@@ -1,181 +1,59 @@
-# Lab 5: Logout
+## Java Version
+Make sure to use openjdk-22. I think this is the newest version and what we've already been using this semester:
 
-## Preamble
+![version](images/207_vers.png)
+## Making pushes/pull-requests
+- First thing to do:
+![prelim](images/prelim.png)
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
+- You can find that link on Quercus. Make sure your school email is associated (it should already be that way)
+and make a small pull request from a new branch to make sure you show up in the graph. You can just slightly edit this
+README or add a comment somewhere or something.
+- Settings are such that each pull request just requires one reviewer. 
+- Everytime you're working on a new feature/usecase, you should create a new branch for it. It would be easier if right when we create
+our branches, we make a push to github so the others know what we're working on.
+- Also before pushing your final copy of the branch to github and opening a pull request,
+make sure to pull the most recent version of the main branch (into your local main branch) and merge
+that into your feature branch. Then you can deal with the conflicts (if there are any) before
+trying the pull request.
+## Style 
 
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
+- While you're coding and following the structure of the starter code
+(it's just the code we already did for lab 5, slightly modified), keep this picture in
+mind:
+  ![CA](images/CA.png)
 
-We have created all the Clean Architecture classes necessary for the logout use case.
+- Try to follow SOLID and clean architecture (can refactor at the end). If you follow the stuff
+from the starter code, that should be like 95% good.
+- Try to write JDocs (can be stupidly basic) and tests for your stuff as you go.
+- Try to keep stuff as private as possible (always make instance variables private
+with getters/setters if needed.)
+- Make helper methods private.
+- I'm not sure if they care about checkstyle but if so, we can just use the
+configurations from the mystyle.xml file.
 
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
+## John/database stuff 
+There are three DAOs in package `data_access`! All three implement the Data Access Interface
+from the use cases. The Use Case code works with any of them.
 
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
+* Class `FileUserDataAccessObject` manages data storage and retrieval in a
+  CSV file, and also keeps the data in a `Map` for easier access. This temporary storage
+  is called a *cache* of the information in the file.
 
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+* Class `DBUserDataAccessObject` uses okhttp to use an API, working with JSON data. Your team
+  might want to refer to this when you do your API work. This API is similar to the one from the third lab;
+  you can read its documentation
+  [here](https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/documentation/fg3zkjm/5-password-protected-user).
 
-* * *
+- For the database stuff, John will have to use one of the above two options (or something else that's easy to integrate but these 2 have examples
+in labs 3,4 and 5 and are already designed to fit with the structure of the starter code (the lab 5 solo part might be especially useful, but keep in mind
+that the stuff for task 2 (editing login use case) is already implemented). You could also look at what's done for "minimal note application" 
+on Quercus, under "project repository and sample starter code") 
+- Until then, we can hook up our code to
+  `InMemoryDataAccessObject` to make sure stuff works and start programming (also use this one for all tests).
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
-
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
-
-* * *
-
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
-
-## Task 1: Understanding the Program
-
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
-
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
-
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
-
-Run the program and make sure the signup and login Use Cases work.
-
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
-
-* * *
-
-**Your team will know when you are done when:**
-
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
-
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
-
-* * *
-
-## Task 2: Dividing up the work
-
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
-
-Once the TODOs are all complete, the "Log Out" button _should_ work!
-
-As a team, split up the TODOs (see below) between the members of your team.
-
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
-
-The TODOs are summarized below (by file) to help your team decide how to split them up:
-
-* * *
-
-- `Main.java`
-
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
-
-* * *
-
-- `LoggedInView.java` (tip: refer to the other views for similar code)
-
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
-
-* * *
-
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
-
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
-
-* * *
-
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
-
-  - [ ] TODO: save the current username in an instance variable and add a getter.
-
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
-
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
-
-* * *
-
-- `LogoutOutputData.java`
-
-  - [ ] TODO: save the parameters in the instance variables.
-
-* * *
-
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
-
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
-
-* * *
-
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
-
-Make sure you switch to the new branch.
-
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
-```
-
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
-
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
-
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
-
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
-
-Your team should spend the rest of the lab working on your project blueprint.
-
-* * *
-
-# Project Blueprint
-
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
+* Class `InMemoryDataAccessObject` **doesn't save the user data to any kind of file at all**,
+  and is intended to be used by the unit tests.
+    * It's also simple to write, which means that you can start
+      programming your Use Cases before you even have the details of data persistence worked out.
+- At the end, we should delete anything in the `data_access`! package we don't use.
