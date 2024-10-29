@@ -21,6 +21,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
+    // null value for currentUsername means that nobody is logged in.
 
     @Override
     public boolean existsByName(String identifier) {
