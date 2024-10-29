@@ -11,7 +11,7 @@ and make a small pull request from a new branch to make sure you show up in the 
 README or add a comment somewhere or something.
 - Settings are such that each pull request just requires one reviewer. 
 - Everytime you're working on a new feature/usecase, you should create a new branch for it. It would be easier if right when we create
-our branches, we make a push to github so the others know what we're working on.
+our branches, we make a push to github (git push origin <branch_name>) so the others know what we're working on.
 - Also before pushing your final copy of the branch to github and opening a pull request,
 make sure to pull the most recent version of the main branch (into your local main branch) and merge
 that into your feature branch. Then you can deal with the conflicts (if there are any) before
