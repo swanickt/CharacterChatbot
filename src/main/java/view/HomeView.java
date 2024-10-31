@@ -11,13 +11,20 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import interface_adapter.home_view.HomeViewController;
+
+/**
+ * The View for the program's home screen.
+ */
 public class HomeView extends JPanel implements ActionListener {
 
     private final String viewName = "home view";
 
-    private JButton logIn;
+    private final JButton logIn;
     private final JButton closeApp;
     private final JButton createAccount;
+
+    private HomeViewController homeViewController;
 
     public HomeView() {
 
@@ -27,8 +34,6 @@ public class HomeView extends JPanel implements ActionListener {
         title1.setAlignmentX(Component.CENTER_ALIGNMENT);
         final JLabel title2 = new JLabel("(Beta Version)");
         title2.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final JLabel space = new JLabel(" ");
-        space.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel buttons = new JPanel();
 
@@ -56,7 +61,8 @@ public class HomeView extends JPanel implements ActionListener {
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
         this.add(title1);
         this.add(title2);
-        this.add(space);
+        this.add(Box.createRigidArea(new Dimension(0, 6)));
+        // The above line is to add space between header and buttons.
         this.add(buttons);
 
     }
@@ -65,11 +71,22 @@ public class HomeView extends JPanel implements ActionListener {
      * React to a button click that results in evt.
      * @param evt the ActionEvent to react to
      */
+    @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        if (evt.getSource().equals(logIn)) {
+            homeViewController.switchToLoginView();
+        }
+        else if (evt.getSource().equals(createAccount)) {
+            homeViewController.switchToSignupView();
+        }
     }
 
     public String getViewName() {
         return viewName;
     }
+
+    public void setHomeViewController(HomeViewController controller) {
+        this.homeViewController = controller;
+    }
+
 }
