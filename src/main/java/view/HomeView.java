@@ -1,9 +1,11 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,10 +35,14 @@ public class HomeView extends JPanel implements ActionListener {
         createAccount = new JButton("Create Account");
         createAccount.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(createAccount);
+        buttons.add(Box.createRigidArea(new Dimension(0, 11)));
+        // The above line is to add space between buttons.
 
         logIn = new JButton("Go to Login");
         logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(logIn);
+        buttons.add(Box.createRigidArea(new Dimension(0, 11)));
+        // The above line is to add space between buttons.
 
         closeApp = new JButton("Close App");
         closeApp.setAlignmentX(Component.CENTER_ALIGNMENT);
