@@ -33,6 +33,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.HomeView;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -66,6 +67,7 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private HomeView homeView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -101,6 +103,16 @@ public class AppBuilder {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Home View to the application.
+     * @return this builder
+     */
+    public AppBuilder addHomeView() {
+        homeView = new HomeView();
+        cardPanel.add(homeView);
         return this;
     }
 
@@ -168,7 +180,7 @@ public class AppBuilder {
     }
 
     /**
-     * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     * Creates the JFrame for the application and initially sets the HomeView to be displayed.
      * @return the application
      */
     public JFrame build() {
@@ -177,7 +189,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(homeView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
