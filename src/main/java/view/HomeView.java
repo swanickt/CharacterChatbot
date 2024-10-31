@@ -13,9 +13,9 @@ public class HomeView extends JPanel implements ActionListener {
 
     private final String viewName = "home view";
 
-    private final JButton logIn;
+    private JButton logIn;
     private final JButton closeApp;
-    private final JButton signUp;
+    private final JButton createAccount;
 
     public HomeView() {
 
@@ -30,9 +30,9 @@ public class HomeView extends JPanel implements ActionListener {
 
         final JPanel buttons = new JPanel();
 
-        signUp = new JButton("Sign Up");
-        signUp.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttons.add(signUp);
+        createAccount = new JButton("Create Account");
+        createAccount.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttons.add(createAccount);
 
         logIn = new JButton("Go to Login");
         logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -42,7 +42,7 @@ public class HomeView extends JPanel implements ActionListener {
         closeApp.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(closeApp);
 
-        signUp.addActionListener(this);
+        createAccount.addActionListener(this);
         logIn.addActionListener(this);
         closeApp.addActionListener(this);
 
