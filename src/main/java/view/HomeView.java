@@ -3,11 +3,14 @@ package view;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
+public class HomeView extends JPanel implements ActionListener {
+
     private final String viewName = "home view";
 
     private final JButton logIn;
@@ -16,32 +19,51 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
     public HomeView() {
 
-        final JLabel title = new JLabel(HomeView.name());
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Formatting the view and adding buttons/labels:
+
+        final JLabel title1 = new JLabel("Welcome to Character Chatbot!");
+        title1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel title2 = new JLabel("(Beta Version)");
+        title2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel space = new JLabel(" ");
+        space.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel buttons = new JPanel();
 
         signUp = new JButton("Sign Up");
+        signUp.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(signUp);
+
         logIn = new JButton("Go to Login");
+        logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(logIn);
+
         closeApp = new JButton("Close App");
+        closeApp.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(closeApp);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        this.add(title);
+        signUp.addActionListener(this);
+        logIn.addActionListener(this);
+        closeApp.addActionListener(this);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+        this.add(title1);
+        this.add(title2);
+        this.add(space);
         this.add(buttons);
 
     }
 
     /**
-     * Formats the header for the home screen.
-     * @return the string version of the home screen header.
+     * React to a button click that results in evt.
+     * @param evt the ActionEvent to react to
      */
-    private static String name() {
-        final String line1 = "Welcome to Character Chatbot!";
-        final String line2 = "(Beta Version)";
-        final int padding = line1.length()/(4);
-        return String.format("%s%n%" + padding + "s%s", line1, "", line2);
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }
