@@ -74,6 +74,16 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Home View to the application.
+     * @return this builder
+     */
+    public AppBuilder addHomeView() {
+        homeView = new HomeView();
+        cardPanel.add(homeView);
+        return this;
+    }
+
+    /**
      * Adds the Signup View to the application.
      * @return this builder
      */
@@ -103,16 +113,6 @@ public class AppBuilder {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
-        return this;
-    }
-
-    /**
-     * Adds the Home View to the application.
-     * @return this builder
-     */
-    public AppBuilder addHomeView() {
-        homeView = new HomeView();
-        cardPanel.add(homeView);
         return this;
     }
 
