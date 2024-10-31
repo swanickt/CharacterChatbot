@@ -13,6 +13,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.home_view.HomeViewController;
+import interface_adapter.home_view.HomeViewPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -24,6 +26,9 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.home_view.HomeViewInputBoundary;
+import use_case.home_view.HomeViewInteractor;
+import use_case.home_view.HomeViewOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -79,7 +84,7 @@ public class AppBuilder {
      */
     public AppBuilder addHomeView() {
         homeView = new HomeView();
-        cardPanel.add(homeView);
+        cardPanel.add(homeView, homeView.getViewName());
         return this;
     }
 
@@ -128,6 +133,20 @@ public class AppBuilder {
 
         final SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
+        return this;
+    }
+
+    /**
+     * Adds the HomeView Use Case (home screen buttons) to the application.
+     * @return this builder
+     */
+    public AppBuilder addHomeViewUseCase() {
+        final HomeViewOutputBoundary homeViewOutputBoundary = new HomeViewPresenter(viewManagerModel,
+                signupViewModel, loginViewModel);
+        final HomeViewInputBoundary homeViewInteractor = new HomeViewInteractor(homeViewOutputBoundary);
+
+        final HomeViewController controller = new HomeViewController(homeViewInteractor);
+        homeView.setHomeViewController(controller);
         return this;
     }
 
