@@ -82,6 +82,7 @@ public class HomeView extends JPanel implements ActionListener {
         else if (evt.getSource().equals(closeApp)) {
             System.exit(0);
         }
+    }
 
     public String getViewName() {
         return viewName;
