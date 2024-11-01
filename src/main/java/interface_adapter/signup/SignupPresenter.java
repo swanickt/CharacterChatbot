@@ -1,6 +1,7 @@
 package interface_adapter.signup;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.home_view.HomeViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import use_case.signup.SignupOutputBoundary;
@@ -14,13 +15,16 @@ public class SignupPresenter implements SignupOutputBoundary {
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final HomeViewModel homeViewModel;
 
     public SignupPresenter(ViewManagerModel viewManagerModel,
                            SignupViewModel signupViewModel,
-                           LoginViewModel loginViewModel) {
+                           LoginViewModel loginViewModel,
+                           HomeViewModel homeViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
         this.loginViewModel = loginViewModel;
+        this.homeViewModel = homeViewModel;
     }
 
     @Override
@@ -46,6 +50,21 @@ public class SignupPresenter implements SignupOutputBoundary {
     @Override
     public void switchToLoginView() {
         viewManagerModel.setState(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToHomeView() {
+        final SignupState signupState = signupViewModel.getState();
+        signupState.setUsername("");
+        signupState.setPassword("");
+        signupState.setRepeatPassword("");
+        signupViewModel.setState(signupState);
+        signupViewModel.firePropertyChanged();
+        // The above lines make it so that when we click cancel,
+        // the textfields get cleared.
+
+        viewManagerModel.setState(homeViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

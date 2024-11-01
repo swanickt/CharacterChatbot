@@ -83,7 +83,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        cancel.addActionListener(this);
+        cancel.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        signupController.switchToHomeView();
+                    }
+                }
+        );
 
         addUsernameListener();
         addPasswordListener();
@@ -184,9 +190,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final SignupState state = (SignupState) evt.getNewValue();
+        setFields(state);
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
+    }
+
+    private void setFields(SignupState state) {
+        usernameInputField.setText(state.getUsername());
+        passwordInputField.setText(state.getPassword());
+        repeatPasswordInputField.setText(state.getRepeatPassword());
     }
 
     public String getViewName() {
