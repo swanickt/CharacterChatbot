@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import interface_adapter.home_view.HomeViewController;
-import interface_adapter.home_view.HomeViewModel;
 
 /**
  * The View for the program's home screen.
@@ -20,7 +19,6 @@ import interface_adapter.home_view.HomeViewModel;
 public class HomeView extends JPanel implements ActionListener {
 
     private final String viewName = "home view";
-    private final HomeViewModel homeViewModel;
 
     private final JButton logIn;
     private final JButton closeApp;
@@ -28,30 +26,30 @@ public class HomeView extends JPanel implements ActionListener {
 
     private HomeViewController homeViewController;
 
-    public HomeView(HomeViewModel homeViewModel) {
-        this.homeViewModel = homeViewModel;
+    public HomeView() {
+
         // Formatting the view and adding buttons/labels:
 
-        final JLabel title1 = new JLabel(HomeViewModel.TITLE1_LABEL);
+        final JLabel title1 = new JLabel("Welcome to Character Chatbot!");
         title1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final JLabel title2 = new JLabel(HomeViewModel.TITLE2_LABEL);
+        final JLabel title2 = new JLabel("(Beta Version)");
         title2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel buttons = new JPanel();
 
-        createAccount = new JButton(HomeViewModel.CREATE_ACCOUNT_BUTTON_LABEL);
+        createAccount = new JButton("Create Account");
         createAccount.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(createAccount);
         buttons.add(Box.createRigidArea(new Dimension(0, 11)));
         // The above line is to add space between buttons.
 
-        logIn = new JButton(HomeViewModel.LOGIN_BUTTON_LABEL);
+        logIn = new JButton("Go to Login");
         logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(logIn);
         buttons.add(Box.createRigidArea(new Dimension(0, 11)));
         // The above line is to add space between buttons.
 
-        closeApp = new JButton(HomeViewModel.CLOSE_APP_BUTTON_LABEL);
+        closeApp = new JButton("Close App");
         closeApp.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttons.add(closeApp);
 
@@ -84,7 +82,6 @@ public class HomeView extends JPanel implements ActionListener {
         else if (evt.getSource().equals(closeApp)) {
             System.exit(0);
         }
-    }
 
     public String getViewName() {
         return viewName;
