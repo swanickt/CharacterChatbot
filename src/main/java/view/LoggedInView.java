@@ -17,6 +17,7 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
+import java.awt.FlowLayout;
 
 /**
  * The View for when the user is logged into the program.
@@ -25,14 +26,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private final JLabel passwordErrorField = new JLabel();
+    // private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
 
+    private final JButton chatButton;
+    private final JButton chatHistoryButton;
     private final JLabel username;
-
     private final JButton logOut;
-
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
@@ -40,26 +41,91 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Logged In Screen");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Title
+        final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
-
-        final JLabel usernameInfo = new JLabel("Currently logged in: ");
+        final JLabel title = new JLabel("Free Character Chatbot for");
         username = new JLabel();
 
-        final JPanel buttons = new JPanel();
-        logOut = new JButton("Log Out");
-        buttons.add(logOut);
+        titlePanel.add(title);
+        titlePanel.add(username);
+        // Title label
+        // final JLabel title = new JLabel("Character Chatbot for");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Username information
+        // final JLabel usernameInfo = new JLabel("Currently logged in: ");
+        // username = new JLabel();
+
+        // Password input field and change password button
+        final JPanel passwordInfo = new JPanel();
+        //        passwordInfo.setLayout(new BoxLayout(passwordInfo, BoxLayout.X_AXIS));
+        //        passwordInfo.add(new JLabel("Password: "));
+        passwordInfo.add(passwordInputField);
+
+        // Initialize buttons
+        chatButton = new JButton("Chat");
+        chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        chatButton.addActionListener(evt -> {
+            JOptionPane.showMessageDialog(this, "Starting Chat...");
+        });
+
+        chatHistoryButton = new JButton("Chat History");
+        chatHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        chatHistoryButton.addActionListener(evt -> {
+            JOptionPane.showMessageDialog(this, "Opening Chat History...");
+        });
 
         changePassword = new JButton("Change Password");
-        buttons.add(changePassword);
+        changePassword.addActionListener(evt -> {
+            final LoggedInState currentState = loggedInViewModel.getState();
+            this.changePasswordController.execute(
+                    currentState.getUsername(),
+                    currentState.getPassword()
+            );
+        });
 
+        logOut = new JButton("Log Out");
+        logOut.addActionListener(evt -> {
+            final LoggedInState currentState = loggedInViewModel.getState();
+            logoutController.execute(currentState.getUsername());
+        });
+
+        // Layout setup
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
+        // chatButton
+        final JLabel chatLabel = new JLabel("Normal Bot:");
+        final JPanel chatButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        chatButtonPanel.add(chatLabel);
+        chatButtonPanel.add(chatButton);
 
+        // chathistoryButton
+        final JPanel chathistoryButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        chathistoryButtonPanel.add(chatHistoryButton);
+
+        // logoutChangePasswordButton
+        final JPanel lcButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        lcButtonPanel.add(changePassword);
+        lcButtonPanel.add(logOut);
+
+        // Button panel
+        final JPanel buttons = new JPanel();
+        buttons.add(chatButtonPanel);
+        buttons.add(chathistoryButtonPanel);
+        buttons.add(lcButtonPanel);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+
+        // Add components to the main panel
+        // this.add(title);
+        // this.add(username);
+        this.add(titlePanel);
+        // Ethis.add(passwordInfo);
+        // this.add(passwordErrorField);
+        this.add(buttons);
+
+        // Document listener for password field
+        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
                 final LoggedInState currentState = loggedInViewModel.getState();
                 currentState.setPassword(passwordInputField.getText());
@@ -81,40 +147,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 documentListenerHelper();
             }
         });
-
-        changePassword.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(changePassword)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-
-                        this.changePasswordController.execute(
-                                currentState.getUsername(),
-                                currentState.getPassword()
-                        );
-                    }
-                }
-        );
-
-        logOut.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        // 2. Execute the logout Controller.
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        logoutController.execute(currentState.getUsername());
-                    }
-                }
-        );
-
-        this.add(title);
-        this.add(usernameInfo);
-        this.add(username);
-
-        this.add(passwordInfo);
-        this.add(passwordErrorField);
-        this.add(buttons);
     }
 
     @Override
@@ -125,9 +157,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         }
         else if (evt.getPropertyName().equals("password")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
+            JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
         }
-
     }
 
     public String getViewName() {
