@@ -14,6 +14,7 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.home_view.HomeViewController;
+import interface_adapter.home_view.HomeViewModel;
 import interface_adapter.home_view.HomeViewPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -73,6 +74,7 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private HomeView homeView;
+    private HomeViewModel homeViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -83,7 +85,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHomeView() {
-        homeView = new HomeView();
+        homeViewModel = new HomeViewModel();
+        homeView = new HomeView(homeViewModel);
         cardPanel.add(homeView, homeView.getViewName());
         return this;
     }
