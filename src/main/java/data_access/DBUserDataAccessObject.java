@@ -1,7 +1,10 @@
 package data_access;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +27,9 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
+    private static final String API_KEY = "your-openai-api-key-here";
+    private static final String BEARER_PREFIX = "Bearer ";
+    private static final String AUTHORIZATION_LABEL = "Authorization";
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
@@ -31,11 +37,18 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
     private static final String MESSAGE = "message";
+    private static String api_toUse = "gpt-3.5-turbo";
+    private static final String CHATGPT_URL = "https://api.openai.com/v1/chat/completions";
+    private static List<String> conversationHistory = new ArrayList<>();
     private final UserFactory userFactory;
 
     public DBUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
         // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
+    }
+
+    public void setApi(String api) {
+        api_toUse = api;
     }
 
     @Override
@@ -64,6 +77,65 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         }
         catch (IOException | JSONException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Used to send user input into chatgpt.
+     * @param message user input
+     * @return a message from chatgpt
+     * @throws RuntimeException if it has an error
+     * @throws JSONException as checkstyle required
+     */
+    public String sendMessage(String message) throws JSONException {
+        // Construct the JSON request body
+        final OkHttpClient client = new OkHttpClient().newBuilder().build();
+        final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
+        final JSONObject requestBody = new JSONObject();
+        // adding history to let chatgpt can read the text before
+        conversationHistory.add("user:" + message);
+        try {
+            // Set up the model and messages
+            requestBody.put("model", api_toUse);
+            final JSONArray messages = new JSONArray();
+            for (String history : conversationHistory) {
+                JSONObject messageObject = new JSONObject();
+                String[] parts = history.split(":", 2);
+                messageObject.put("role", parts[0]);
+                messageObject.put("content", parts[1]);
+                messages.put(messageObject);
+            }
+
+            requestBody.put("messages", messages);
+        }
+        catch (JSONException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        // Create the request
+        final RequestBody body = RequestBody.create(requestBody.toString(), mediaType);
+        final Request request = new Request.Builder()
+                .url(CHATGPT_URL)
+                .method("POST", body)
+                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
+                .addHeader(AUTHORIZATION_LABEL, BEARER_PREFIX + API_KEY)
+                .build();
+
+        // Execute the request and handle the response
+        try {
+            final Response response = client.newCall(request).execute();
+            if (response.code() == SUCCESS_CODE) {
+                // Parse the response JSON
+                JSONObject responseBody = new JSONObject(response.body().string());
+                JSONArray choices = responseBody.getJSONArray("choices");
+                return choices.getJSONObject(0).getJSONObject("message").getString("content");
+            }
+            else {
+                throw new RuntimeException("Error: " + response.message());
+            }
+        }
+        catch (IOException | JSONException ex) {
+            throw new RuntimeException("Failed to communicate with ChatGPT");
         }
     }
 
