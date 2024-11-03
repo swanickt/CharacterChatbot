@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import app.ChatBotSwingApp;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -68,6 +69,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
+            final String setting = "You are a helpful assistant, reply in short sentence,act as you are talking to a normal human, and always remember your role, an assistant,your reply should not exceed 20 words and only reply in plain word text";
+            final ChatBotSwingApp chatApp = new ChatBotSwingApp(setting);
+            chatApp.setVisible(true);
         });
 
         chatHistoryButton = new JButton("Chat History");
