@@ -16,7 +16,7 @@ import java.util.Map;
 
 @SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
 public class ChatBotSwingApp extends JFrame {
-    private static final String API_KEY = "sk-FQEt-6SN5RGeq_GDQTBovqwPoDa0Oj9wsOiOJEwdhhT3BlbkFJqrncaGUW0oEU8n04Swa_K-1qALE3eUtSjiIwxVnu8A";// Replace with your actual API key
+    private static final String API_KEY = System.getenv("OPENAI_KEY");
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
     private JPanel chatPanel;
