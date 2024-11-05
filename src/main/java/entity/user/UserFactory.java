@@ -1,7 +1,7 @@
-package entity;
+package entity.user;
 
 /**
- * Factory for creating users.
+ * Factory for creating users. At creation, a user's chat history is empty.
  */
 public interface UserFactory {
     /**
