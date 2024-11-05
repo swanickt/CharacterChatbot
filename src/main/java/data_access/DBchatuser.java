@@ -70,7 +70,7 @@ public class DBchatuser {
         return existingUser != null;
     }
 
-    // TODO: this is used to check the password is correct or not.
+    // TODO: this is used to check the password is correct or not
     public Map<String, String> getUserNameAndPassword(String userId) {
         Map<String, String> userCredentials = new HashMap<>();
         Document userDoc = userCollection.find(Filters.eq("userId", userId)).first();
