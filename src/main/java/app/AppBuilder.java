@@ -13,7 +13,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.home_view.HomeViewController;
+import interface_adapter.home_view.GoToLoginController;
+import interface_adapter.home_view.GoToSignUpController;
 import interface_adapter.home_view.HomeViewModel;
 import interface_adapter.home_view.HomeViewPresenter;
 import interface_adapter.login.LoginController;
@@ -148,8 +149,12 @@ public class AppBuilder {
                 signupViewModel, loginViewModel);
         final HomeViewInputBoundary homeViewInteractor = new HomeViewInteractor(homeViewOutputBoundary);
 
-        final HomeViewController controller = new HomeViewController(homeViewInteractor);
-        homeView.setHomeViewController(controller);
+        final GoToLoginController controller1 = new GoToLoginController(homeViewInteractor);
+        homeView.setGoToLoginController(controller1);
+
+        final GoToSignUpController controller2 = new GoToSignUpController(homeViewInteractor);
+        homeView.setGoToSignUpController(controller2);
+
         return this;
     }
 

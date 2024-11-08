@@ -11,7 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import interface_adapter.home_view.HomeViewController;
+import interface_adapter.home_view.GoToLoginController;
+import interface_adapter.home_view.GoToSignUpController;
 import interface_adapter.home_view.HomeViewModel;
 
 /**
@@ -26,7 +27,8 @@ public class HomeView extends JPanel implements ActionListener {
     private final JButton closeApp;
     private final JButton createAccount;
 
-    private HomeViewController homeViewController;
+    private GoToLoginController goToLoginController;
+    private GoToSignUpController goToSignUpController;
 
     public HomeView(HomeViewModel homeViewModel) {
         this.homeViewModel = homeViewModel;
@@ -76,10 +78,10 @@ public class HomeView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(logIn)) {
-            homeViewController.switchToLoginView();
+            goToLoginController.switchToView();
         }
         else if (evt.getSource().equals(createAccount)) {
-            homeViewController.switchToSignupView();
+            goToSignUpController.switchToView();
         }
         else if (evt.getSource().equals(closeApp)) {
             System.exit(0);
@@ -90,8 +92,12 @@ public class HomeView extends JPanel implements ActionListener {
         return viewName;
     }
 
-    public void setHomeViewController(HomeViewController controller) {
-        this.homeViewController = controller;
+    public void setGoToLoginController(GoToLoginController controller) {
+        this.goToLoginController = controller;
+    }
+
+    public void setGoToSignUpController(GoToSignUpController controller) {
+        this.goToSignUpController = controller;
     }
 
 }
