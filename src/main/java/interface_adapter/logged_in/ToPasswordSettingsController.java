@@ -1,9 +1,6 @@
-package interface_adapter.change_password;
+package interface_adapter.logged_in;
 
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInputData;
 import use_case.logged_in.LoggedInInputBoundary;
-import use_case.logged_in.LoggedInInputData;
 
 public class ToPasswordSettingsController {
     private final LoggedInInputBoundary toPasswordSettingsInteractor;

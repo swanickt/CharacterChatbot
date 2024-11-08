@@ -10,9 +10,9 @@ import javax.swing.event.DocumentListener;
 
 import app.ChatBotSwingApp;
 import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.LoggedInState;
-import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.change_password.ToPasswordSettingsController;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 
 /**

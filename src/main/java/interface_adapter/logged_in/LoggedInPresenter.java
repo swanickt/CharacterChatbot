@@ -1,6 +1,8 @@
-package interface_adapter.change_password;
+package interface_adapter.logged_in;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.change_password.ChangePasswordState;
+import interface_adapter.change_password.ChangePasswordViewModel;
 import use_case.logged_in.LoggedInOutputBoundary;
 
 public class LoggedInPresenter implements LoggedInOutputBoundary {
