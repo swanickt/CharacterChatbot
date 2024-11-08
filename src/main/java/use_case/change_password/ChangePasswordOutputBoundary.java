@@ -18,6 +18,9 @@ public interface ChangePasswordOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
+    /**
+     * Goes back to the logged in page from the change password page.
+     */
     void switchToLoggedInView();
 }
 

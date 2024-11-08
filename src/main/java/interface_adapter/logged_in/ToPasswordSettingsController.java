@@ -9,6 +9,9 @@ public class ToPasswordSettingsController {
         this.toPasswordSettingsInteractor = toPasswordSettingsInteractor;
     }
 
+    /**
+     * Executes the go to password settings page use case.
+     */
     public void switchToChangePasswordView() {
         toPasswordSettingsInteractor.switchToChangePasswordView();
     }

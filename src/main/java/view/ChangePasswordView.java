@@ -123,10 +123,10 @@ public class ChangePasswordView extends JPanel implements PropertyChangeListener
         this.add(buttons);
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent evt) {
-//        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
-//    }
+    //    @Override
+    //    public void actionPerformed(ActionEvent evt) {
+    //        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+    //    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
