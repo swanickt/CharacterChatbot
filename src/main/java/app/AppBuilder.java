@@ -17,7 +17,8 @@ import interface_adapter.change_password.ChangePasswordViewModel;
 import interface_adapter.change_password.LoggedInPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.change_password.ToPasswordSettingsController;
-import interface_adapter.home_view.HomeViewController;
+import interface_adapter.home_view.GoToLoginController;
+import interface_adapter.home_view.GoToSignUpController;
 import interface_adapter.home_view.HomeViewModel;
 import interface_adapter.home_view.HomeViewPresenter;
 import interface_adapter.login.LoginController;
@@ -46,7 +47,12 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.ChangePasswordView;
+import view.HomeView;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -179,8 +185,12 @@ public class AppBuilder {
                 signupViewModel, loginViewModel);
         final HomeViewInputBoundary homeViewInteractor = new HomeViewInteractor(homeViewOutputBoundary);
 
-        final HomeViewController controller = new HomeViewController(homeViewInteractor);
-        homeView.setHomeViewController(controller);
+        final GoToLoginController controller1 = new GoToLoginController(homeViewInteractor);
+        homeView.setGoToLoginController(controller1);
+
+        final GoToSignUpController controller2 = new GoToSignUpController(homeViewInteractor);
+        homeView.setGoToSignUpController(controller2);
+
         return this;
     }
 
