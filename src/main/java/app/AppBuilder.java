@@ -10,9 +10,7 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.ChangePasswordPresenter;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.change_password.*;
 import interface_adapter.home_view.HomeViewController;
 import interface_adapter.home_view.HomeViewModel;
 import interface_adapter.home_view.HomeViewPresenter;
@@ -30,6 +28,9 @@ import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.home_view.HomeViewInputBoundary;
 import use_case.home_view.HomeViewInteractor;
 import use_case.home_view.HomeViewOutputBoundary;
+import use_case.logged_in.LoggedInInputBoundary;
+import use_case.logged_in.LoggedInInteractor;
+import use_case.logged_in.LoggedInOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -39,11 +40,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.HomeView;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -75,9 +72,23 @@ public class AppBuilder {
     private LoginView loginView;
     private HomeView homeView;
     private HomeViewModel homeViewModel;
+    private ChangePasswordView changePasswordView;
+    private ChangePasswordViewModel changePasswordViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+    }
+
+    /**
+     * Adds the change password view to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangePasswordView() {
+        changePasswordViewModel = new ChangePasswordViewModel();
+        changePasswordView = new ChangePasswordView(changePasswordViewModel);
+        cardPanel.add(changePasswordView, changePasswordView.getViewName());
+        return this;
+
     }
 
     /**
@@ -140,6 +151,20 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the LoggedIn Use Cases (buttons in logged in screen) to the application.
+     * @return this builder
+     */
+    public AppBuilder addLoggedInUseCase() {
+        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(changePasswordViewModel,
+                viewManagerModel, loggedInViewModel);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
+
+        final ToPasswordSettingsController controller = new ToPasswordSettingsController(loggedInInteractor);
+        loggedInView.setToPasswordSettingsController(controller);
+        return this;
+    }
+
+    /**
      * Adds the HomeView Use Case (home screen buttons) to the application.
      * @return this builder
      */
@@ -174,14 +199,17 @@ public class AppBuilder {
      */
     public AppBuilder addChangePasswordUseCase() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-                new ChangePasswordPresenter(loggedInViewModel);
+                new ChangePasswordPresenter(loggedInViewModel, changePasswordViewModel, viewManagerModel);
 
         final ChangePasswordInputBoundary changePasswordInteractor =
                 new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-
+        final BackToLoggedInController backToLoggedInController =
+                new BackToLoggedInController(changePasswordInteractor);
+        changePasswordView.setBackToLoggedInController(backToLoggedInController);
         final ChangePasswordController changePasswordController =
                 new ChangePasswordController(changePasswordInteractor);
         loggedInView.setChangePasswordController(changePasswordController);
+        changePasswordView.setChangePasswordController(changePasswordController);
         return this;
     }
 

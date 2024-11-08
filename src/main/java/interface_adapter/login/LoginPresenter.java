@@ -36,6 +36,13 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
 
+        final LoginState loginState = loginViewModel.getState();
+        loginState.setUsername("");
+        loginState.setPassword("");
+        loginState.setLoginError(null);
+        loginViewModel.setState(loginState);
+        loginViewModel.firePropertyChanged();
+
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
@@ -52,6 +59,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         final LoginState loginState = loginViewModel.getState();
         loginState.setUsername("");
         loginState.setPassword("");
+        loginState.setLoginError(null);
         loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
         // The above lines make it so that when we click cancel,
