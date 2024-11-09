@@ -2,10 +2,10 @@ package interface_adapter.login;
 
 import use_case.login.LoginInputBoundary;
 
-public class CancelController {
+public class LoginCancelController {
     private final LoginInputBoundary loginUseCaseInteractor;
 
-    public CancelController(LoginInputBoundary loginUseCaseInteractor) {
+    public LoginCancelController(LoginInputBoundary loginUseCaseInteractor) {
         this.loginUseCaseInteractor = loginUseCaseInteractor;
     }
 
