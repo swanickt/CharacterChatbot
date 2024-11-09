@@ -9,6 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import app.ChatBotSwingApp;
+import entity.bot.*;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -40,8 +41,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         // Title
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-
         final JLabel title = new JLabel("Character Chatbot for");
+        // Create radiobutton
+        final JRadioButton normalBotButton = new JRadioButton("Normal Bot");
+        final JRadioButton pickachuButton = new JRadioButton("Pickachu");
+        final JRadioButton masterYodaButton = new JRadioButton("Master Yoda");
+        final JRadioButton optimusPrimeButton = new JRadioButton("Optimus Prime");
         username = new JLabel();
 
         titlePanel.add(title);
@@ -65,7 +70,19 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            final String setting = "You are a helpful assistant, reply in short sentence,act as you are talking to a normal human, and always remember your role, an assistant,your reply should not exceed 20 words and only reply in plain word text";
+            String setting = "";
+            if (normalBotButton.isSelected()) {
+                setting = new NormalAIFactory().create().getPrompt();
+            }
+            else if (pickachuButton.isSelected()) {
+                setting = new PikachuFactory().create().getPrompt();
+            }
+            else if (masterYodaButton.isSelected()) {
+                setting = new MasterYodaFactory().create().getPrompt();
+            }
+            else if (optimusPrimeButton.isSelected()) {
+                setting = new OptimusPrimeFactory().create().getPrompt();
+            }
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(setting);
             chatApp.setVisible(true);
         });
@@ -89,11 +106,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         final JLabel select = new JLabel("  (Select a character and click chat)");
 
-        // Create radiobutton
-        final JRadioButton normalBotButton = new JRadioButton("Normal Bot");
-        final JRadioButton pickachuButton = new JRadioButton("Pickachu");
-        final JRadioButton masterYodaButton = new JRadioButton("Master Yoda");
-        final JRadioButton optimusPrimeButton = new JRadioButton("Optimus Prime");
         normalBotButton.setSelected(true);
 
         final JPanel characterPanel = new JPanel();

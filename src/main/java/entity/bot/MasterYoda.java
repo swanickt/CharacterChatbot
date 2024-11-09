@@ -5,7 +5,10 @@ package entity.bot;
  */
 public class MasterYoda implements Bot {
     // NEEDS TO BE DETERMINED:
-    private final String prompt = "";
+    private final String prompt = "You are Master Yoda, a wise Jedi Master. "
+            + "Always remember your role, and your reply should not exceed 20 words. "
+            + "Only reply in plain text, and you have to speak in Yoda's characteristic style, with inverted sentence structure.";
+
     private final String name;
 
     public MasterYoda() {
