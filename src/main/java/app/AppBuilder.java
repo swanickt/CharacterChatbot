@@ -21,6 +21,7 @@ import interface_adapter.home_view.GoToLoginController;
 import interface_adapter.home_view.GoToSignUpController;
 import interface_adapter.home_view.HomeViewModel;
 import interface_adapter.home_view.HomeViewPresenter;
+import interface_adapter.login.CancelController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -206,7 +207,11 @@ public class AppBuilder {
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+
+        final CancelController cancelController = new CancelController(loginInteractor);
+        loginView.setCancelController(cancelController);
         return this;
+
     }
 
     /**
