@@ -30,6 +30,7 @@ public class SignupInteractor implements SignupInputBoundary {
         else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
         }
+
         else {
             dbchatuser.saveUserAccount(signupInputData.getUsername(),
                     signupInputData.getUsername(), signupInputData.getPassword());
