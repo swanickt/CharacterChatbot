@@ -22,6 +22,7 @@ public class ChatBotSwingApp extends JFrame {
     private JPanel chatPanel;
     private JTextField inputField;
     private JButton sendButton;
+    private JButton exitButton;
     private List<Map<String, String>> conversationHistory;
 
     @SuppressWarnings("checkstyle:MagicNumber")
@@ -45,14 +46,21 @@ public class ChatBotSwingApp extends JFrame {
         // Input panel
         inputField = new JTextField();
         sendButton = new JButton("Send");
+        exitButton = new JButton("Exit");
         final JPanel inputPanel = new JPanel(new BorderLayout());
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
         add(inputPanel, BorderLayout.SOUTH);
 
+        // Add exit button to the top right corner
+        final JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(exitButton, BorderLayout.EAST);
+        add(topPanel, BorderLayout.NORTH);
+
         // Initialize conversation history
         conversationHistory = new ArrayList<>();
         addMessageToHistory("system", system_setting);
+
         // Send button action listener
         sendButton.addActionListener(new ActionListener() {
             @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:RightCurly",
@@ -76,6 +84,13 @@ public class ChatBotSwingApp extends JFrame {
                         addChatBubble("Error: Unable to get response from GPT.", "error");
                     }
                 }
+            }
+        });
+        // Exit button action listener
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
             }
         });
     }
@@ -199,9 +214,5 @@ public class ChatBotSwingApp extends JFrame {
 
     @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:UncommentedMain", "checkstyle:LineLength", "checkstyle:MissingJavadocMethod", "checkstyle:UnusedLocalVariable"})
     public static void main(String[] args) {
-        String setting = "You are a helpful assistant, reply in short sentence,act as you are talking to a normal human, and always remember your role, an assistant,your reply should not exceed 20 words and only reply in plain word text";
-        String setting2 = "You are optimus prime, the leader of the Autobots, always remember your role and your reply should not exceed 20 words and only reply in plain word text, you have to behave like optimus";
-        ChatBotSwingApp chatApp = new ChatBotSwingApp(setting2);
-        chatApp.setVisible(true);
     }
 }
