@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -31,6 +32,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private SignupController signupController;
+    private SignupCancelController signupCancelController;
 
     private final JButton signUp;
     private final JButton cancel;
@@ -86,7 +88,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         cancel.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        signupController.switchToHomeView();
+                        signupCancelController.switchToHomeView();
                     }
                 }
         );
@@ -209,5 +211,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     public void setSignupController(SignupController controller) {
         this.signupController = controller;
+    }
+
+    public void setSignupCancelController(SignupCancelController controller) {
+        this.signupCancelController = controller;
     }
 }
