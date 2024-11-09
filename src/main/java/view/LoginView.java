@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.login.CancelController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -36,6 +37,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JButton logIn;
     private final JButton cancel;
     private LoginController loginController;
+    private CancelController cancelController;
 
     public LoginView(LoginViewModel loginViewModel) {
 
@@ -74,7 +76,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        loginController.switchToHomeView();
+                        cancelController.switchToHomeView();
                     }
                 }
         );
@@ -162,5 +164,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
+    }
+
+    public void setCancelController(CancelController cancelController) {
+        this.cancelController = cancelController;
     }
 }
