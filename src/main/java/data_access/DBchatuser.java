@@ -65,7 +65,7 @@ public class DBchatuser {
         return chatMap;
     }
 
-    public boolean checkDuplicate(String userId) {
+    private boolean checkDuplicate(String userId) {
         Document existingUser = userCollection.find(Filters.eq("userId", userId)).first();
         return existingUser != null;
     }
