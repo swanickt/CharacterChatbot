@@ -27,6 +27,7 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -158,8 +159,11 @@ public class AppBuilder {
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);
 
-        final SignupController controller = new SignupController(userSignupInteractor);
-        signupView.setSignupController(controller);
+        final SignupController controller1 = new SignupController(userSignupInteractor);
+        signupView.setSignupController(controller1);
+
+        final SignupCancelController controller2 = new SignupCancelController(userSignupInteractor);
+        signupView.setSignupCancelController(controller2);
         return this;
     }
 
