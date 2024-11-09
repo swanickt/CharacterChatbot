@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
+                                            .addChangePasswordView()
                                             .addHomeView()
                                             .addLoginView()
                                             .addSignupView()
@@ -22,6 +23,7 @@ public class Main {
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addHomeViewUseCase()
+                                            .addLoggedInUseCase()
                                             .build();
 
         application.pack();
