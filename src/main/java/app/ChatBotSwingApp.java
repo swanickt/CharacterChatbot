@@ -60,6 +60,7 @@ public class ChatBotSwingApp extends JFrame {
         // Initialize conversation history
         conversationHistory = new ArrayList<>();
         addMessageToHistory("system", system_setting);
+
         // Send button action listener
         sendButton.addActionListener(new ActionListener() {
             @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:RightCurly",
