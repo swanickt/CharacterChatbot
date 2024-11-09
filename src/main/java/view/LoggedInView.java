@@ -10,8 +10,9 @@ import javax.swing.event.DocumentListener;
 
 import app.ChatBotSwingApp;
 import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.LoggedInState;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 
 /**
@@ -24,6 +25,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     // private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
+    private ToPasswordSettingsController toPasswordSettingsController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -76,11 +78,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         changePassword = new JButton("Change Password");
         changePassword.addActionListener(evt -> {
-            final LoggedInState currentState = loggedInViewModel.getState();
-            this.changePasswordController.execute(
-                    currentState.getUsername(),
-                    currentState.getPassword()
-            );
+            toPasswordSettingsController.switchToChangePasswordView();
         });
 
         logOut = new JButton("Log Out");
@@ -214,5 +212,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setToPasswordSettingsController(ToPasswordSettingsController toPasswordSettingsController) {
+        this.toPasswordSettingsController = toPasswordSettingsController;
     }
 }

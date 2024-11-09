@@ -1,9 +1,9 @@
 package use_case.login;
 
 import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.User;
-import entity.UserFactory;
+import entity.user.CommonUserFactory;
+import entity.user.User;
+import entity.user.UserFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

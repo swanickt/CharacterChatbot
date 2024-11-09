@@ -11,4 +11,9 @@ public interface ChangePasswordInputBoundary {
      */
     void execute(ChangePasswordInputData changePasswordInputData);
 
+    /**
+     * Executes the switch to logged in view use case.
+     */
+    void switchToLoggedInView();
+
 }
