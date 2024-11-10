@@ -3,7 +3,7 @@ package entity.message;
 /**
  * A chat message sent from a User.
  */
-public class CommonUserMessage implements Message {
+public class CommonUserMessage implements MessageInterface {
 
     private final String contents;
     private final String userName;
@@ -14,12 +14,12 @@ public class CommonUserMessage implements Message {
     }
 
     @Override
-    public String getContents() {
+    public String getContent() {
         return contents;
     }
 
     @Override
-    public String getSender() {
+    public String getRole() {
         return userName;
     }
 

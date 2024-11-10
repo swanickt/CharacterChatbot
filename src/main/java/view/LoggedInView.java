@@ -8,13 +8,14 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import app.ChatBotSwingApp;
 import entity.bot.*;
 import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.chat.ChatController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
+import use_case.ChatService.ChatService;
 
 /**
  * The View for when the user is logged into the program.
@@ -83,7 +84,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             else if (optimusPrimeButton.isSelected()) {
                 setting = new OptimusPrimeFactory().create().getPrompt();
             }
-            final ChatBotSwingApp chatApp = new ChatBotSwingApp(setting);
+            final ChatService chatService = new ChatService(setting);
+            final ChatController chatController = new ChatController(chatService);
+            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
             chatApp.setVisible(true);
         });
 
