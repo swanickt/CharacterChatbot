@@ -10,5 +10,5 @@ public interface MessageFactory {
      * @param sender the sender of the message.
      * @return the new message
      */
-    Message create(String contents, String sender);
+    MessageInterface create(String contents, String sender);
 }

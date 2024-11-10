@@ -1,4 +1,7 @@
-package app;
+package view;
+
+import interface_adapter.chat.ChatController;
+import use_case.ChatService.ChatService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,17 +19,16 @@ import java.util.Map;
 
 @SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
 public class ChatBotSwingApp extends JFrame {
-    private static final String API_KEY = System.getenv("OPENAI_KEY");
-    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-
     private JPanel chatPanel;
     private JTextField inputField;
     private JButton sendButton;
     private JButton exitButton;
-    private List<Map<String, String>> conversationHistory;
+    private ChatController chatController;
 
-    @SuppressWarnings("checkstyle:MagicNumber")
-    public ChatBotSwingApp(String system_setting) {
+    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName"})
+    public ChatBotSwingApp(ChatController chatController) {
+        this.chatController = chatController;
+
         // Initialize main frame
         setTitle("Character Chatbot");
         setSize(500, 600);
@@ -57,42 +59,33 @@ public class ChatBotSwingApp extends JFrame {
         topPanel.add(exitButton, BorderLayout.EAST);
         add(topPanel, BorderLayout.NORTH);
 
-        // Initialize conversation history
-        conversationHistory = new ArrayList<>();
-        addMessageToHistory("system", system_setting);
-
         // Send button action listener
         sendButton.addActionListener(new ActionListener() {
-            @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:RightCurly",
-                    "checkstyle:IllegalCatch", "checkstyle:ParameterName", "checkstyle:MultipleStringLiterals",
-                    "checkstyle:Indentation"})
+            @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ParameterName"})
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userInput = inputField.getText().trim();
+                final String userInput = inputField.getText().trim();
                 if (!userInput.isEmpty()) {
                     addChatBubble(userInput, "user");
                     inputField.setText("");
 
-                    addMessageToHistory("user", userInput);
+                    chatController.addUserMessage(userInput);
 
                     // Fetch GPT response
                     try {
-                        final String response = getChatbotResponse();
+                        final String response = chatController.getAssistantResponse();
                         addChatBubble(response, "assistant");
-                        addMessageToHistory("assistant", response);
-                    } catch (Exception ex) {
+                        chatController.addAssistantMessage(response);
+                    }
+                    catch (Exception ex) {
                         addChatBubble("Error: Unable to get response from GPT.", "error");
                     }
                 }
             }
         });
+
         // Exit button action listener
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
+        exitButton.addActionListener(e -> setVisible(false));
     }
 
     // Function to add message bubble to chat panel
@@ -142,77 +135,7 @@ public class ChatBotSwingApp extends JFrame {
         });
     }
 
-    // Add message to conversation history
-    @SuppressWarnings("checkstyle:FinalLocalVariable")
-    private void addMessageToHistory(String role, String content) {
-        Map<String, String> message = new HashMap<>();
-        message.put("role", role);
-        message.put("content", content);
-        conversationHistory.add(message);
-    }
-
-    // Fetch response from GPT API
-    @SuppressWarnings("checkstyle:FinalLocalVariable")
-    private String getChatbotResponse() throws Exception {
-        String jsonInputString = "{\"model\": \"gpt-4\", \"messages\": " + buildMessagesJson() + "}";
-
-        URL url = new URL(API_URL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);
-
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-
-        StringBuilder response = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
-            String responseLine;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-        }
-
-        return parseAssistantMessage(response.toString());
-    }
-
-    // Build JSON formatted conversation history
-    @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:MultipleStringLiterals"})
-    private String buildMessagesJson() {
-        StringBuilder messagesJson = new StringBuilder("[");
-        for (Map<String, String> message : conversationHistory) {
-            messagesJson.append("{")
-                    .append("\"role\": \"").append(message.get("role")).append("\", ")
-                    .append("\"content\": \"").append(message.get("content")).append("\"")
-                    .append("},");
-        }
-        if (!conversationHistory.isEmpty()) {
-            messagesJson.deleteCharAt(messagesJson.length() - 1);
-        }
-        messagesJson.append("]");
-        return messagesJson.toString();
-    }
-
-    // Parse assistant's message from API response
-    @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:ReturnCount", "checkstyle:RightCurly"})
-    private static String parseAssistantMessage(String responseBody) {
-        String contentKey = "\"content\":";
-        int contentIndex = responseBody.indexOf(contentKey);
-        if (contentIndex != -1) {
-            int startIndex = responseBody.indexOf("\"", contentIndex + contentKey.length()) + 1;
-            int endIndex = responseBody.indexOf("\"", startIndex);
-            String content = responseBody.substring(startIndex, endIndex);
-            return content.trim();
-        } else {
-            return "Content not found in the response.";
-        }
-    }
-
-    @SuppressWarnings({"checkstyle:FinalLocalVariable", "checkstyle:UncommentedMain", "checkstyle:LineLength", "checkstyle:MissingJavadocMethod", "checkstyle:UnusedLocalVariable"})
+    @SuppressWarnings({"checkstyle:UncommentedMain", "checkstyle:SuppressWarnings", "checkstyle:MissingJavadocMethod"})
     public static void main(String[] args) {
     }
 }
