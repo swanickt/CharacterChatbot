@@ -3,7 +3,7 @@ package entity.message;
 /**
  * A chat message sent from a Bot.
  */
-public class BotMessage implements Message {
+public class BotMessage implements MessageInterface {
 
     private final String contents;
     private final String botName;
@@ -14,12 +14,12 @@ public class BotMessage implements Message {
     }
 
     @Override
-    public String getContents() {
+    public String getContent() {
         return contents;
     }
 
     @Override
-    public String getSender() {
+    public String getRole() {
         return botName;
     }
 }

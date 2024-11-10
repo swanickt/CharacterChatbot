@@ -1,19 +1,20 @@
 package entity.message;
 
-/**
- * The representation of a message in a chat, either from a user or a character/bot.
- */
-public interface Message {
+@SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
+public class Message implements MessageInterface {
+    private String role;
+    private String content;
 
-    /**
-     * Returns the contents of the message.
-     * @return the contents of the message.
-     */
-    String getContents();
+    public Message(String role, String content) {
+        this.role = role;
+        this.content = content;
+    }
 
-    /**
-     * Returns the name of the message's sender.
-     * @return the name of the message's sender.
-     */
-    String getSender();
+    public String getRole() {
+        return role;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }
