@@ -25,7 +25,7 @@ public class ChatBotSwingApp extends JFrame {
     private JButton exitButton;
     private ChatController chatController;
 
-    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch"})
+    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength"})
     public ChatBotSwingApp(ChatController chatController) {
         this.chatController = chatController;
 
@@ -92,7 +92,7 @@ public class ChatBotSwingApp extends JFrame {
                 // 模拟发送 "hello" 消息但不显示在界面上
                 chatController.addUserMessage("hello, tell me who are you and give me a greeting according to your character");
                 // 获取助手的响应并在界面上显示为气泡形式
-                String initialResponse = chatController.getAssistantResponse();
+                final String initialResponse = chatController.getAssistantResponse();
                 if (initialResponse != null && !initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         addChatBubble(initialResponse, "assistant");
