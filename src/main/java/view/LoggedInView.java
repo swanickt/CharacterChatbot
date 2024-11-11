@@ -104,12 +104,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             logoutController.execute(currentState.getUsername());
         });
         final JPanel defaultCharactorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        final JLabel defaultCharactors = new JLabel("Default Charactors:");
+        final JLabel defaultCharactors = new JLabel("Default Characters:");
         defaultCharactorsPanel.add(defaultCharactors);
         defaultCharactors.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
         final JPanel defaultPanel = new JPanel();
-        final JLabel selectCharactors = new JLabel("(Selected a charactor and click chat)");
+        final JLabel selectCharactors = new JLabel("(Select a character and click chat)");
 
         final JPanel characterPanel = new JPanel(new GridLayout(2, 2));
         // ensure only one button can be selected
