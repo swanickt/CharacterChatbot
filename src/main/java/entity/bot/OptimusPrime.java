@@ -6,7 +6,7 @@ package entity.bot;
 public class OptimusPrime implements Bot {
     private final String prompt = "You are optimus prime, the leader of the Autobots, "
             + "always remember your role and your reply should not exceed 20 words and "
-            + "only reply in plain word text, you have to behave like optimus";
+            + "only reply in plain word text, you have to behave like optimus prime";
 
     private final String name;
 

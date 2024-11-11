@@ -1,5 +1,9 @@
 package view;
 
+import entity.chat.ChatFactory;
+import entity.chat.CommonUserChat;
+import entity.chat.CommonUserChatFactory;
+import entity.message.Message;
 import interface_adapter.chat.ChatController;
 import use_case.ChatService.ChatService;
 
@@ -24,11 +28,14 @@ public class ChatBotSwingApp extends JFrame {
     private JButton sendButton;
     private JButton exitButton;
     private ChatController chatController;
+    private CommonUserChatFactory chatFactory;
 
-    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength"})
+    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance"})
     public ChatBotSwingApp(ChatController chatController) {
         this.chatController = chatController;
 
+        chatFactory = new CommonUserChatFactory();
+        CommonUserChat chat = chatFactory.create();
         // Initialize main frame
         setTitle("Character Chatbot");
         setSize(500, 600);
@@ -61,20 +68,21 @@ public class ChatBotSwingApp extends JFrame {
 
         // Send button action listener
         sendButton.addActionListener(new ActionListener() {
-            @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ParameterName"})
+            @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ParameterName", "checkstyle:EmptyStatement", "checkstyle:MultipleStringLiterals"})
             @Override
             public void actionPerformed(ActionEvent e) {
-                final String userInput = inputField.getText().trim();
+                final String userInput = inputField.getText().replace("\n", "");
                 if (!userInput.isEmpty()) {
                     addChatBubble(userInput, "user");
+                    chat.addUserInput(userInput);
                     inputField.setText("");
-
                     chatController.addUserMessage(userInput);
 
                     // Fetch GPT response
                     try {
-                        final String response = chatController.getAssistantResponse();
+                        final String response = chatController.getAssistantResponse().replace("\n", "");
                         addChatBubble(response, "assistant");
+                        chat.addBotResponse(response);
                         chatController.addAssistantMessage(response);
                     }
                     catch (Exception ex) {
@@ -85,15 +93,23 @@ public class ChatBotSwingApp extends JFrame {
         });
 
         // Exit button action listener
-        exitButton.addActionListener(e -> setVisible(false));
+        exitButton.addActionListener(e -> {
+            setVisible(false);
+            final List<Message> lst = chat.getUserInputs();
+            final List<Message> lst2 = chat.getBotResponses();
+            for (int i = 0; i < lst.size(); i++) {
+                System.out.println(lst.get(i).getContent());
+                System.out.println(lst2.get(i).getContent());
+            }
+        });
         SwingUtilities.invokeLater(() -> {
             setVisible(true);
             try {
                 // 模拟发送 "hello" 消息但不显示在界面上
                 chatController.addUserMessage("hello, tell me who are you and give me a greeting according to your character");
                 // 获取助手的响应并在界面上显示为气泡形式
-                final String initialResponse = chatController.getAssistantResponse();
-                if (initialResponse != null && !initialResponse.isEmpty()) {
+                final String initialResponse = chatController.getAssistantResponse().replace("\n", "");
+                if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         addChatBubble(initialResponse, "assistant");
                         chatController.addAssistantMessage(initialResponse);
