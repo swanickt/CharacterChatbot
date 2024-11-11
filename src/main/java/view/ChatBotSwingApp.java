@@ -61,7 +61,7 @@ public class ChatBotSwingApp extends JFrame {
 
         // Send button action listener
         sendButton.addActionListener(new ActionListener() {
-            @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ParameterName", "checkstyle:EmptyStatement"})
+            @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ParameterName", "checkstyle:EmptyStatement", "checkstyle:MultipleStringLiterals"})
             @Override
             public void actionPerformed(ActionEvent e) {
                 final String userInput = inputField.getText().replace("\n", "");
@@ -73,7 +73,7 @@ public class ChatBotSwingApp extends JFrame {
 
                     // Fetch GPT response
                     try {
-                        final String response = chatController.getAssistantResponse().replace("\n", "");;
+                        final String response = chatController.getAssistantResponse().replace("\n", "");
                         addChatBubble(response, "assistant");
                         chatController.addAssistantMessage(response);
                     }
@@ -92,7 +92,7 @@ public class ChatBotSwingApp extends JFrame {
                 // 模拟发送 "hello" 消息但不显示在界面上
                 chatController.addUserMessage("hello, tell me who are you and give me a greeting according to your character");
                 // 获取助手的响应并在界面上显示为气泡形式
-                final String initialResponse = chatController.getAssistantResponse().trim();
+                final String initialResponse = chatController.getAssistantResponse().replace("\n", "");
                 if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         addChatBubble(initialResponse, "assistant");
