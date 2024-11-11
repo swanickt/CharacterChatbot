@@ -35,38 +35,35 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton logOut;
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
+    private final JButton customBotButton;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         // Title
-        final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        final JLabel title = new JLabel("Character Chatbot for");
-        // Create radiobutton
-        final JRadioButton normalBotButton = new JRadioButton("Normal Bot");
-        final JRadioButton pickachuButton = new JRadioButton("Pickachu");
-        final JRadioButton masterYodaButton = new JRadioButton("Master Yoda");
-        final JRadioButton optimusPrimeButton = new JRadioButton("Optimus Prime");
-        username = new JLabel();
+        final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        final JLabel title = new JLabel("Chatbot for");
 
+        username = new JLabel();
         titlePanel.add(title);
         titlePanel.add(username);
         // Title label
         // final JLabel title = new JLabel("Character Chatbot for");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Username information
-        // final JLabel usernameInfo = new JLabel("Currently logged in: ");
-        // username = new JLabel();
-
         // Password input field and change password button
         final JPanel passwordInfo = new JPanel();
-        //        passwordInfo.setLayout(new BoxLayout(passwordInfo, BoxLayout.X_AXIS));
-        //        passwordInfo.add(new JLabel("Password: "));
         passwordInfo.add(passwordInputField);
 
+        // Create radiobutton
+        final JRadioButton normalBotButton = new JRadioButton("Normal Bot");
+        final JRadioButton pickachuButton = new JRadioButton("Pickachu");
+        final JRadioButton masterYodaButton = new JRadioButton("Master Yoda");
+        final JRadioButton optimusPrimeButton = new JRadioButton("Optimus Prime");
+
         // Initialize buttons
+
         chatButton = new JButton("Chat");
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
@@ -106,79 +103,69 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState currentState = loggedInViewModel.getState();
             logoutController.execute(currentState.getUsername());
         });
+        final JPanel defaultCharactorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JLabel defaultCharactors = new JLabel("Default Characters:");
+        defaultCharactorsPanel.add(defaultCharactors);
+        defaultCharactors.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
-        final JLabel select = new JLabel("  (Select a character and click chat)");
+        final JPanel defaultPanel = new JPanel();
+        final JLabel selectCharactors = new JLabel("(Select a character and click chat)");
 
-        normalBotButton.setSelected(true);
-
-        final JPanel characterPanel = new JPanel();
+        final JPanel characterPanel = new JPanel(new GridLayout(2, 2));
         // ensure only one button can be selected
         final ButtonGroup group = new ButtonGroup();
         group.add(normalBotButton);
         group.add(pickachuButton);
         group.add(masterYodaButton);
         group.add(optimusPrimeButton);
+        normalBotButton.setSelected(true);
+
+        normalBotButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        pickachuButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        masterYodaButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        optimusPrimeButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
         characterPanel.add(normalBotButton);
         characterPanel.add(pickachuButton);
         characterPanel.add(masterYodaButton);
         characterPanel.add(optimusPrimeButton);
 
-        characterPanel.add(select);
-        characterPanel.setLayout(new BoxLayout(characterPanel, BoxLayout.Y_AXIS));
+        // defaultPanel.add(defaultCharactors);
+        defaultPanel.add(characterPanel);
+        defaultPanel.add(selectCharactors);
+        // defaultPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        defaultPanel.setLayout(new BoxLayout(defaultPanel, BoxLayout.Y_AXIS));
+        // defaultCharactors.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        selectCharactors.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // chatPanel
+        final JPanel chatControlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        chatControlPanel.add(chatButton);
+        chatControlPanel.add(chatHistoryButton);
+
+        // custompanel
+        customBotButton = new JButton("Custom Bot");
+        final JPanel customSettingsPanel = new JPanel();
+        customSettingsPanel.add(customBotButton);
+        customSettingsPanel.add(changePassword);
+        customBotButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
+        customSettingsPanel.setLayout(new BoxLayout(customSettingsPanel, BoxLayout.Y_AXIS));
+
+        // log out panel
+        final JPanel logoutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        logoutPanel.add(logOut);
 
         // Layout setup
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // this.add(rightVerticalPanel, BorderLayout.EAST);
+        this.add(titlePanel);
+        this.add(defaultCharactorsPanel);
+        this.add(defaultPanel);
+        this.add(chatControlPanel);
+        this.add(customSettingsPanel);
+        this.add(logoutPanel);
 
-        // chatButton
-        // final JLabel chatLabel = new JLabel("Normal Bot:");
-        // final JPanel chatButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        // chatButtonPanel.add(chatLabel);
-        // chatButtonPanel.add(characterPanel);
-        // chatButtonPanel.add(chatButton);
-
-        // chathistoryButton
-        //        final JPanel chathistoryButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        //        chathistoryButtonPanel.add(chatHistoryButton);
-
-        // logoutChangePasswordButton
-        //        final JPanel lcButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        //        lcButtonPanel.add(changePassword);
-        //        lcButtonPanel.add(logOut);
-
-        // right vertical panel
-        final JPanel rightVerticalPanel = new JPanel();
-        chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        chatHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
-        logOut.setAlignmentX(Component.CENTER_ALIGNMENT);
-        rightVerticalPanel.add(chatButton);
-        rightVerticalPanel.add(chatHistoryButton);
-        rightVerticalPanel.add(changePassword);
-        rightVerticalPanel.add(logOut);
-        rightVerticalPanel.setLayout(new BoxLayout(rightVerticalPanel, BoxLayout.Y_AXIS));
-        // right part
-        // final JPanel threeButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        // threeButtonPanel.add(rightVerticalPanel);
-
-        // Button panel
-        // final JPanel buttons = new JPanel();
-        // buttons.add(chatButtonPanel);
-        // buttons.add(threeButtonPanel);
-        // buttons.add(chathistoryButtonPanel);
-        // buttons.add(lcButtonPanel);
-        // buttons.add(characterPanel);
-        // buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-
-        // Add components to the main panel
-        // this.add(title);
-        // this.add(username);
-        // this.add(titlePanel);
-        // Ethis.add(passwordInfo);
-        // this.add(passwordErrorField);
-        this.add(rightVerticalPanel, BorderLayout.EAST);
-        this.add(titlePanel, BorderLayout.NORTH);
-        this.add(characterPanel, BorderLayout.WEST);
 
         // Document listener for password field
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
