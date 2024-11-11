@@ -82,7 +82,14 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     }
 
     public void changePassword(User user) {
-        userCollection.updateOne(new Document("userName", user.getName()), new Document("$set", new Document("userPassword", user)));
+        // Create a query to find the user by username
+        Document query = new Document(USERNAME, user.getName());
+
+        // Create an update operation to set the new password
+        Document update = new Document("$set", new Document(PASSWORD, user.getPassword()));
+
+        // Update the user's password in the collection
+        userCollection.updateOne(query, update);
     }
 
     public Map<String, String> loadHistory(User user) {
