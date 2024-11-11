@@ -4,6 +4,7 @@ import java.util.List;
 
 import entity.message.BotMessage;
 import entity.message.CommonUserMessage;
+import entity.message.Message;
 
 /**
  * The representation of a chat in Character Chatbot.
@@ -14,13 +15,13 @@ public interface Chat {
      * Returns the User's messages in the order they were sent.
      * @return the User's messages.
      */
-    List<CommonUserMessage> getUserInputs();
+    List<Message> getUserInputs();
 
     /**
      * Returns the Bot's responses in the order they were sent.
      * @return the Bot's messages.
      */
-    List<BotMessage> getBotResponses();
+    List<Message> getBotResponses();
 
     /**
      * @param content the contents of the new message.

@@ -11,9 +11,7 @@ public interface ChatFactory {
 
     /**
      * Creates a new Chat.
-     * @param user the user involved in the chat.
-     * @param bot the bot involved in the chat.
      * @return the new chat.
      */
-    Chat create(User user, Bot bot);
+    Chat create();
 }

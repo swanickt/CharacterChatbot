@@ -77,6 +77,7 @@ public class ChatService {
     private static String parseAssistantMessage(String responseBody) {
         final String contentKey = "\"content\":";
         final int contentIndex = responseBody.indexOf(contentKey);
+        System.out.println(responseBody);
         if (contentIndex != -1) {
             final int startIndex = responseBody.indexOf("\"", contentIndex + contentKey.length()) + 1;
             final int endIndex = responseBody.indexOf("\"", startIndex);
