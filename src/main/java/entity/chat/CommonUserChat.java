@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.bot.Bot;
-import entity.message.BotMessage;
-import entity.message.BotMessageFactory;
-import entity.message.CommonUserMessage;
-import entity.message.CommonUserMessageFactory;
+import entity.message.*;
 import entity.user.User;
 
 /**
@@ -15,40 +12,36 @@ import entity.user.User;
  * of user input messages and bot responses.
  */
 public class CommonUserChat implements Chat {
-    private final User user;
-    private final Bot bot;
-    private List<CommonUserMessage> userInputs;
-    private List<BotMessage> botResponses;
+    private List<Message> userInputs;
+    private List<Message> botResponses;
     private final BotMessageFactory botMessageFactory = new BotMessageFactory();
     private final CommonUserMessageFactory userMessageFactory = new CommonUserMessageFactory();
 
-    public CommonUserChat(User user, Bot bot) {
-        this.user = user;
-        this.bot = bot;
+    public CommonUserChat() {
         this.userInputs = new ArrayList<>();
         this.botResponses = new ArrayList<>();
     }
 
     @Override
-    public List<CommonUserMessage> getUserInputs() {
+    public List<Message> getUserInputs() {
         return userInputs;
     }
 
     @Override
-    public List<BotMessage> getBotResponses() {
+    public List<Message> getBotResponses() {
         return botResponses;
     }
 
     @Override
     public void addUserInput(String content) {
-        final CommonUserMessage message = userMessageFactory.create(content, user.getName());
+        final Message message = new Message("user", content);
         userInputs.add(message);
 
     }
 
     @Override
     public void addBotResponse(String content) {
-        final BotMessage message = botMessageFactory.create(content, bot.getName());
+        final Message message = new Message("assistant", content);
         botResponses.add(message);
     }
 

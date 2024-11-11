@@ -9,7 +9,7 @@ import entity.user.User;
 public class CommonUserChatFactory implements ChatFactory {
 
     @Override
-    public CommonUserChat create(User user, Bot bot) {
-        return new CommonUserChat(user, bot);
+    public CommonUserChat create() {
+        return new CommonUserChat();
     }
 }
