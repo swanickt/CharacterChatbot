@@ -11,6 +11,7 @@ import javax.swing.event.DocumentListener;
 import entity.bot.*;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
+import interface_adapter.chat.promptController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
@@ -71,19 +72,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            String setting = "";
-            if (normalBotButton.isSelected()) {
-                setting = new NormalAIFactory().create().getPrompt();
-            }
-            else if (pickachuButton.isSelected()) {
-                setting = new PikachuFactory().create().getPrompt();
-            }
-            else if (masterYodaButton.isSelected()) {
-                setting = new MasterYodaFactory().create().getPrompt();
-            }
-            else if (optimusPrimeButton.isSelected()) {
-                setting = new OptimusPrimeFactory().create().getPrompt();
-            }
+            final promptController prompcontroller = new promptController();
+            final String setting = prompcontroller.getPrompt(normalBotButton, pickachuButton, masterYodaButton, optimusPrimeButton);
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
