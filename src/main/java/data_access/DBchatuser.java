@@ -44,6 +44,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         chatCollection = database.getCollection("chatHistory");
         userCollection = database.getCollection("userAccounts");
     }
+
     // TODO: need to modify due to different condition
     public void saveHistory(String user, String chatbotResponse) {
         Document document = new Document("user:", user)
