@@ -137,11 +137,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         customBotButton = new JButton("Custom Bot");
         final JPanel customSettingsPanel = new JPanel();
         customSettingsPanel.add(customBotButton);
-        customSettingsPanel.add(changePassword);
+        // customSettingsPanel.add(changePassword);
         customBotButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
-        customSettingsPanel.setLayout(new BoxLayout(customSettingsPanel, BoxLayout.Y_AXIS));
 
+        // customSettingsPanel.setLayout(new BoxLayout(customSettingsPanel, BoxLayout.Y_AXIS));
+
+        final JPanel changePasswordPanel = new JPanel();
+        changePasswordPanel.add(changePassword);
+        changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
         // log out panel
         final JPanel logoutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         logoutPanel.add(logOut);
@@ -154,8 +157,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.add(defaultPanel);
         this.add(chatControlPanel);
         this.add(customSettingsPanel);
+        this.add(changePasswordPanel);
         this.add(logoutPanel);
-
 
         // Document listener for password field
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
