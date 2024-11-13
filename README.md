@@ -1,4 +1,4 @@
-## Team Members:
+S## Team Members:
 
 **Note for TA** We are mainly using discord to communicate what features we are currently working on
 instead of solely using github issues. We may periodically create issues but prefer this method as it
