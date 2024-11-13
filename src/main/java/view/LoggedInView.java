@@ -11,6 +11,7 @@ import javax.swing.event.DocumentListener;
 import entity.bot.*;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
+import interface_adapter.chat.promptController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
@@ -70,19 +71,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            String setting = "";
-            if (normalBotButton.isSelected()) {
-                setting = new NormalAIFactory().create().getPrompt();
-            }
-            else if (pickachuButton.isSelected()) {
-                setting = new PikachuFactory().create().getPrompt();
-            }
-            else if (masterYodaButton.isSelected()) {
-                setting = new MasterYodaFactory().create().getPrompt();
-            }
-            else if (optimusPrimeButton.isSelected()) {
-                setting = new OptimusPrimeFactory().create().getPrompt();
-            }
+            final promptController prompcontroller = new promptController();
+            final String setting = prompcontroller.getPrompt(normalBotButton, pickachuButton, masterYodaButton, optimusPrimeButton);
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
@@ -106,12 +96,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             logoutController.execute(currentState.getUsername());
         });
         final JPanel defaultCharactorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        final JLabel defaultCharactors = new JLabel("Default Charactors:");
+        final JLabel defaultCharactors = new JLabel("Default Characters:");
         defaultCharactorsPanel.add(defaultCharactors);
         defaultCharactors.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
         final JPanel defaultPanel = new JPanel();
-        final JLabel selectCharactors = new JLabel("(Selected a charactor and click chat)");
+        final JLabel selectCharactors = new JLabel("(Select a character and click chat)");
 
         final JPanel characterPanel = new JPanel(new GridLayout(2, 2));
         // ensure only one button can be selected
@@ -152,11 +142,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         });
         final JPanel customSettingsPanel = new JPanel();
         customSettingsPanel.add(customBotButton);
-        customSettingsPanel.add(changePassword);
+        // customSettingsPanel.add(changePassword);
         customBotButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
-        customSettingsPanel.setLayout(new BoxLayout(customSettingsPanel, BoxLayout.Y_AXIS));
 
+        // customSettingsPanel.setLayout(new BoxLayout(customSettingsPanel, BoxLayout.Y_AXIS));
+
+        final JPanel changePasswordPanel = new JPanel();
+        changePasswordPanel.add(changePassword);
+        changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
         // log out panel
         final JPanel logoutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         logoutPanel.add(logOut);
@@ -169,8 +162,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.add(defaultPanel);
         this.add(chatControlPanel);
         this.add(customSettingsPanel);
+        this.add(changePasswordPanel);
         this.add(logoutPanel);
-
 
         // Document listener for password field
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
