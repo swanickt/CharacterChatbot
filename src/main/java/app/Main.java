@@ -18,12 +18,14 @@ public class Main {
                                             .addLoginView()
                                             .addSignupView()
                                             .addLoggedInView()
+                                            .addCustomBotView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addHomeViewUseCase()
                                             .addLoggedInUseCase()
+                                            .addCustomBotUseCase()
                                             .build();
 
         application.pack();

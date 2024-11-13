@@ -15,6 +15,7 @@ import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.logged_in.ToCustomViewController;
 import use_case.ChatService.ChatService;
 
 /**
@@ -28,6 +29,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
     private ToPasswordSettingsController toPasswordSettingsController;
+    private ToCustomViewController toCustomViewController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -45,7 +47,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JLabel title = new JLabel("Chatbot for");
 
-        username = new JLabel();
+        username = new JLabel() ;
         titlePanel.add(title);
         titlePanel.add(username);
         // Title label
@@ -145,6 +147,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         // custompanel
         customBotButton = new JButton("Custom Bot");
+        customBotButton.addActionListener(evt -> {
+            toCustomViewController.switchToCustomBotView();
+        });
         final JPanel customSettingsPanel = new JPanel();
         customSettingsPanel.add(customBotButton);
         customSettingsPanel.add(changePassword);
@@ -218,5 +223,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setToPasswordSettingsController(ToPasswordSettingsController toPasswordSettingsController) {
         this.toPasswordSettingsController = toPasswordSettingsController;
+    }
+
+    public void setToCustomViewController(ToCustomViewController toCustomViewController) {
+        this.toCustomViewController = toCustomViewController;
     }
 }

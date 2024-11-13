@@ -14,8 +14,13 @@ import interface_adapter.change_password.BackToLoggedInController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.ChangePasswordViewModel;
+
+import interface_adapter.customBot.CustomBotPresenter;
+import interface_adapter.customBot.CustomBotViewModel;
+import interface_adapter.customBot.GoBackToLogginViewController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.logged_in.ToCustomViewController;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.home_view.GoToLoginController;
 import interface_adapter.home_view.GoToSignUpController;
@@ -34,6 +39,9 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.custom_bot.CustomViewInputBoundary;
+import use_case.custom_bot.CustomViewInteractor;
+import use_case.custom_bot.CustomViewOutputBoundary;
 import use_case.home_view.HomeViewInputBoundary;
 import use_case.home_view.HomeViewInteractor;
 import use_case.home_view.HomeViewOutputBoundary;
@@ -49,12 +57,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.ChangePasswordView;
-import view.HomeView;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -88,6 +91,8 @@ public class AppBuilder {
     private HomeViewModel homeViewModel;
     private ChangePasswordView changePasswordView;
     private ChangePasswordViewModel changePasswordViewModel;
+    private CustomBotViewModel customBotViewModel;
+    private CustomBotView customBotView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -149,6 +154,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addCustomBotView() {
+        customBotViewModel = new CustomBotViewModel();
+        customBotView = new CustomBotView(customBotViewModel);
+        cardPanel.add(customBotView, customBotView.getViewName());
+        return this;
+    }
+
     /**
      * Adds the Signup Use Case to the application.
      * @return this builder
@@ -164,6 +176,7 @@ public class AppBuilder {
 
         final SignupCancelController signupCancelInteractor = new SignupCancelController(userSignupInteractor);
         signupView.setSignupCancelController(signupCancelInteractor);
+
         return this;
     }
 
@@ -173,11 +186,15 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(changePasswordViewModel,
-                viewManagerModel, loggedInViewModel);
+                viewManagerModel, loggedInViewModel, customBotViewModel);
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
 
-        final ToPasswordSettingsController controller = new ToPasswordSettingsController(loggedInInteractor);
-        loggedInView.setToPasswordSettingsController(controller);
+        final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
+        loggedInView.setToPasswordSettingsController(controller1);
+
+        final ToCustomViewController controller2 = new ToCustomViewController(loggedInInteractor);
+        loggedInView.setToCustomViewController(controller2);
+
         return this;
     }
 
@@ -251,6 +268,18 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    public AppBuilder addCustomBotUseCase() {
+        final CustomViewOutputBoundary customViewOutputBoundary = new CustomBotPresenter(loggedInViewModel,
+                viewManagerModel);
+
+        final CustomViewInputBoundary customViewInteractor = new CustomViewInteractor(customViewOutputBoundary);
+
+        final GoBackToLogginViewController controller = new GoBackToLogginViewController(customViewInteractor);
+        customBotView.setToLoggedInView(controller);
+
         return this;
     }
 

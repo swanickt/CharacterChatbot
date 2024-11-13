@@ -8,4 +8,7 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
     }
 
     public void switchToChangePasswordView() { loggedInPresenter.switchToChangePasswordView(); }
+
+    public void switchToCustomBotView() { loggedInPresenter.switchToCustomBotView(); }
+
 }
