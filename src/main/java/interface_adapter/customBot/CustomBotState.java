@@ -2,41 +2,22 @@ package interface_adapter.customBot;
 
 public class CustomBotState {
     private final String state = "CustomBotState";
-    private String password = "";
-    private String repeatPassword = "";
-    private String repeatPasswordError;
-    private String username = "";
+    private String name = "";
+    private String occupation = "";
 
-    public String getPassword() {
-        return password;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
     }
 
-    public String getRepeatPassword() {
-        return repeatPassword;
+    public String getOccupation() {
+        return occupation;
     }
-
-    public String getRepeatPasswordError() {
-        return repeatPasswordError;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
-    }
-
-    public void setRepeatPasswordError(String repeatPasswordError) {
-        this.repeatPasswordError = repeatPasswordError;
-    }
-
 }
