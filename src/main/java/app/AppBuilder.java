@@ -287,7 +287,7 @@ public class AppBuilder {
      */
     public AppBuilder addCustomBotUseCase() {
         final CustomViewOutputBoundary customViewOutputBoundary = new CustomBotPresenter(loggedInViewModel,
-                viewManagerModel);
+                viewManagerModel, customBotViewModel);
 
         final CustomViewInputBoundary customViewInteractor = new CustomViewInteractor(customViewOutputBoundary);
 
