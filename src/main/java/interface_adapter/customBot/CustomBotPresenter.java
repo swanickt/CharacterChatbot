@@ -1,16 +1,13 @@
 package interface_adapter.customBot;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.ChangePasswordState;
-import interface_adapter.change_password.ChangePasswordViewModel;
-import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import use_case.change_password.ChangePasswordOutputBoundary;
-import use_case.change_password.ChangePasswordOutputData;
 import use_case.custom_bot.CustomViewOutputBoundary;
 import view.ChatBotSwingApp;
 
-
+/**
+ * The Presenter for the Custom Bot Use Case.
+ */
 public class CustomBotPresenter implements CustomViewOutputBoundary {
 
     private final LoggedInViewModel loggedInViewModel;
