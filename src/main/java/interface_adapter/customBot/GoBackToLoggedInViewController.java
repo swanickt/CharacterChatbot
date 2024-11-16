@@ -1,17 +1,16 @@
 package interface_adapter.customBot;
 
 import use_case.custom_bot.CustomViewInputBoundary;
-import use_case.custom_bot.CustomViewInteractor;
 
-public class GoBackToLogginViewController {
+public class GoBackToLoggedInViewController {
     private final CustomViewInputBoundary customViewInteractor;
 
-    public GoBackToLogginViewController(CustomViewInputBoundary customViewInteractor) {
+    public GoBackToLoggedInViewController(CustomViewInputBoundary customViewInteractor) {
         this.customViewInteractor = customViewInteractor;
     }
 
     /**
-     * Executes the "switch to HomeView" Use Case.
+     * Executes the "switch to LoggedIn View" Use Case.
      */
     public void switchToLoggedInView() {
         customViewInteractor.switchToLoggedinView();

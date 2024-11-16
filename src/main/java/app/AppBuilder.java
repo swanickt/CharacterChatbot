@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.DBchatuser;
-import data_access.InMemoryUserDataAccessObject;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -18,7 +17,7 @@ import interface_adapter.change_password.ChangePasswordViewModel;
 
 import interface_adapter.customBot.CustomBotPresenter;
 import interface_adapter.customBot.CustomBotViewModel;
-import interface_adapter.customBot.GoBackToLogginViewController;
+import interface_adapter.customBot.GoBackToLoggedInViewController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToCustomViewController;
@@ -292,7 +291,7 @@ public class AppBuilder {
 
         final CustomViewInputBoundary customViewInteractor = new CustomViewInteractor(customViewOutputBoundary);
 
-        final GoBackToLogginViewController controller = new GoBackToLogginViewController(customViewInteractor);
+        final GoBackToLoggedInViewController controller = new GoBackToLoggedInViewController(customViewInteractor);
         customBotView.setToLoggedInView(controller);
 
         return this;

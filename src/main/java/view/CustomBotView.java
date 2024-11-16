@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import interface_adapter.chat.ChatController;
 import interface_adapter.customBot.CustomBotViewModel;
-import interface_adapter.customBot.GoBackToLogginViewController;
+import interface_adapter.customBot.GoBackToLoggedInViewController;
 import use_case.ChatService.ChatService;
 
 
@@ -17,7 +17,7 @@ public class CustomBotView extends JPanel {
     // private final JLabel passwordErrorField = new JLabel();
     private final JButton chatButton;
     private final JButton backButton;
-    private GoBackToLogginViewController goBackToLogginViewController;
+    private GoBackToLoggedInViewController goBackToLoggedInViewController;
     private final JTextField nameInputField = new JTextField(15);
     private final JTextField occupationInputField = new JTextField(15);
 
@@ -39,7 +39,7 @@ public class CustomBotView extends JPanel {
         backButton = new JButton("Back");
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         backButton.addActionListener(evt -> {
-            goBackToLogginViewController.switchToLoggedInView();
+            goBackToLoggedInViewController.switchToLoggedInView();
         });
 
         final JLabel title = new JLabel("Custom Bot Creation");
@@ -69,7 +69,7 @@ public class CustomBotView extends JPanel {
         return viewName;
     }
 
-    public void setToLoggedInView(GoBackToLogginViewController goBackToLogginViewController) {
-        this.goBackToLogginViewController = goBackToLogginViewController;
+    public void setToLoggedInView(GoBackToLoggedInViewController goBackToLoggedInViewController) {
+        this.goBackToLoggedInViewController = goBackToLoggedInViewController;
     }
 }
