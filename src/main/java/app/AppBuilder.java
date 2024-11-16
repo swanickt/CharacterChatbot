@@ -58,7 +58,13 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.ChangePasswordView;
+import view.CustomBotView;
+import view.HomeView;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -155,6 +161,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the CustomBot View to the application.
+     * @return this builder
+     */
     public AppBuilder addCustomBotView() {
         customBotViewModel = new CustomBotViewModel();
         customBotView = new CustomBotView(customBotViewModel);
@@ -272,6 +282,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Custom Bot Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addCustomBotUseCase() {
         final CustomViewOutputBoundary customViewOutputBoundary = new CustomBotPresenter(loggedInViewModel,
                 viewManagerModel);
