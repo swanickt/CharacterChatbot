@@ -29,7 +29,7 @@ public class CustomBotView extends JPanel {
 
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            final String setting = "";
+            final String setting = "Cap your responses at 20 words.";
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
