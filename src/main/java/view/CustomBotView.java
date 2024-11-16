@@ -1,16 +1,22 @@
 package view;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.chat.ChatController;
+import interface_adapter.customBot.CustomBotState;
 import interface_adapter.customBot.CustomBotViewModel;
 import interface_adapter.customBot.GoBackToLoggedInViewController;
 import use_case.ChatService.ChatService;
 
 
-public class CustomBotView extends JPanel {
+public class CustomBotView extends JPanel implements PropertyChangeListener {
     private final String viewName = "customBot";
     private final CustomBotViewModel customBotViewModel;
     // private final LoggedInViewModel loggedInViewModel;
@@ -23,7 +29,7 @@ public class CustomBotView extends JPanel {
 
     public CustomBotView(CustomBotViewModel customBotViewModel) {
         this.customBotViewModel = customBotViewModel;
-        // this.loggedInViewModel.addPropertyChangeListener(this);
+        this.customBotViewModel.addPropertyChangeListener(this);
         chatButton = new JButton("Chat");
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -60,9 +66,68 @@ public class CustomBotView extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        nameInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final CustomBotState currentState = customBotViewModel.getState();
+                currentState.setName(nameInputField.getText());
+                customBotViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
+        occupationInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final CustomBotState currentState = customBotViewModel.getState();
+                currentState.setOccupation(occupationInputField.getText());
+                customBotViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
         this.add(title);
         this.add(inputPanel);
         this.add(buttons);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final CustomBotState state = (CustomBotState) evt.getNewValue();
+        setFields(state);
+    }
+
+    private void setFields(CustomBotState state) {
+        nameInputField.setText(state.getName());
+        occupationInputField.setText(state.getOccupation());
     }
 
     public String getViewName() {

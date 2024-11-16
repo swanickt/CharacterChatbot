@@ -61,7 +61,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         // Create radiobutton
         final JRadioButton normalBotButton = new JRadioButton("Normal Bot");
-        final JRadioButton pickachuButton = new JRadioButton("Pickachu");
+        final JRadioButton pikachuButton = new JRadioButton("Pikachu");
         final JRadioButton masterYodaButton = new JRadioButton("Master Yoda");
         final JRadioButton optimusPrimeButton = new JRadioButton("Optimus Prime");
 
@@ -72,7 +72,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
             final promptController prompcontroller = new promptController();
-            final String setting = prompcontroller.getPrompt(normalBotButton, pickachuButton, masterYodaButton, optimusPrimeButton);
+            final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
@@ -107,18 +107,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         // ensure only one button can be selected
         final ButtonGroup group = new ButtonGroup();
         group.add(normalBotButton);
-        group.add(pickachuButton);
+        group.add(pikachuButton);
         group.add(masterYodaButton);
         group.add(optimusPrimeButton);
         normalBotButton.setSelected(true);
 
         normalBotButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
-        pickachuButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        pikachuButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
         masterYodaButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
         optimusPrimeButton.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
         characterPanel.add(normalBotButton);
-        characterPanel.add(pickachuButton);
+        characterPanel.add(pikachuButton);
         characterPanel.add(masterYodaButton);
         characterPanel.add(optimusPrimeButton);
 
