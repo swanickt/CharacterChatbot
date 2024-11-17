@@ -1,10 +1,12 @@
 package view;
 
+import data_access.DBchatuser;
 import entity.chat.ChatFactory;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
 import interface_adapter.chat.ChatController;
+import interface_adapter.logged_in.LoggedInState;
 import use_case.ChatService.ChatService;
 
 import javax.swing.*;
@@ -29,13 +31,15 @@ public class ChatBotSwingApp extends JFrame {
     private JButton exitButton;
     private ChatController chatController;
     private CommonUserChatFactory chatFactory;
+    private String username;
+    private CommonUserChat chat;
 
-    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance"})
-    public ChatBotSwingApp(ChatController chatController) {
+    @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
+    public ChatBotSwingApp(ChatController chatController, String username) {
         this.chatController = chatController;
-
+        this.username = username;
         chatFactory = new CommonUserChatFactory();
-        CommonUserChat chat = chatFactory.create();
+        chat = chatFactory.create();
         // Initialize main frame
         setTitle("Character Chatbot");
         setSize(500, 600);
@@ -97,10 +101,18 @@ public class ChatBotSwingApp extends JFrame {
             setVisible(false);
             final List<Message> lst = chat.getUserInputs();
             final List<Message> lst2 = chat.getBotResponses();
+            final DBchatuser database = new DBchatuser();
+
             for (int i = 0; i < lst.size(); i++) {
+                System.out.println(username);
+                if (!"".equals(username)) {
+                    database.saveHistory(username, "role", lst.get(i).getContent());
+                    database.saveHistory(username, "assistant", lst2.get(i).getContent());
+                }
                 System.out.println(lst.get(i).getContent());
                 System.out.println(lst2.get(i).getContent());
             }
+            System.out.println(database.get(username));
         });
         SwingUtilities.invokeLater(() -> {
             setVisible(true);
@@ -172,6 +184,10 @@ public class ChatBotSwingApp extends JFrame {
             JScrollBar verticalBar = ((JScrollPane) chatPanel.getParent().getParent()).getVerticalScrollBar();
             verticalBar.setValue(verticalBar.getMaximum());
         });
+    }
+    @SuppressWarnings({"checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
+    public CommonUserChat getchat() {
+        return chat;
     }
 
     @SuppressWarnings({"checkstyle:UncommentedMain", "checkstyle:SuppressWarnings", "checkstyle:MissingJavadocMethod"})

@@ -9,8 +9,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import entity.bot.*;
+import entity.chat.CommonUserChat;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
+import interface_adapter.chat.ChatHistoryController;
 import interface_adapter.chat.promptController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -18,6 +20,7 @@ import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
 import use_case.ChatService.ChatService;
+import use_case.ChatService.chatHistoryService;
 
 /**
  * The View for when the user is logged into the program.
@@ -39,6 +42,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
     private final JButton customBotButton;
+    private CommonUserChat testChat;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -47,8 +51,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         // Title
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JLabel title = new JLabel("Chatbot for");
+        // testChat
+        testChat = new CommonUserChat();
+        testChat.addBotResponse("Nice to meet you");
+        testChat.addBotResponse("Nice to meet you2");
+        testChat.addUserInput("hello");
+        testChat.addUserInput("hello2");
 
-        username = new JLabel() ;
+        username = new JLabel();
         titlePanel.add(title);
         titlePanel.add(username);
         // Title label
@@ -75,7 +85,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
-            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
+            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, username.getText());
             chatApp.setVisible(true);
         });
 
@@ -83,6 +93,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatHistoryButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Opening Chat History...");
+            final chatHistoryService chatHistoryService = new chatHistoryService(username.getText(), testChat);
+            final ChatHistoryController controller = new ChatHistoryController(chatHistoryService);
+            final ChatHistoryView chatHistoryView = new ChatHistoryView(controller, username.getText());
+            chatHistoryView.setVisible(true);
         });
 
         changePassword = new JButton("Change Password");
