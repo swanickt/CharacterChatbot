@@ -6,11 +6,25 @@ import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
 import interface_adapter.chat.ChatController;
+import interface_adapter.chat.ChatViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import use_case.ChatService.ChatService;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -23,7 +37,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
+/**
+ * The chatting view/"app" for all chats, regardless of the character.
+ */
 public class ChatBotSwingApp extends JFrame {
     private JPanel chatPanel;
     private JTextField inputField;
@@ -41,7 +57,7 @@ public class ChatBotSwingApp extends JFrame {
         chatFactory = new CommonUserChatFactory();
         chat = chatFactory.create();
         // Initialize main frame
-        setTitle("Character Chatbot");
+        setTitle(ChatViewModel.TITLE_LABEL);
         setSize(500, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -58,8 +74,8 @@ public class ChatBotSwingApp extends JFrame {
 
         // Input panel
         inputField = new JTextField();
-        sendButton = new JButton("Send");
-        exitButton = new JButton("Exit");
+        sendButton = new JButton(ChatViewModel.SEND_BUTTON_LABEL);
+        exitButton = new JButton(ChatViewModel.EXIT_BUTTON_LABEL);
         final JPanel inputPanel = new JPanel(new BorderLayout());
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
@@ -118,7 +134,7 @@ public class ChatBotSwingApp extends JFrame {
             setVisible(true);
             try {
                 // 模拟发送 "hello" 消息但不显示在界面上
-                chatController.addUserMessage("hello, tell me who are you and give me a greeting according to your character");
+                chatController.addUserMessage(ChatViewModel.FIRST_BACKEND_PROMPT);
                 // 获取助手的响应并在界面上显示为气泡形式
                 final String initialResponse = chatController.getAssistantResponse().replace("\n", "");
                 if (!initialResponse.isEmpty()) {
@@ -153,7 +169,7 @@ public class ChatBotSwingApp extends JFrame {
         messageLabel.setWrapStyleWord(true);
         messageLabel.setOpaque(true);
         messageLabel.setEditable(false);
-        messageLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        messageLabel.setFont(new Font(ChatViewModel.TEXT_FONT, Font.PLAIN, 14));
 
         messageLabel.setBackground(new Color(211, 211, 211));
         messageLabel.setForeground(Color.BLACK);

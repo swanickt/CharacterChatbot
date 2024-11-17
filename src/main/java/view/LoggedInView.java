@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 
 import entity.bot.*;
 import entity.chat.CommonUserChat;
+import interface_adapter.Optimus_Prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
 import interface_adapter.chat.ChatHistoryController;
@@ -34,6 +35,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private LogoutController logoutController;
     private ToPasswordSettingsController toPasswordSettingsController;
     private ToCustomViewController toCustomViewController;
+    private OptimusPrimeController optimusPrimeController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -81,12 +83,17 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            final promptController prompcontroller = new promptController();
-            final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
-            final ChatService chatService = new ChatService(setting);
-            final ChatController chatController = new ChatController(chatService);
-            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, username.getText());
-            chatApp.setVisible(true);
+            if (optimusPrimeButton.isSelected()) {
+                optimusPrimeController.execute(username.getText());
+            }
+            else {
+                final promptController prompcontroller = new promptController();
+                final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
+                final ChatService chatService = new ChatService(setting);
+                final ChatController chatController = new ChatController(chatService);
+                final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, username.getText());
+                chatApp.setVisible(true);
+            }
         });
 
         chatHistoryButton = new JButton("Chat History");
@@ -234,5 +241,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setToCustomViewController(ToCustomViewController toCustomViewController) {
         this.toCustomViewController = toCustomViewController;
+    }
+
+    public void setOptimusPrimeController(OptimusPrimeController optimusPrimeController) {
+        this.optimusPrimeController = optimusPrimeController;
     }
 }
