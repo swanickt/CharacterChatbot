@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 
 import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.chat.ChatController;
+import interface_adapter.chat.promptController;
 import interface_adapter.customBot.CustomBotState;
 import interface_adapter.customBot.CustomBotViewModel;
 import interface_adapter.customBot.GoBackToLoggedInViewController;
@@ -35,7 +36,8 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
 
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            final String setting = "Cap your responses at 20 words.";
+            final promptController prompcontroller = new promptController();
+            final String setting = prompcontroller.creatPrompt(nameInputField.getText(), occupationInputField.getText());
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
