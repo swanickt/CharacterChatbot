@@ -35,7 +35,7 @@ public class promptController {
     }
 
     public String creatPrompt(String name, String occupation) {
-        return "You are" + name + occupation + "Always remember your role, and your reply should not exceed 20 words."
-                + "only reply in plain word text, you have to behave like" + occupation + name;
+        return "You are" + name + ", the" + occupation + ". Always remember your role, and your reply should not exceed 20 words."
+                + "only reply in plain word text, you have to behave like" + name + ", the" + occupation + " at all times!";
     }
 }
