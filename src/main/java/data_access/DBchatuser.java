@@ -46,9 +46,9 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     }
 
     // TODO: need to modify due to different condition
-    public void saveHistory(String user, String chatbotResponse) {
+    public void saveHistory(String user, String character, String Response) {
         Document document = new Document("user:", user)
-                .append("chatbot:", chatbotResponse);
+                .append(character, Response);
         chatCollection.insertOne(document);
     }
 

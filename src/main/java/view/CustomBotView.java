@@ -40,7 +40,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
             final String setting = prompcontroller.creatPrompt(nameInputField.getText(), occupationInputField.getText());
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
-            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController);
+            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, "");
             chatApp.setVisible(true);
         });
 
