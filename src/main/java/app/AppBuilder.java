@@ -9,6 +9,8 @@ import javax.swing.WindowConstants;
 import data_access.DBchatuser;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
+import interface_adapter.Optimus_Prime.OptimusPrimeController;
+import interface_adapter.Optimus_Prime.OptimusPrimePresenter;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.BackToLoggedInController;
 import interface_adapter.change_password.ChangePasswordController;
@@ -36,6 +38,10 @@ import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.OptimusPrime.OptimusPrimeInputBoundary;
+import use_case.OptimusPrime.OptimusPrimeInputData;
+import use_case.OptimusPrime.OptimusPrimeInteractor;
+import use_case.OptimusPrime.OptimusPrimeOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -197,13 +203,18 @@ public class AppBuilder {
     public AppBuilder addLoggedInUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(changePasswordViewModel,
                 viewManagerModel, loggedInViewModel, customBotViewModel);
+        final OptimusPrimeOutputBoundary optimusPrimeOutputBoundary = new OptimusPrimePresenter();
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
+        final OptimusPrimeInputBoundary optimusPrimeInteractor = new OptimusPrimeInteractor(optimusPrimeOutputBoundary);
 
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
 
         final ToCustomViewController controller2 = new ToCustomViewController(loggedInInteractor);
         loggedInView.setToCustomViewController(controller2);
+
+        final OptimusPrimeController controller3 = new OptimusPrimeController(optimusPrimeInteractor);
+        loggedInView.setOptimusPrimeController(controller3);
 
         return this;
     }
