@@ -45,7 +45,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton changePassword;
     private final JButton customBotButton;
     private CommonUserChat testChat;
+    private CommonUserChat chat;
+    @SuppressWarnings({"checkstyle:DeclarationOrder", "checkstyle:VisibilityModifier"})
+    ChatBotSwingApp chatApp;
 
+    @SuppressWarnings({"checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:CatchParameterName"})
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -55,10 +59,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         final JLabel title = new JLabel("Chatbot for");
         // testChat
         testChat = new CommonUserChat();
-        testChat.addBotResponse("Nice to meet you");
-        testChat.addBotResponse("Nice to meet you2");
-        testChat.addUserInput("hello");
-        testChat.addUserInput("hello2");
+        testChat.addBotResponse("NO CHAT HISTORY NOW");
+        testChat.addBotResponse("NO CHAT HISTORY NOW");
+        testChat.addUserInput("NO CHAT HISTORY NOW");
+        testChat.addUserInput("NO CHAT HISTORY NOW");
+        chat = testChat;
 
         username = new JLabel();
         titlePanel.add(title);
@@ -91,15 +96,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
                 final ChatService chatService = new ChatService(setting);
                 final ChatController chatController = new ChatController(chatService);
-                final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, username.getText());
+                chatApp = new ChatBotSwingApp(chatController, username.getText());
                 chatApp.setVisible(true);
             }
         });
 
-        chatHistoryButton = new JButton("Chat History");
+        chatHistoryButton = new JButton("Past Chat");
         chatHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatHistoryButton.addActionListener(evt -> {
-            JOptionPane.showMessageDialog(this, "Opening Chat History...");
+            try {
+                // Attempt to get the chat
+                testChat = chatApp.getchat();
+            } catch (Exception e) {
+                // Handle the exception and proceed to alternative code
+                testChat = testChat;
+            }
+            JOptionPane.showMessageDialog(this, "Opening Past Chat...");
             final chatHistoryService chatHistoryService = new chatHistoryService(username.getText(), testChat);
             final ChatHistoryController controller = new ChatHistoryController(chatHistoryService);
             final ChatHistoryView chatHistoryView = new ChatHistoryView(controller, username.getText());

@@ -27,7 +27,7 @@ public class ChatHistoryView extends JFrame {
         lst = chatHistoryController.getchat().getUserInputs();
         lst2 = chatHistoryController.getchat().getBotResponses();
         // Initialize main frame
-        setTitle("Chatbot History");
+        setTitle("Past Chat");
         setSize(500, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
