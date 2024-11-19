@@ -189,17 +189,9 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
      * @return a JLabel containing the icon and tooltip.
      */
     private JLabel createInfoIcon(String tooltipText) {
-        try {
-            ImageIcon icon = new ImageIcon("/view/info_icon.png");
-            final Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-            final JLabel label = new JLabel("ℹ", new ImageIcon(scaledImage), SwingConstants.CENTER);
-            label.setToolTipText(tooltipText);
-            return label;
-        } catch (Exception e) {
-            System.out.println("Icon not found. Using fallback text.");
-            final JLabel fallbackLabel = new JLabel("ℹ");
-            fallbackLabel.setToolTipText(tooltipText);
-            return fallbackLabel;
+        final JLabel label = new JLabel("ℹ", SwingConstants.CENTER);
+        label.setToolTipText(tooltipText);
+        return label;
         }
-    }
 }
+
