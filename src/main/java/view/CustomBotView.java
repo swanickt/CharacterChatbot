@@ -37,7 +37,8 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
             final promptController prompcontroller = new promptController();
-            final String setting = prompcontroller.creatPrompt(nameInputField.getText(), occupationInputField.getText());
+            final String setting = prompcontroller.creatPrompt(nameInputField.getText(),
+                    occupationInputField.getText());
             final ChatService chatService = new ChatService(setting);
             final ChatController chatController = new ChatController(chatService);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, "");
@@ -53,14 +54,32 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         final JLabel title = new JLabel("Custom Bot Creation");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Input Panel
         final JPanel inputPanel = new JPanel();
-        final LabelTextPanel nameInput = new LabelTextPanel(
-                new JLabel("name"), nameInputField);
-        final LabelTextPanel occupationInput = new LabelTextPanel(
-                new JLabel("occupation"), occupationInputField);
-        inputPanel.add(nameInput);
-        inputPanel.add(occupationInput);
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+
+        // final JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JPanel namePanel = new JPanel();
+        namePanel.setLayout(new FlowLayout());
+        final JLabel nameLabel = new JLabel("Name:");
+        final JLabel nameInfoIcon = createInfoIcon("Enter the name of your custom bot or character.");
+        namePanel.add(nameLabel);
+        namePanel.add(nameInputField);
+        namePanel.add(nameInfoIcon);
+
+        // Occupation Field with Icon
+        // final JPanel occupationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JPanel occupationPanel = new JPanel();
+        occupationPanel.setLayout(new FlowLayout());
+        final JLabel occupationLabel = new JLabel("Occupation:");
+        final JLabel occupationInfoIcon = createInfoIcon("Enter the occupation of your custom bot.");
+        occupationPanel.add(occupationLabel);
+        occupationPanel.add(occupationInputField);
+        occupationPanel.add(occupationInfoIcon);
+
+        // Add panels to input panel
+        inputPanel.add(namePanel);
+        inputPanel.add(occupationPanel);
 
         final JPanel buttons = new JPanel();
         buttons.add(chatButton);
@@ -136,7 +155,23 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         return viewName;
     }
 
-    public void setToLoggedInView(GoBackToLoggedInViewController goBackToLoggedInViewController) {
-        this.goBackToLoggedInViewController = goBackToLoggedInViewController;
+    public void setToLoggedInView(GoBackToLoggedInViewController goBackToLoggedInViewController1) {
+        this.goBackToLoggedInViewController = goBackToLoggedInViewController1;
+    }
+
+    private JLabel createInfoIcon(String tooltipText) {
+        try {
+            ImageIcon icon = new ImageIcon("/view/info_icon.png");
+            final Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            final JLabel label = new JLabel("ℹ", new ImageIcon(scaledImage), SwingConstants.CENTER);
+            // JLabel label = new JLabel(icon, SwingConstants.CENTER);
+            label.setToolTipText(tooltipText);
+            return label;
+        } catch (Exception e) {
+            System.out.println("Icon not found. Using fallback text.");
+            final JLabel fallbackLabel = new JLabel("(i)");
+            fallbackLabel.setToolTipText(tooltipText);
+            return fallbackLabel;
+        }
     }
 }
