@@ -33,22 +33,48 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     private static final String HISTORY = "history";
     private MongoClient mongoClient;
     private MongoDatabase database;
+    private MongoDatabase databaseForHis;
     private MongoCollection<Document> chatCollection;
     private MongoCollection<Document> userCollection;
+    private MongoCollection<Document> chatbot;
+    private String getUsername;
+    private static Boolean chatStatus;
 
     public DBchatuser() {
         String connectionString = "mongodb+srv://jda1234112:dcJSlP8XfESt9FED@cluster0."
                 + "2mrsi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
         mongoClient = MongoClients.create(connectionString);
+        databaseForHis = mongoClient.getDatabase("ChatHistory");
         database = mongoClient.getDatabase("chatbotDB");
-        chatCollection = database.getCollection("chatHistory");
+        chatCollection = databaseForHis.getCollection("chathistory");
         userCollection = database.getCollection("userAccounts");
+        chatbot = database.getCollection("character");
+        chatStatus = Boolean.TRUE;
+    }
+
+    public void setUp(String username) {
+        Document foundDocument = chatCollection.find(Filters.eq("title", username+"'s history")).first();
+        if (foundDocument != null) {
+            chatCollection = databaseForHis.getCollection(username+"'s history");
+        }
+        else {
+            chatCollection = databaseForHis.getCollection(username+"'s history");
+        }
     }
 
     // TODO: need to modify due to different condition
-    public void saveHistory(String user, String character, String Response) {
-        Document document = new Document("user:", user)
-                .append(character, Response);
+    public void saveHistory(String user,String Response) {
+        Document document;
+        if (chatStatus) {
+            document = new Document("user:", user)
+                    .append("response", Response);
+            chatStatus = Boolean.FALSE;
+        }
+        else {
+            document = new Document("chat:", user)
+                    .append("response", Response);
+            chatStatus = Boolean.TRUE;
+        }
         chatCollection.insertOne(document);
     }
 
@@ -78,7 +104,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     public void save(User user) {
         String name = user.getName();
         Document userDocument = new Document(USERNAME, name)
-                    .append(PASSWORD, user.getPassword());
+                .append(PASSWORD, user.getPassword());
         userCollection.insertOne(userDocument);
     }
 
@@ -106,19 +132,6 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         return chatMap;
     }
 
-    // TODO: this is used to check the password is correct or not
-    public Map<String, String> getUserNameAndPassword(String userId) {
-        Map<String, String> userCredentials = new HashMap<>();
-        Document userDoc = userCollection.find(Filters.eq(USERNAME, userId)).first();
-        if (userDoc != null) {
-            String userName = userDoc.getString(USERNAME);
-            String userPassword = userDoc.getString(PASSWORD);
-            userCredentials.put(USERNAME, userName);
-            userCredentials.put(PASSWORD, userPassword);
-        }
-        return userCredentials;
-    }
-
     public boolean existsByName(String identifier) {
         // Create a query to search for a user with the given username
         Document query = new Document(USERNAME, identifier);
@@ -130,4 +143,16 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         return found != null;
     }
 
+    public void saveCharacter(String character,String usage, String reply) {
+        Document query = new Document(USERNAME, character).append("usage", usage);
+        Document found = chatbot.find(query).first();
+        if (found != null) {
+            Document newdoc = new Document(USERNAME, character).append("usage", usage).append("reply", reply);
+            chatbot.updateOne(query, newdoc);
+        }
+        else {
+            Document userDocument = new Document(USERNAME, character).append("usage", usage).append("reply", reply);
+            chatbot.insertOne(userDocument);
+        }
+    }
 }
