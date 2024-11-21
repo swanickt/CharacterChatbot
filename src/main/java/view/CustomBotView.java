@@ -51,7 +51,6 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, "");
             chatApp.setVisible(true);
         });
-
         backButton = new JButton("Back");
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         backButton.addActionListener(evt -> {
@@ -69,7 +68,8 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         final JPanel namePanel = new JPanel();
         namePanel.setLayout(new FlowLayout());
         final JLabel nameLabel = new JLabel("Name:");
-        final JLabel nameInfoIcon = createInfoIcon("Enter the name of your custom bot or character.");
+        final JLabel nameInfoIcon = createInfoIcon("Enter the name "
+                + "of your custom bot or character.");
         namePanel.add(nameLabel);
         namePanel.add(nameInputField);
         namePanel.add(nameInfoIcon);
@@ -77,7 +77,8 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         final JPanel occupationPanel = new JPanel();
         occupationPanel.setLayout(new FlowLayout());
         final JLabel occupationLabel = new JLabel("Occupation:");
-        final JLabel occupationInfoIcon = createInfoIcon("Enter the occupation of your custom bot.");
+        final JLabel occupationInfoIcon = createInfoIcon("Enter the "
+                + "occupation of your custom bot.");
         occupationPanel.add(occupationLabel);
         occupationPanel.add(occupationInputField);
         occupationPanel.add(occupationInfoIcon);
@@ -189,7 +190,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
      * @return a JLabel containing the icon and tooltip.
      */
     private JLabel createInfoIcon(String tooltipText) {
-        final JLabel label = new JLabel("ℹ", SwingConstants.CENTER);
+        final JLabel label = new JLabel("(ℹ)", SwingConstants.CENTER);
         label.setToolTipText(tooltipText);
         return label;
         }
