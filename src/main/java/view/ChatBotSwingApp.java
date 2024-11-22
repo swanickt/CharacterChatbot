@@ -101,7 +101,7 @@ public class ChatBotSwingApp extends JFrame {
                     inputField.setText("");
                     chatController.addUserMessage(userInput);
                     dbchatuser.saveHistory(username, userInput);
-                    // Fetch GPT response
+                    // Fetch GPT responses
                     try {
                         final String response = chatController.getAssistantResponse().replace("\n", "");
                         addChatBubble(response, "assistant");

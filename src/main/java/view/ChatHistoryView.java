@@ -61,10 +61,6 @@ public class ChatHistoryView extends JFrame {
                 else {
                     addChatBubble(lst3.get(i).getContent(), "assistant");
                 }
-//                addChatBubble(lst.get(i).getContent(), "user");
-//                System.out.println(lst.get(i).getContent());
-//                addChatBubble(lst2.get(i).getContent(), "assistant");
-//                System.out.println(lst2.get(i).getContent());
             }
         });
 

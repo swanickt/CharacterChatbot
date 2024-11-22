@@ -152,7 +152,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
         FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
         for (Document doc: documents) {
-            if(doc.getString("response").contains("Hello")) {
+            if (doc.getString("response").contains("Hello")) {
                 Message message = new Message("assistant", doc.getString("response"));
                 returnDoc.add(message);
                 break;
