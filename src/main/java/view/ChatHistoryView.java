@@ -21,17 +21,18 @@ public class ChatHistoryView extends JFrame {
     private final List<Message> lst;
     private final List<Message> lst2;
     private ChatHistoryController chathistorycontroller;
+    private DBchatuser dbchatuser;
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:SuppressWarnings", "checkstyle:LambdaParameterName", "checkstyle:EmptyLineSeparator"})
     public ChatHistoryView(ChatHistoryController chatHistoryController, String username) {
+        this.dbchatuser = new DBchatuser();
         this.username = username;
-        lst = chatHistoryController.getchat().getUserInputs();
-        lst2 = chatHistoryController.getchat().getBotResponses();
+        lst = dbchatuser.userHistory(username);
+        lst2 = dbchatuser.chatHistory(username);
         // Initialize main frame
         setTitle("Past Chat");
         setSize(500, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
         // Chat display panel with BoxLayout for vertical stacking
         chatPanel = new JPanel();
         chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
@@ -49,6 +50,7 @@ public class ChatHistoryView extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         SwingUtilities.invokeLater(() -> {
+
             for (int i = 0; i < lst.size(); i++) {
                 addChatBubble(lst.get(i).getContent(), "user");
                 System.out.println(lst.get(i).getContent());

@@ -1,5 +1,6 @@
 package view;
 
+import com.mongodb.MongoNamespace;
 import data_access.DBchatuser;
 import entity.chat.ChatFactory;
 import entity.chat.CommonUserChat;
@@ -49,11 +50,14 @@ public class ChatBotSwingApp extends JFrame {
     private CommonUserChatFactory chatFactory;
     private String username;
     private CommonUserChat chat;
+    private DBchatuser dbchatuser;
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
     public ChatBotSwingApp(ChatController chatController, String username) {
         this.chatController = chatController;
         this.username = username;
+        dbchatuser = new DBchatuser();
+        dbchatuser.setUp(username);
         chatFactory = new CommonUserChatFactory();
         chat = chatFactory.create();
         // Initialize main frame
@@ -61,7 +65,6 @@ public class ChatBotSwingApp extends JFrame {
         setSize(500, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
         // Chat display panel with BoxLayout for vertical stacking
         chatPanel = new JPanel();
         chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
@@ -97,13 +100,14 @@ public class ChatBotSwingApp extends JFrame {
                     chat.addUserInput(userInput);
                     inputField.setText("");
                     chatController.addUserMessage(userInput);
-
+                    dbchatuser.saveHistory(username, userInput);
                     // Fetch GPT response
                     try {
                         final String response = chatController.getAssistantResponse().replace("\n", "");
                         addChatBubble(response, "assistant");
                         chat.addBotResponse(response);
                         chatController.addAssistantMessage(response);
+                        dbchatuser.saveHistory("assistant", response);
                     }
                     catch (Exception ex) {
                         addChatBubble("Error: Unable to get response from GPT.", "error");
@@ -122,8 +126,8 @@ public class ChatBotSwingApp extends JFrame {
             for (int i = 0; i < lst.size(); i++) {
                 System.out.println(username);
                 if (!"".equals(username)) {
-                    database.saveHistory(username, "role", lst.get(i).getContent());
-                    database.saveHistory(username, "assistant", lst2.get(i).getContent());
+                    database.saveHistory(username, lst.get(i).getContent());
+                    database.saveHistory("assistant", lst2.get(i).getContent());
                 }
                 System.out.println(lst.get(i).getContent());
                 System.out.println(lst2.get(i).getContent());

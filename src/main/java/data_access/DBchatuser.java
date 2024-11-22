@@ -1,18 +1,17 @@
 package data_access;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
+import entity.message.Message;
 import entity.user.User;
 import org.bson.Document;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
@@ -33,31 +32,60 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     private static final String HISTORY = "history";
     private MongoClient mongoClient;
     private MongoDatabase database;
+    private MongoDatabase databaseForHis;
     private MongoCollection<Document> chatCollection;
     private MongoCollection<Document> userCollection;
+    private MongoCollection<Document> chatbot;
+    private String getUsername;
+    private static Boolean chatStatus;
+    private String currentUsername;
+    private int LIMIT = 10;
 
     public DBchatuser() {
         String connectionString = "mongodb+srv://jda1234112:dcJSlP8XfESt9FED@cluster0."
                 + "2mrsi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
         mongoClient = MongoClients.create(connectionString);
+        databaseForHis = mongoClient.getDatabase("ChatHistory");
         database = mongoClient.getDatabase("chatbotDB");
-        chatCollection = database.getCollection("chatHistory");
+        chatCollection = databaseForHis.getCollection("chathistory");
         userCollection = database.getCollection("userAccounts");
+        chatbot = database.getCollection("character");
+        chatStatus = Boolean.TRUE;
+        this.currentUsername = null;
+    }
+
+    public void setUp(String username) {
+        Document foundDocument = chatCollection.find(Filters.eq("title", username+"'s history")).first();
+        if (foundDocument != null) {
+            chatCollection = databaseForHis.getCollection(username+"'s history");
+        }
+        else {
+            chatCollection = databaseForHis.getCollection(username+"'s history");
+        }
     }
 
     // TODO: need to modify due to different condition
-    public void saveHistory(String user, String character, String Response) {
-        Document document = new Document("user:", user)
-                .append(character, Response);
+    public void saveHistory(String user,String Response) {
+        Document document;
+        if (chatStatus) {
+            document = new Document("user:", user)
+                    .append("response", Response);
+            chatStatus = Boolean.FALSE;
+        }
+        else {
+            document = new Document("chat:", user)
+                    .append("response", Response);
+            chatStatus = Boolean.TRUE;
+        }
         chatCollection.insertOne(document);
     }
 
     public void setCurrentUsername(String name) {
-        // this isn't implemented for the lab
+        this.currentUsername = name;
     }
 
     public String getCurrentUsername() {
-        return null;
+        return this.currentUsername;
     }
 
     public User get(String username) {
@@ -74,11 +102,10 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         }
     }
 
-    // TODO: Might need some edition due to the condition i.e. else part
     public void save(User user) {
         String name = user.getName();
         Document userDocument = new Document(USERNAME, name)
-                    .append(PASSWORD, user.getPassword());
+                .append(PASSWORD, user.getPassword());
         userCollection.insertOne(userDocument);
     }
 
@@ -93,30 +120,36 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         userCollection.updateOne(query, update);
     }
 
-    public Map<String, String> loadHistory(User user) {
-        Map<String, String> chatMap = new HashMap<>();
-        for (Document doc : chatCollection.find()) {
-            String userMessage = doc.getString(user.getName());
-            String chatbotResponse = doc.getString("chatbot");
-            if (userMessage != null && chatbotResponse != null) {
-                chatMap.put("user:", userMessage);
-                chatMap.put("chatbot:", chatbotResponse);
+    public List<Message> userHistory(String user) {
+        List<Message> userdocuments = new ArrayList();
+        MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
+        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
+        // check the last n messages
+        documents = documents.limit(LIMIT);
+
+        for (Document doc: documents) {
+            if (doc.containsKey("user:")) {
+                Message message = new Message("user", doc.getString("response"));
+                userdocuments.add(message);
             }
         }
-        return chatMap;
+        return userdocuments;
     }
 
-    // TODO: this is used to check the password is correct or not
-    public Map<String, String> getUserNameAndPassword(String userId) {
-        Map<String, String> userCredentials = new HashMap<>();
-        Document userDoc = userCollection.find(Filters.eq(USERNAME, userId)).first();
-        if (userDoc != null) {
-            String userName = userDoc.getString(USERNAME);
-            String userPassword = userDoc.getString(PASSWORD);
-            userCredentials.put(USERNAME, userName);
-            userCredentials.put(PASSWORD, userPassword);
+    public List<Message> chatHistory(String user) {
+        List<Message> chatdocuments = new ArrayList();
+        MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
+        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
+        // check the last n messages
+        documents = documents.limit(LIMIT);
+
+        for (Document doc: documents) {
+            if (doc.containsKey("chat:")) {
+                Message message = new Message("assistant", doc.getString("response"));
+                chatdocuments.add(message);
+            }
         }
-        return userCredentials;
+        return chatdocuments;
     }
 
     public boolean existsByName(String identifier) {
@@ -130,4 +163,16 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         return found != null;
     }
 
+    public void saveCharacter(String character,String usage, String reply) {
+        Document query = new Document(USERNAME, character).append("usage", usage);
+        Document found = chatbot.find(query).first();
+        if (found != null) {
+            Document newdoc = new Document(USERNAME, character).append("usage", usage).append("reply", reply);
+            chatbot.updateOne(query, newdoc);
+        }
+        else {
+            Document userDocument = new Document(USERNAME, character).append("usage", usage).append("reply", reply);
+            chatbot.insertOne(userDocument);
+        }
+    }
 }
