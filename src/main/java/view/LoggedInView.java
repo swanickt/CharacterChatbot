@@ -46,7 +46,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private CommonUserChat testChat;
     private CommonUserChat chat;
     @SuppressWarnings({"checkstyle:DeclarationOrder", "checkstyle:VisibilityModifier"})
-    ChatBotSwingApp chatApp;
+    ChatView chatApp;
 
     @SuppressWarnings({"checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:CatchParameterName"})
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
@@ -95,7 +95,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
                 final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GPTApiCallBotResponseDataAccessObject(setting);
                 final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
-                chatApp = new ChatBotSwingApp(chatController, username.getText());
+                chatApp = new ChatView(chatController, username.getText());
                 chatApp.setVisible(true);
             }
         });

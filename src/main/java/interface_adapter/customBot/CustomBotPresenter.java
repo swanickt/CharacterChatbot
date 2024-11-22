@@ -3,8 +3,6 @@ package interface_adapter.customBot;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.custom_bot.CustomViewOutputBoundary;
-import view.ChatBotSwingApp;
-import view.CustomBotView;
 
 /**
  * The Presenter for the Custom Bot Use Case.

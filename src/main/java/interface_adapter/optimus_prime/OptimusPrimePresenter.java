@@ -4,7 +4,7 @@ import interface_adapter.chat.ChatController;
 import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
 import use_case.optimus_prime.OptimusPrimeOutputBoundary;
 import use_case.optimus_prime.OptimusPrimeOutputData;
-import view.ChatBotSwingApp;
+import view.ChatView;
 
 public class OptimusPrimePresenter implements OptimusPrimeOutputBoundary {
 
@@ -17,7 +17,7 @@ public class OptimusPrimePresenter implements OptimusPrimeOutputBoundary {
         final String username = optimusPrimeOutputData.getUsername();
         final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = optimusPrimeOutputData.getChatService();
         final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
-        final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, username);
+        final ChatView chatApp = new ChatView(chatController, username);
         chatApp.setVisible(true);
     }
 }

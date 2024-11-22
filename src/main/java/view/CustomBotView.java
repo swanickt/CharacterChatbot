@@ -48,7 +48,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
                     occupationInputField.getText());
             final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GPTApiCallBotResponseDataAccessObject(setting);
             final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
-            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, "");
+            final ChatView chatApp = new ChatView(chatController, "");
             chatApp.setVisible(true);
         });
         backButton = new JButton("Back");

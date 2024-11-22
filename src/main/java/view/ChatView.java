@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * The chatting view/"app" for all chats, regardless of the character.
  */
-public class ChatBotSwingApp extends JFrame {
+public class ChatView extends JFrame {
     private JPanel chatPanel;
     private JTextField inputField;
     private JButton sendButton;
@@ -41,7 +41,7 @@ public class ChatBotSwingApp extends JFrame {
     private MongoDBDataAccessObject dbchatuser;
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
-    public ChatBotSwingApp(ChatController chatController, String username) {
+    public ChatView(ChatController chatController, String username) {
         this.chatController = chatController;
         this.username = username;
         dbchatuser = new MongoDBDataAccessObject();
