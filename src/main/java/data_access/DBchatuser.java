@@ -37,7 +37,6 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     private MongoCollection<Document> userCollection;
     private MongoCollection<Document> chatbot;
     private String getUsername;
-    private static Boolean chatStatus;
     private String currentUsername;
     private int LIMIT = 10;
 
@@ -50,8 +49,6 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         chatCollection = databaseForHis.getCollection("chathistory");
         userCollection = database.getCollection("userAccounts");
         chatbot = database.getCollection("character");
-        chatStatus = Boolean.TRUE;
-        this.currentUsername = null;
     }
 
     public void setUp(String username) {
@@ -67,15 +64,13 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     // TODO: need to modify due to different condition
     public void saveHistory(String user,String Response) {
         Document document;
-        if (chatStatus) {
+        if (!user.equals("assistant")) {
             document = new Document("user:", user)
                     .append("response", Response);
-            chatStatus = Boolean.FALSE;
         }
         else {
             document = new Document("chat:", user)
                     .append("response", Response);
-            chatStatus = Boolean.TRUE;
         }
         chatCollection.insertOne(document);
     }
@@ -125,7 +120,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
         FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
         // check the last n messages
-        documents = documents.limit(LIMIT);
+//        documents = documents.limit(LIMIT);
 
         for (Document doc: documents) {
             if (doc.containsKey("user:")) {
@@ -141,7 +136,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
         FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
         // check the last n messages
-        documents = documents.limit(LIMIT);
+//        documents = documents.limit(LIMIT);
 
         for (Document doc: documents) {
             if (doc.containsKey("chat:")) {
@@ -150,6 +145,23 @@ public class DBchatuser implements SignupUserDataAccessInterface,
             }
         }
         return chatdocuments;
+    }
+
+    public List<Message> mixedHistory(String user){
+        List<Message> returnDoc = new ArrayList();
+        MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
+        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
+        for (Document doc: documents) {
+            if (doc.containsKey("user:")) {
+                Message message = new Message("user", doc.getString("response"));
+                returnDoc.add(message);
+            }
+            if (doc.containsKey("chat:")) {
+                Message message = new Message("assistant", doc.getString("response"));
+                returnDoc.add(message);
+            }
+        }
+        return returnDoc;
     }
 
     public boolean existsByName(String identifier) {
