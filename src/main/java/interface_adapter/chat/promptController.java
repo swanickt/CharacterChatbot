@@ -1,6 +1,6 @@
 package interface_adapter.chat;
 
-import data_access.gpt_api_calls.PrompInteractor;
+import use_case.chat.PrompInteractor;
 
 import javax.swing.*;
 
