@@ -19,7 +19,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
-import data_access.gpt_api_calls.ChatService;
+import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
 import data_access.gpt_api_calls.chatHistoryService;
 
 /**
@@ -93,8 +93,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             else {
                 final promptController prompcontroller = new promptController();
                 final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
-                final ChatService chatService = new ChatService(setting);
-                final ChatController chatController = new ChatController(chatService);
+                final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GPTApiCallBotResponseDataAccessObject(setting);
+                final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
                 chatApp = new ChatBotSwingApp(chatController, username.getText());
                 chatApp.setVisible(true);
             }

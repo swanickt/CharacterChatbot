@@ -1,6 +1,6 @@
 package use_case.OptimusPrime;
 
-import data_access.gpt_api_calls.ChatService;
+import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
 
 /**
  * Output Data for the chat with optimus prime Use Case.
@@ -8,18 +8,18 @@ import data_access.gpt_api_calls.ChatService;
 public class OptimusPrimeOutputData {
 
     private final String username;
-    private final ChatService chatService;
+    private final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject;
 
-    public OptimusPrimeOutputData(String username, ChatService chatService) {
+    public OptimusPrimeOutputData(String username, GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject) {
         this.username = username;
-        this.chatService = chatService;
+        this.GPTApiCallBotResponseDataAccessObject = GPTApiCallBotResponseDataAccessObject;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public ChatService getChatService() {
-        return chatService;
+    public GPTApiCallBotResponseDataAccessObject getChatService() {
+        return GPTApiCallBotResponseDataAccessObject;
     }
 }

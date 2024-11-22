@@ -1,7 +1,7 @@
 package use_case.OptimusPrime;
 
 import entity.bot.OptimusPrimeFactory;
-import data_access.gpt_api_calls.ChatService;
+import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
 
 /**
  * The Optimus Prime Interactor.
@@ -18,8 +18,8 @@ public class OptimusPrimeInteractor implements OptimusPrimeInputBoundary {
     @Override
     public void execute(OptimusPrimeInputData optimusPrimeInputData) {
         final String username = optimusPrimeInputData.getUsername();
-        final ChatService chatService = new ChatService(setting);
-        final OptimusPrimeOutputData optimusPrimeOutputData = new OptimusPrimeOutputData(username, chatService);
+        final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GPTApiCallBotResponseDataAccessObject(setting);
+        final OptimusPrimeOutputData optimusPrimeOutputData = new OptimusPrimeOutputData(username, GPTApiCallBotResponseDataAccessObject);
         optimusPrimePresenter.beginChat(optimusPrimeOutputData);
     }
 }

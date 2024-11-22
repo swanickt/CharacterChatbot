@@ -17,7 +17,7 @@ import interface_adapter.chat.promptController;
 import interface_adapter.customBot.CustomBotState;
 import interface_adapter.customBot.CustomBotViewModel;
 import interface_adapter.customBot.GoBackToLoggedInViewController;
-import data_access.gpt_api_calls.ChatService;
+import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
 
 public class CustomBotView extends JPanel implements PropertyChangeListener {
 
@@ -46,8 +46,8 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
             final promptController prompcontroller = new promptController();
             final String setting = prompcontroller.creatPrompt(nameInputField.getText(),
                     occupationInputField.getText());
-            final ChatService chatService = new ChatService(setting);
-            final ChatController chatController = new ChatController(chatService);
+            final GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GPTApiCallBotResponseDataAccessObject(setting);
+            final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
             final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, "");
             chatApp.setVisible(true);
         });
