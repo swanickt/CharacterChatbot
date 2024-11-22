@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 
 import entity.chat.CommonUserChat;
 import interface_adapter.chat.ChatViewModel;
+import interface_adapter.chat.normal_bot.NormalBotController;
 import interface_adapter.chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
@@ -38,6 +39,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ToCustomViewController toCustomViewController;
     private OptimusPrimeController optimusPrimeController;
     private PikachuController pikachuController;
+    private NormalBotController normalBotController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -98,6 +100,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             }
             else if (pikachuButton.isSelected()) {
                 pikachuController.execute(username.getText());
+            }
+            else if (normalBotButton.isSelected()) {
+                normalBotController.execute(username.getText());
             }
             else {
                 final promptController prompcontroller = new promptController();
@@ -280,5 +285,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setPikachuController(PikachuController pikachuController) {
         this.pikachuController = pikachuController;
+    }
+
+    public void setNormalBotController(NormalBotController normalBotController) {
+        this.normalBotController = normalBotController;
     }
 }

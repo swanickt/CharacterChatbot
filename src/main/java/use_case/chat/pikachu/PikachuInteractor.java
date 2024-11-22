@@ -1,7 +1,6 @@
 package use_case.chat.pikachu;
 
 import entity.bot.BotFactory;
-import use_case.chat.ChatApiAccessInterface;
 
 /**
  * The begin chat with Pikachu Interactor.

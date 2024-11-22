@@ -7,10 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.MongoDBDataAccessObject;
+import entity.bot.NormalAIFactory;
 import entity.bot.PikachuFactory;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
 import interface_adapter.chat.ChatViewModel;
+import interface_adapter.chat.normal_bot.NormalBotController;
+import interface_adapter.chat.normal_bot.NormalBotPresenter;
 import interface_adapter.chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.chat.optimus_prime.OptimusPrimePresenter;
 import interface_adapter.ViewManagerModel;
@@ -42,6 +45,8 @@ import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.chat.normal_bot.NormalBotInteractor;
+import use_case.chat.normal_bot.NormalBotOutputBoundary;
 import use_case.chat.optimus_prime.OptimusPrimeInputBoundary;
 import use_case.chat.optimus_prime.OptimusPrimeInteractor;
 import use_case.chat.optimus_prime.OptimusPrimeOutputBoundary;
@@ -216,6 +221,9 @@ public class AppBuilder {
         final PikachuOutputBoundary pikachuOutputBoundary = new PikachuPresenter(chatViewModel);
         final PikachuInputBoundary pikachuInteractor = new PikachuInteractor(pikachuOutputBoundary,
                 new PikachuFactory());
+        final NormalBotOutputBoundary normalBotOutputBoundary = new NormalBotPresenter(chatViewModel);
+        final NormalBotInteractor normalBotInteractor = new NormalBotInteractor(normalBotOutputBoundary,
+                new NormalAIFactory());
 
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
@@ -228,6 +236,9 @@ public class AppBuilder {
 
         final PikachuController controller4 = new PikachuController(pikachuInteractor);
         loggedInView.setPikachuController(controller4);
+
+        final NormalBotController controller5 = new NormalBotController(normalBotInteractor);
+        loggedInView.setNormalBotController(controller5);
 
         return this;
     }

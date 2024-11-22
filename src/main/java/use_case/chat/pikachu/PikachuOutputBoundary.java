@@ -3,7 +3,7 @@ package use_case.chat.pikachu;
 import use_case.chat.optimus_prime.OptimusPrimeOutputData;
 
 /**
- * The output boundary for the chat with Pikachu prime Use Case.
+ * The output boundary for the chat with Pikachu Use Case.
  */
 public interface PikachuOutputBoundary {
 
