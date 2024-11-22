@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import data_access.MongoDBDataAccessObject;
 import entity.bot.MasterYodaFactory;
 import entity.bot.NormalAIFactory;
+import entity.bot.OptimusPrimeFactory;
 import entity.bot.PikachuFactory;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
@@ -220,9 +221,10 @@ public class AppBuilder {
     public AppBuilder addLoggedInUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(changePasswordViewModel,
                 viewManagerModel, loggedInViewModel, customBotViewModel);
-        final OptimusPrimeOutputBoundary optimusPrimeOutputBoundary = new OptimusPrimePresenter();
+        final OptimusPrimeOutputBoundary optimusPrimeOutputBoundary = new OptimusPrimePresenter(chatViewModel);
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
-        final OptimusPrimeInputBoundary optimusPrimeInteractor = new OptimusPrimeInteractor(optimusPrimeOutputBoundary);
+        final OptimusPrimeInputBoundary optimusPrimeInteractor = new OptimusPrimeInteractor(optimusPrimeOutputBoundary,
+                new OptimusPrimeFactory());
         final PikachuOutputBoundary pikachuOutputBoundary = new PikachuPresenter(chatViewModel);
         final PikachuInputBoundary pikachuInteractor = new PikachuInteractor(pikachuOutputBoundary,
                 new PikachuFactory());
