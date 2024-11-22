@@ -1,4 +1,4 @@
-package use_case.OptimusPrime;
+package use_case.optimus_prime;
 
 import entity.bot.OptimusPrimeFactory;
 import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;

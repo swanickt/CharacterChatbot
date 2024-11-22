@@ -1,4 +1,4 @@
-package use_case.OptimusPrime;
+package use_case.optimus_prime;
 
 /**
  * The Input Data for the Optimus Prime chat Use Case.

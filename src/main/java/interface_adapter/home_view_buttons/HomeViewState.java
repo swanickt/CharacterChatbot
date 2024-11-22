@@ -1,4 +1,4 @@
-package interface_adapter.home_view;
+package interface_adapter.home_view_buttons;
 
 /**
  * The state for the HomeView Model.

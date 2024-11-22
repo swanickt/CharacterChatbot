@@ -1,4 +1,4 @@
-package use_case.OptimusPrime;
+package use_case.optimus_prime;
 
 /**
  * Input Boundary for chatting with Optimus Prime.

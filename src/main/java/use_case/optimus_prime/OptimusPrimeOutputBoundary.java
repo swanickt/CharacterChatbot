@@ -1,4 +1,4 @@
-package use_case.OptimusPrime;
+package use_case.optimus_prime;
 
 /**
  * The output boundary for the chat with optimus prime Use Case.

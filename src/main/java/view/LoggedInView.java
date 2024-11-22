@@ -9,7 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import entity.chat.CommonUserChat;
-import interface_adapter.Optimus_Prime.OptimusPrimeController;
+import interface_adapter.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
 import interface_adapter.chat.ChatHistoryController;
@@ -20,7 +20,7 @@ import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
 import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
-import data_access.gpt_api_calls.chatHistoryService;
+import use_case.chat_history.ChatHistoryInteractor;
 
 /**
  * The View for when the user is logged into the program.
@@ -111,8 +111,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 testChat = testChat;
             }
             JOptionPane.showMessageDialog(this, "Opening Past Chat...");
-            final chatHistoryService chatHistoryService = new chatHistoryService(username.getText(), testChat);
-            final ChatHistoryController controller = new ChatHistoryController(chatHistoryService);
+            final ChatHistoryInteractor ChatHistoryInteractor = new ChatHistoryInteractor(username.getText(), testChat);
+            final ChatHistoryController controller = new ChatHistoryController(ChatHistoryInteractor);
             final ChatHistoryView chatHistoryView = new ChatHistoryView(controller, username.getText());
             chatHistoryView.setVisible(true);
         });

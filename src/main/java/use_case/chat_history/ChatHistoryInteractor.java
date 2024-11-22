@@ -1,12 +1,12 @@
-package data_access.gpt_api_calls;
+package use_case.chat_history;
 
 import entity.chat.CommonUserChat;
 
-public class chatHistoryService {
+public class ChatHistoryInteractor {
     String userName;
     CommonUserChat chat;
 
-    public chatHistoryService(String userName, CommonUserChat chat) {
+    public ChatHistoryInteractor(String userName, CommonUserChat chat) {
         this.userName = userName;
         this.chat = chat;
     }

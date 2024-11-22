@@ -1,4 +1,4 @@
-package use_case.home_view;
+package use_case.home_view_buttons;
 
 /**
  * Input Boundary for actions which are related to home screen buttons.

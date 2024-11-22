@@ -1,4 +1,4 @@
-package data_access.gpt_api_calls;
+package use_case.chat;
 
 public interface ChatServiceInterface {
 

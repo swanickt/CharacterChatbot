@@ -1,6 +1,6 @@
-package interface_adapter.home_view;
+package interface_adapter.home_view_buttons;
 
-import use_case.home_view.HomeViewInputBoundary;
+import use_case.home_view_buttons.HomeViewInputBoundary;
 
 /**
  * The controller for the Home Screen use cases.

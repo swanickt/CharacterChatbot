@@ -1,9 +1,9 @@
-package interface_adapter.home_view;
+package interface_adapter.home_view_buttons;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
-import use_case.home_view.HomeViewOutputBoundary;
+import use_case.home_view_buttons.HomeViewOutputBoundary;
 
 /**
  * The Presenter for the home screen Use Cases.

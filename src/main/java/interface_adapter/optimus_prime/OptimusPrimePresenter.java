@@ -1,9 +1,9 @@
-package interface_adapter.Optimus_Prime;
+package interface_adapter.optimus_prime;
 
 import interface_adapter.chat.ChatController;
 import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
-import use_case.OptimusPrime.OptimusPrimeOutputBoundary;
-import use_case.OptimusPrime.OptimusPrimeOutputData;
+import use_case.optimus_prime.OptimusPrimeOutputBoundary;
+import use_case.optimus_prime.OptimusPrimeOutputData;
 import view.ChatBotSwingApp;
 
 public class OptimusPrimePresenter implements OptimusPrimeOutputBoundary {
