@@ -1,18 +1,17 @@
 package data_access;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
+import entity.message.Message;
 import entity.user.User;
 import org.bson.Document;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
@@ -39,6 +38,8 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     private MongoCollection<Document> chatbot;
     private String getUsername;
     private static Boolean chatStatus;
+    private String currentUsername;
+    private int LIMIT = 10;
 
     public DBchatuser() {
         String connectionString = "mongodb+srv://jda1234112:dcJSlP8XfESt9FED@cluster0."
@@ -50,6 +51,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         userCollection = database.getCollection("userAccounts");
         chatbot = database.getCollection("character");
         chatStatus = Boolean.TRUE;
+        this.currentUsername = null;
     }
 
     public void setUp(String username) {
@@ -79,11 +81,11 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     }
 
     public void setCurrentUsername(String name) {
-        // this isn't implemented for the lab
+        this.currentUsername = name;
     }
 
     public String getCurrentUsername() {
-        return null;
+        return this.currentUsername;
     }
 
     public User get(String username) {
@@ -100,7 +102,6 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         }
     }
 
-    // TODO: Might need some edition due to the condition i.e. else part
     public void save(User user) {
         String name = user.getName();
         Document userDocument = new Document(USERNAME, name)
@@ -119,17 +120,36 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         userCollection.updateOne(query, update);
     }
 
-    public Map<String, String> loadHistory(User user) {
-        Map<String, String> chatMap = new HashMap<>();
-        for (Document doc : chatCollection.find()) {
-            String userMessage = doc.getString(user.getName());
-            String chatbotResponse = doc.getString("chatbot");
-            if (userMessage != null && chatbotResponse != null) {
-                chatMap.put("user:", userMessage);
-                chatMap.put("chatbot:", chatbotResponse);
+    public List<Message> userHistory(String user) {
+        List<Message> userdocuments = new ArrayList();
+        MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
+        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
+        // check the last n messages
+        documents = documents.limit(LIMIT);
+
+        for (Document doc: documents) {
+            if (doc.containsKey("user:")) {
+                Message message = new Message("user", doc.getString("response"));
+                userdocuments.add(message);
             }
         }
-        return chatMap;
+        return userdocuments;
+    }
+
+    public List<Message> chatHistory(String user) {
+        List<Message> chatdocuments = new ArrayList();
+        MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
+        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
+        // check the last n messages
+        documents = documents.limit(LIMIT);
+
+        for (Document doc: documents) {
+            if (doc.containsKey("chat:")) {
+                Message message = new Message("assistant", doc.getString("response"));
+                chatdocuments.add(message);
+            }
+        }
+        return chatdocuments;
     }
 
     public boolean existsByName(String identifier) {
