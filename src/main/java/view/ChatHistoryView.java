@@ -53,7 +53,6 @@ public class ChatHistoryView extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         SwingUtilities.invokeLater(() -> {
-
             for (int i = 0; i < lst3.size(); i++) {
                 String role = lst3.get(i).getRole();
                 if (role.equals("user")) {

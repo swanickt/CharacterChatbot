@@ -141,6 +141,7 @@ public class ChatBotSwingApp extends JFrame {
                 chatController.addUserMessage(ChatViewModel.FIRST_BACKEND_PROMPT);
                 // 获取助手的响应并在界面上显示为气泡形式
                 final String initialResponse = chatController.getAssistantResponse().replace("\n", "");
+
                 dbchatuser.saveHistory("assistant", initialResponse);
                 if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
