@@ -138,7 +138,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
 
     public List<Message> chatHistory(String user) {
         List<Message> chatdocuments = new ArrayList();
-        MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
+        MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
         FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
         // check the last n messages
         documents = documents.limit(LIMIT);

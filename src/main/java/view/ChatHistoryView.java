@@ -33,7 +33,6 @@ public class ChatHistoryView extends JFrame {
         setSize(500, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
         // Chat display panel with BoxLayout for vertical stacking
         chatPanel = new JPanel();
         chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
