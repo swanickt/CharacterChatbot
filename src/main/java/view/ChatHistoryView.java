@@ -2,7 +2,7 @@ package view;
 
 import data_access.MongoDBDataAccessObject;
 import entity.message.Message;
-import interface_adapter.chat.ChatHistoryController;
+import interface_adapter.chat_history.ChatHistoryController;
 
 import javax.swing.*;
 import java.awt.*;

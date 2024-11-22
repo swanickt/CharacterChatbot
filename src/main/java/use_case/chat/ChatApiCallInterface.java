@@ -1,6 +1,6 @@
 package use_case.chat;
 
-public interface ChatServiceInterface {
+public interface ChatApiCallInterface {
 
     void addMessageToHistory(String role, String content);
 

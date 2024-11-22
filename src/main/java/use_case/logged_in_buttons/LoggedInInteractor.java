@@ -1,4 +1,4 @@
-package use_case.logged_in;
+package use_case.logged_in_buttons;
 
 public class LoggedInInteractor implements LoggedInInputBoundary {
     private final LoggedInOutputBoundary loggedInPresenter;

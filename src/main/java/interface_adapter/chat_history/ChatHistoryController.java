@@ -1,4 +1,4 @@
-package interface_adapter.chat;
+package interface_adapter.chat_history;
 
 import entity.chat.CommonUserChat;
 import use_case.chat_history.ChatHistoryInteractor;

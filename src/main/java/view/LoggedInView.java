@@ -9,10 +9,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import entity.chat.CommonUserChat;
-import interface_adapter.optimus_prime.OptimusPrimeController;
+import interface_adapter.chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
-import interface_adapter.chat.ChatHistoryController;
+import interface_adapter.chat_history.ChatHistoryController;
 import interface_adapter.chat.promptController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;

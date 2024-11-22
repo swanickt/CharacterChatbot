@@ -1,7 +1,7 @@
-package interface_adapter.optimus_prime;
+package interface_adapter.chat.optimus_prime;
 
-import use_case.optimus_prime.OptimusPrimeInputBoundary;
-import use_case.optimus_prime.OptimusPrimeInputData;
+import use_case.chat.optimus_prime.OptimusPrimeInputBoundary;
+import use_case.chat.optimus_prime.OptimusPrimeInputData;
 
 /**
  * The controller for the chatting with Optimus Prime Use case.
