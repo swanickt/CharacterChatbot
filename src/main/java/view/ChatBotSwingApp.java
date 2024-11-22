@@ -1,6 +1,6 @@
 package view;
 
-import data_access.DBchatuser;
+import data_access.MongoDBDataAccessObject;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
@@ -38,13 +38,13 @@ public class ChatBotSwingApp extends JFrame {
     private CommonUserChatFactory chatFactory;
     private String username;
     private CommonUserChat chat;
-    private DBchatuser dbchatuser;
+    private MongoDBDataAccessObject dbchatuser;
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
     public ChatBotSwingApp(ChatController chatController, String username) {
         this.chatController = chatController;
         this.username = username;
-        dbchatuser = new DBchatuser();
+        dbchatuser = new MongoDBDataAccessObject();
         dbchatuser.setUp(username);
         chatFactory = new CommonUserChatFactory();
         chat = chatFactory.create();
@@ -109,7 +109,7 @@ public class ChatBotSwingApp extends JFrame {
             setVisible(false);
             final List<Message> lst = chat.getUserInputs();
             final List<Message> lst2 = chat.getBotResponses();
-            final DBchatuser database = new DBchatuser();
+            final MongoDBDataAccessObject database = new MongoDBDataAccessObject();
 
             for (int i = 0; i < lst.size(); i++) {
                 System.out.println(username);

@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.DBchatuser;
+import data_access.MongoDBDataAccessObject;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
 import interface_adapter.Optimus_Prime.OptimusPrimeController;
@@ -39,7 +39,6 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import use_case.OptimusPrime.OptimusPrimeInputBoundary;
-import use_case.OptimusPrime.OptimusPrimeInputData;
 import use_case.OptimusPrime.OptimusPrimeInteractor;
 import use_case.OptimusPrime.OptimusPrimeOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
@@ -91,7 +90,7 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
-    private final DBchatuser userDataAccessObject = new DBchatuser();
+    private final MongoDBDataAccessObject userDataAccessObject = new MongoDBDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;

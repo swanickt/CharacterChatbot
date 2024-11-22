@@ -1,10 +1,7 @@
 package data_access;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
@@ -23,7 +20,7 @@ import entity.user.CommonUser;
  * Just a class that people can access to store the data.
  */
 @SuppressWarnings({"checkstyle:AbbreviationAsWordInName", "checkstyle:SuppressWarnings"})
-public class DBchatuser implements SignupUserDataAccessInterface,
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
@@ -41,7 +38,7 @@ public class DBchatuser implements SignupUserDataAccessInterface,
     private String currentUsername;
     private int LIMIT = 10;
 
-    public DBchatuser() {
+    public MongoDBDataAccessObject() {
         String connectionString = "mongodb+srv://jda1234112:dcJSlP8XfESt9FED@cluster0."
                 + "2mrsi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
         mongoClient = MongoClients.create(connectionString);
