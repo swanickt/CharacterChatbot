@@ -1,7 +1,7 @@
 package interface_adapter.Optimus_Prime;
 
 import interface_adapter.chat.ChatController;
-import use_case.ChatService.ChatService;
+import data_access.gpt_api_calls.ChatService;
 import use_case.OptimusPrime.OptimusPrimeOutputBoundary;
 import use_case.OptimusPrime.OptimusPrimeOutputData;
 import view.ChatBotSwingApp;

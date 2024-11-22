@@ -11,13 +11,13 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import interface_adapter.change_password.ChangePasswordState;
+
 import interface_adapter.chat.ChatController;
 import interface_adapter.chat.promptController;
 import interface_adapter.customBot.CustomBotState;
 import interface_adapter.customBot.CustomBotViewModel;
 import interface_adapter.customBot.GoBackToLoggedInViewController;
-import use_case.ChatService.ChatService;
+import data_access.gpt_api_calls.ChatService;
 
 public class CustomBotView extends JPanel implements PropertyChangeListener {
 

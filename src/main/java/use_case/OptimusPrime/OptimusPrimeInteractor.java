@@ -1,7 +1,7 @@
 package use_case.OptimusPrime;
 
 import entity.bot.OptimusPrimeFactory;
-import use_case.ChatService.ChatService;
+import data_access.gpt_api_calls.ChatService;
 
 /**
  * The Optimus Prime Interactor.

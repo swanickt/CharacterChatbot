@@ -1,6 +1,6 @@
 package interface_adapter.chat;
 
-import use_case.ChatService.ChatService;
+import data_access.gpt_api_calls.ChatService;
 
 public class ChatController {
     private ChatService chatService;

@@ -1,6 +1,6 @@
 package use_case.OptimusPrime;
 
-import use_case.ChatService.ChatService;
+import data_access.gpt_api_calls.ChatService;
 
 /**
  * Output Data for the chat with optimus prime Use Case.

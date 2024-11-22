@@ -1,6 +1,5 @@
 package interface_adapter.Optimus_Prime;
 
-import use_case.ChatService.ChatService;
 import use_case.OptimusPrime.OptimusPrimeInputBoundary;
 import use_case.OptimusPrime.OptimusPrimeInputData;
 

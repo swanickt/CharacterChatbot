@@ -1,15 +1,11 @@
 package view;
 
-import com.mongodb.MongoNamespace;
 import data_access.DBchatuser;
-import entity.chat.ChatFactory;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
 import interface_adapter.chat.ChatController;
 import interface_adapter.chat.ChatViewModel;
-import interface_adapter.logged_in.LoggedInState;
-import use_case.ChatService.ChatService;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -28,15 +24,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The chatting view/"app" for all chats, regardless of the character.

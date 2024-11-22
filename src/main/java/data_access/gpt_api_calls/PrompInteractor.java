@@ -1,4 +1,4 @@
-package use_case.ChatService;
+package data_access.gpt_api_calls;
 
 import entity.bot.MasterYodaFactory;
 import entity.bot.NormalAIFactory;

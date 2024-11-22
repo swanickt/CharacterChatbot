@@ -1,6 +1,5 @@
-package use_case.ChatService;
+package data_access.gpt_api_calls;
 
-import entity.chat.Chat;
 import entity.chat.CommonUserChat;
 
 public class chatHistoryService {

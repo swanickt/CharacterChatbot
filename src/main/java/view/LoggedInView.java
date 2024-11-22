@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import entity.bot.*;
 import entity.chat.CommonUserChat;
 import interface_adapter.Optimus_Prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
@@ -20,8 +19,8 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
-import use_case.ChatService.ChatService;
-import use_case.ChatService.chatHistoryService;
+import data_access.gpt_api_calls.ChatService;
+import data_access.gpt_api_calls.chatHistoryService;
 
 /**
  * The View for when the user is logged into the program.

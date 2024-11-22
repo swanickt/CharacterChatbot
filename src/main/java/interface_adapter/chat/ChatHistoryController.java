@@ -1,8 +1,7 @@
 package interface_adapter.chat;
 
 import entity.chat.CommonUserChat;
-import use_case.ChatService.ChatService;
-import use_case.ChatService.chatHistoryService;
+import data_access.gpt_api_calls.chatHistoryService;
 
 public class ChatHistoryController {
     private chatHistoryService service;
