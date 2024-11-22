@@ -12,12 +12,12 @@ import java.util.List;
 
 
 @SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
-public class GPTApiCallBotResponseDataAccessObject {
+public class GptApiCallBotResponseDataAccessObject {
     private static final String API_KEY = System.getenv("OPENAI_KEY");
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private List<Message> conversationHistory;
 
-    public GPTApiCallBotResponseDataAccessObject(String systemSetting) {
+    public GptApiCallBotResponseDataAccessObject(String systemSetting) {
         this.conversationHistory = new ArrayList<>();
         // 添加初始系统设置
         addMessageToHistory("system", systemSetting);

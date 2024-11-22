@@ -1,11 +1,11 @@
 package interface_adapter.chat;
 
-import data_access.gpt_api_calls.GPTApiCallBotResponseDataAccessObject;
+import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 
 public class ChatController {
-    private GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject;
+    private GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject;
 
-    public ChatController(GPTApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject) {
+    public ChatController(GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject) {
         this.GPTApiCallBotResponseDataAccessObject = GPTApiCallBotResponseDataAccessObject;
     }
 

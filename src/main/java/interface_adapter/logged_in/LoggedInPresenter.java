@@ -3,7 +3,7 @@ package interface_adapter.logged_in;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.change_password.ChangePasswordViewModel;
-import interface_adapter.customBot.CustomBotViewModel;
+import interface_adapter.custom_bot.CustomBotViewModel;
 import use_case.logged_in_buttons.LoggedInOutputBoundary;
 
 public class LoggedInPresenter implements LoggedInOutputBoundary {

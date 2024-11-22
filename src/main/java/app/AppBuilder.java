@@ -7,8 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.MongoDBDataAccessObject;
+import entity.bot.PikachuFactory;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
+import interface_adapter.chat.ChatViewModel;
 import interface_adapter.chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.chat.optimus_prime.OptimusPrimePresenter;
 import interface_adapter.ViewManagerModel;
@@ -17,9 +19,11 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.ChangePasswordViewModel;
 
-import interface_adapter.customBot.CustomBotPresenter;
-import interface_adapter.customBot.CustomBotViewModel;
-import interface_adapter.customBot.GoBackToLoggedInViewController;
+import interface_adapter.chat.pikachu.PikachuController;
+import interface_adapter.chat.pikachu.PikachuPresenter;
+import interface_adapter.custom_bot.CustomBotPresenter;
+import interface_adapter.custom_bot.CustomBotViewModel;
+import interface_adapter.custom_bot.GoBackToLoggedInViewController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToCustomViewController;
@@ -44,6 +48,9 @@ import use_case.chat.optimus_prime.OptimusPrimeOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.chat.pikachu.PikachuInputBoundary;
+import use_case.chat.pikachu.PikachuInteractor;
+import use_case.chat.pikachu.PikachuOutputBoundary;
 import use_case.custom_bot.CustomViewInputBoundary;
 import use_case.custom_bot.CustomViewInteractor;
 import use_case.custom_bot.CustomViewOutputBoundary;
@@ -104,6 +111,7 @@ public class AppBuilder {
     private ChangePasswordViewModel changePasswordViewModel;
     private CustomBotViewModel customBotViewModel;
     private CustomBotView customBotView;
+    private final ChatViewModel chatViewModel = new ChatViewModel();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -160,7 +168,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, chatViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -205,6 +213,9 @@ public class AppBuilder {
         final OptimusPrimeOutputBoundary optimusPrimeOutputBoundary = new OptimusPrimePresenter();
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
         final OptimusPrimeInputBoundary optimusPrimeInteractor = new OptimusPrimeInteractor(optimusPrimeOutputBoundary);
+        final PikachuOutputBoundary pikachuOutputBoundary = new PikachuPresenter(chatViewModel);
+        final PikachuInputBoundary pikachuInteractor = new PikachuInteractor(pikachuOutputBoundary,
+                new PikachuFactory());
 
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
@@ -214,6 +225,9 @@ public class AppBuilder {
 
         final OptimusPrimeController controller3 = new OptimusPrimeController(optimusPrimeInteractor);
         loggedInView.setOptimusPrimeController(controller3);
+
+        final PikachuController controller4 = new PikachuController(pikachuInteractor);
+        loggedInView.setPikachuController(controller4);
 
         return this;
     }

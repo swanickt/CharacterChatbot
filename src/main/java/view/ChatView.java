@@ -24,6 +24,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 /**
@@ -41,9 +42,11 @@ public class ChatView extends JFrame {
     private MongoDBDataAccessObject dbchatuser;
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
+
     public ChatView(ChatController chatController, String username) {
         this.chatController = chatController;
         this.username = username;
+
         dbchatuser = new MongoDBDataAccessObject();
         dbchatuser.setUp(username);
         chatFactory = new CommonUserChatFactory();

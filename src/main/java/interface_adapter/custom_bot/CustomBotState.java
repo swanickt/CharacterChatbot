@@ -1,4 +1,4 @@
-package interface_adapter.customBot;
+package interface_adapter.custom_bot;
 
 public class CustomBotState {
     private final String state = "CustomBotState";

@@ -1,4 +1,4 @@
-package interface_adapter.customBot;
+package interface_adapter.custom_bot;
 
 import interface_adapter.ViewModel;
 

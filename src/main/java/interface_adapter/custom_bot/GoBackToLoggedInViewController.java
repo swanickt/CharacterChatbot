@@ -1,4 +1,4 @@
-package interface_adapter.customBot;
+package interface_adapter.custom_bot;
 
 import use_case.custom_bot.CustomViewInputBoundary;
 
