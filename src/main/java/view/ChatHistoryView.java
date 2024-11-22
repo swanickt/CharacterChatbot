@@ -20,14 +20,17 @@ public class ChatHistoryView extends JFrame {
     private JButton exitButton;
     private final List<Message> lst;
     private final List<Message> lst2;
+    private final List<Message> lst3;
     private ChatHistoryController chathistorycontroller;
     private DBchatuser dbchatuser;
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:SuppressWarnings", "checkstyle:LambdaParameterName", "checkstyle:EmptyLineSeparator"})
     public ChatHistoryView(ChatHistoryController chatHistoryController, String username) {
         this.dbchatuser = new DBchatuser();
         this.username = username;
-        lst = dbchatuser.userHistory(username);
-        lst2 = dbchatuser.chatHistory(username);
+        lst2 = dbchatuser.userHistory(username);
+        lst = dbchatuser.chatHistory(username);
+        // the saving thingy called mixed history
+        lst3 = dbchatuser.mixedHistory(username);
         // Initialize main frame
         setTitle("Past Chat");
         setSize(500, 600);
@@ -51,11 +54,18 @@ public class ChatHistoryView extends JFrame {
 
         SwingUtilities.invokeLater(() -> {
 
-            for (int i = 0; i < lst.size(); i++) {
-                addChatBubble(lst.get(i).getContent(), "user");
-                System.out.println(lst.get(i).getContent());
-                addChatBubble(lst2.get(i).getContent(), "assistant");
-                System.out.println(lst2.get(i).getContent());
+            for (int i = 0; i < lst3.size(); i++) {
+                String role = lst3.get(i).getRole();
+                if (role.equals("user")) {
+                    addChatBubble(lst3.get(i).getContent(), "user");
+                }
+                else {
+                    addChatBubble(lst3.get(i).getContent(), "assistant");
+                }
+//                addChatBubble(lst.get(i).getContent(), "user");
+//                System.out.println(lst.get(i).getContent());
+//                addChatBubble(lst2.get(i).getContent(), "assistant");
+//                System.out.println(lst2.get(i).getContent());
             }
         });
 
