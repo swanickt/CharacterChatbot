@@ -16,6 +16,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final HomeViewModel homeViewModel;
+    private boolean switchToHomeViewCalled = false;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
@@ -25,6 +26,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.homeViewModel = homeViewModel;
+        this.switchToHomeViewCalled = false;
     }
 
     @Override
@@ -57,6 +59,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public void switchToHomeView() {
         final LoginState loginState = loginViewModel.getState();
+        switchToHomeViewCalled = true;
         loginState.setUsername("");
         loginState.setPassword("");
         loginState.setLoginError(null);
@@ -67,5 +70,10 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         viewManagerModel.setState(homeViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public boolean isSwitchToHomeViewCalled() {
+        return switchToHomeViewCalled;
     }
 }

@@ -1,6 +1,8 @@
 package use_case.login;
 
 import data_access.InMemoryUserDataAccessObject;
+import entity.bot.NormalAI;
+import entity.bot.NormalAIFactory;
 import entity.user.CommonUserFactory;
 import entity.user.User;
 import entity.user.UserFactory;
@@ -24,6 +26,8 @@ class LoginInteractorTest {
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            private boolean switchToHomeViewCalled = false;
+
             @Override
             public void prepareSuccessView(LoginOutputData user) {
                 assertEquals("Paul", user.getUsername());
@@ -37,11 +41,19 @@ class LoginInteractorTest {
             @Override
             public void switchToHomeView() {
                 // This is expected
+                switchToHomeViewCalled = true;
+            }
+
+            public boolean isSwitchToHomeViewCalled() {
+                return switchToHomeViewCalled;
             }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
         interactor.execute(inputData);
+        // assertTrue(successPresenter.isSwitchToHomeViewCalled(), "");
+        interactor.switchToHomeView();
+        assertTrue(successPresenter.isSwitchToHomeViewCalled());
     }
 
     @Test
@@ -56,6 +68,8 @@ class LoginInteractorTest {
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            private boolean switchToHomeViewCalled = false;
+
             @Override
             public void prepareSuccessView(LoginOutputData user) {
                 assertEquals("Paul", userRepository.getCurrentUsername());
@@ -69,6 +83,12 @@ class LoginInteractorTest {
             @Override
             public void switchToHomeView() {
                 // This is expected
+                switchToHomeViewCalled = true;
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                return switchToHomeViewCalled;
             }
         };
 
@@ -76,7 +96,8 @@ class LoginInteractorTest {
         assertEquals(null, userRepository.getCurrentUsername());
 
         interactor.execute(inputData);
-    }
+        interactor.switchToHomeView();
+        assertTrue(successPresenter.isSwitchToHomeViewCalled());    }
 
     @Test
     void failurePasswordMismatchTest() {
@@ -105,6 +126,12 @@ class LoginInteractorTest {
             @Override
             public void switchToHomeView() {
                 // This is expected
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                // no need to test here
+                return false;
             }
         };
 
@@ -135,6 +162,12 @@ class LoginInteractorTest {
             @Override
             public void switchToHomeView() {
                 // This is expected
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                // no need to test here
+                return false;
             }
         };
 
