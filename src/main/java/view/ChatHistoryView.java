@@ -27,8 +27,6 @@ public class ChatHistoryView extends JFrame {
     public ChatHistoryView(ChatHistoryController chatHistoryController, String username) {
         this.dbchatuser = new DBchatuser();
         this.username = username;
-        lst2 = dbchatuser.userHistory(username);
-        lst = dbchatuser.chatHistory(username);
         // the saving thingy called mixed history
         lst3 = dbchatuser.mixedHistory(username);
         // Initialize main frame

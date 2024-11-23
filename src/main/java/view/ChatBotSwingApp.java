@@ -137,7 +137,7 @@ public class ChatBotSwingApp extends JFrame {
         SwingUtilities.invokeLater(() -> {
             setVisible(true);
             try {
-                // 模拟发送 "hello" 消息但不显示在界面上
+                // 模拟发送 "hello" 消息但不显示在界面上.
                 chatController.addUserMessage(ChatViewModel.FIRST_BACKEND_PROMPT);
                 // 获取助手的响应并在界面上显示为气泡形式
                 final String initialResponse = chatController.getAssistantResponse().replace("\n", "");

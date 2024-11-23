@@ -115,38 +115,6 @@ public class DBchatuser implements SignupUserDataAccessInterface,
         userCollection.updateOne(query, update);
     }
 
-    public List<Message> userHistory(String user) {
-        List<Message> userdocuments = new ArrayList();
-        MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
-        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
-        // check the last n messages
-//        documents = documents.limit(LIMIT);
-
-        for (Document doc: documents) {
-            if (doc.containsKey("user:")) {
-                Message message = new Message("user", doc.getString("response"));
-                userdocuments.add(message);
-            }
-        }
-        return userdocuments;
-    }
-
-    public List<Message> chatHistory(String user) {
-        List<Message> chatdocuments = new ArrayList();
-        MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
-        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
-        // check the last n messages
-//        documents = documents.limit(LIMIT);
-
-        for (Document doc: documents) {
-            if (doc.containsKey("chat:")) {
-                Message message = new Message("assistant", doc.getString("response"));
-                chatdocuments.add(message);
-            }
-        }
-        return chatdocuments;
-    }
-
     public List<Message> mixedHistory(String user){
         List<Message> returnDoc = new ArrayList();
         MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
