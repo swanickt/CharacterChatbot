@@ -127,6 +127,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface,
                 returnDoc.add(message);
                 break;
             }
+
             if (doc.containsKey("user:")) {
                 Message message = new Message("user", doc.getString("response"));
                 returnDoc.add(message);
