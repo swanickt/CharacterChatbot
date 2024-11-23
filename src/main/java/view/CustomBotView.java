@@ -15,25 +15,34 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.custom_bot.CustomBotState;
 import interface_adapter.custom_bot.CustomBotViewModel;
 import interface_adapter.custom_bot.GoBackToLoggedInViewController;
+import interface_adapter.new_chat.ChatViewModel;
+import interface_adapter.new_chat.custom_bot.CustomBotController;
+import interface_adapter.send_message.SendMessageController;
 
 public class CustomBotView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "customBot";
     private final CustomBotViewModel customBotViewModel;
+    private CustomBotController customBotController;
+    private SendMessageController sendMessageController;
     private final JButton chatButton;
     private final JButton backButton;
     private GoBackToLoggedInViewController goBackToLoggedInViewController;
     private final JTextField nameInputField = new JTextField(15);
     private final JTextField occupationInputField = new JTextField(15);
+    private final ChatViewModel chatViewModel;
+    ChatView chatApp;
 
     /**
      * Constructs the CustomBotView.
      *
      * @param customBotViewModel the ViewModel that holds the state for the custom bot creation view.
      */
-    public CustomBotView(CustomBotViewModel customBotViewModel) {
+    public CustomBotView(CustomBotViewModel customBotViewModel, ChatViewModel chatViewModel) {
         this.customBotViewModel = customBotViewModel;
         this.customBotViewModel.addPropertyChangeListener(this);
+        this.chatViewModel = chatViewModel;
+        this.chatViewModel.addPropertyChangeListener(this);
 
         // Initialize buttons and their action listeners
         chatButton = new JButton("Chat");
@@ -48,6 +57,17 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
 //            final SendMessageController sendChatController = new SendMessageController(GPTApiCallBotResponseDataAccessObject);
 //            final ChatView chatApp = new ChatView(sendChatController, "");
 //            chatApp.setVisible(true);
+            final String occupation = occupationInputField.getText();
+            final String name = nameInputField.getText();
+            customBotController.execute("", name, occupation);
+
+            final String setting = chatViewModel.getPrompt();
+            sendMessageController.setSystemSetting(setting);
+
+            final String username = chatViewModel.getUsername();
+
+            chatApp = new ChatView(sendMessageController, username, chatViewModel);
+            chatApp.setVisible(true);
         });
         backButton = new JButton("Back");
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -191,6 +211,14 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         final JLabel label = new JLabel("(ℹ)", SwingConstants.CENTER);
         label.setToolTipText(tooltipText);
         return label;
-        }
+    }
+
+    public void setCustomBotController(CustomBotController customBotController) {
+        this.customBotController = customBotController;
+    }
+
+    public void setSendMessageController(SendMessageController sendMessageController) {
+        this.sendMessageController = sendMessageController;
+    }
 }
 

@@ -7,15 +7,15 @@ import use_case.exit_custom_bot_view.CustomViewOutputBoundary;
 /**
  * The Presenter for the Custom Bot Use Case.
  */
-public class CustomBotPresenter implements CustomViewOutputBoundary {
+public class CustomBotPagePresenter implements CustomViewOutputBoundary {
 
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final CustomBotViewModel customBotViewModel;
 
-    public CustomBotPresenter(LoggedInViewModel loggedInViewModel,
-                              ViewManagerModel viewManagerModel,
-                              CustomBotViewModel customBotViewModel) {
+    public CustomBotPagePresenter(LoggedInViewModel loggedInViewModel,
+                                  ViewManagerModel viewManagerModel,
+                                  CustomBotViewModel customBotViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.customBotViewModel = customBotViewModel;
