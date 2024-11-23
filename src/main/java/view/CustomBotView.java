@@ -12,12 +12,9 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import interface_adapter.send_chat.SendChatController;
-import interface_adapter.new_chat.promptController;
 import interface_adapter.custom_bot.CustomBotState;
 import interface_adapter.custom_bot.CustomBotViewModel;
 import interface_adapter.custom_bot.GoBackToLoggedInViewController;
-import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 
 public class CustomBotView extends JPanel implements PropertyChangeListener {
 
@@ -48,7 +45,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
 //                    occupationInputField.getText());
 //            final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject();
 //            GPTApiCallBotResponseDataAccessObject.setSystemSetting(setting);
-//            final SendChatController sendChatController = new SendChatController(GPTApiCallBotResponseDataAccessObject);
+//            final SendMessageController sendChatController = new SendMessageController(GPTApiCallBotResponseDataAccessObject);
 //            final ChatView chatApp = new ChatView(sendChatController, "");
 //            chatApp.setVisible(true);
         });

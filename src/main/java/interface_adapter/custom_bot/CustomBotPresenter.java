@@ -2,7 +2,7 @@ package interface_adapter.custom_bot;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import use_case.custom_bot.CustomViewOutputBoundary;
+import use_case.exit_custom_bot_view.CustomViewOutputBoundary;
 
 /**
  * The Presenter for the Custom Bot Use Case.

@@ -1,7 +1,7 @@
 package data_access.gpt_api_calls;
 
 import entity.message.Message;
-import use_case.send_chat.ChatApiAccessInterface;
+import use_case.send_message.ChatApiAccessInterface;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

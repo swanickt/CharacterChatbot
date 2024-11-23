@@ -1,13 +1,12 @@
-package interface_adapter.send_chat;
+package interface_adapter.send_message;
 
-import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
-import use_case.send_chat.SendChatInputBoundary;
-import use_case.send_chat.SendChatInputData;
+import use_case.send_message.SendMessageInputBoundary;
+import use_case.send_message.SendMessageInputData;
 
-public class SendChatController {
-    private final SendChatInputBoundary sendChatInteractor;
+public class SendMessageController {
+    private final SendMessageInputBoundary sendChatInteractor;
 
-    public SendChatController(SendChatInputBoundary sendChatInteractor) {
+    public SendMessageController(SendMessageInputBoundary sendChatInteractor) {
         this.sendChatInteractor = sendChatInteractor;
     }
 
@@ -16,9 +15,9 @@ public class SendChatController {
      * @param userInput the input of the user chatting.
      */
     public void execute(String userInput) {
-        final SendChatInputData sendChatInputData = new SendChatInputData(userInput);
+        final SendMessageInputData sendMessageInputData = new SendMessageInputData(userInput);
 
-        sendChatInteractor.execute(sendChatInputData);
+        sendChatInteractor.execute(sendMessageInputData);
     }
 
     public void setSystemSetting(String prompt) {

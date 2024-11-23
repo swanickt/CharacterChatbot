@@ -1,6 +1,6 @@
 package interface_adapter.custom_bot;
 
-import use_case.custom_bot.CustomViewInputBoundary;
+import use_case.exit_custom_bot_view.CustomViewInputBoundary;
 
 public class GoBackToLoggedInViewController {
     private final CustomViewInputBoundary customViewInteractor;

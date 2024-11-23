@@ -46,8 +46,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.send_chat.SendChatController;
-import interface_adapter.send_chat.SendChatPresenter;
+import interface_adapter.send_message.SendMessageController;
+import interface_adapter.send_message.SendMessagePresenter;
 import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -65,9 +65,9 @@ import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.new_chat.pikachu.PikachuInputBoundary;
 import use_case.new_chat.pikachu.PikachuInteractor;
 import use_case.new_chat.pikachu.PikachuOutputBoundary;
-import use_case.custom_bot.CustomViewInputBoundary;
-import use_case.custom_bot.CustomViewInteractor;
-import use_case.custom_bot.CustomViewOutputBoundary;
+import use_case.exit_custom_bot_view.CustomViewInputBoundary;
+import use_case.exit_custom_bot_view.CustomViewInteractor;
+import use_case.exit_custom_bot_view.CustomViewOutputBoundary;
 import use_case.home_view_buttons.HomeViewInputBoundary;
 import use_case.home_view_buttons.HomeViewInteractor;
 import use_case.home_view_buttons.HomeViewOutputBoundary;
@@ -80,8 +80,8 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.send_chat.SendChatInteractor;
-import use_case.send_chat.SendChatOutputBoundary;
+import use_case.send_message.SendMessageInteractor;
+import use_case.send_message.SendMessageOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -241,8 +241,8 @@ public class AppBuilder {
         final MasterYodaInteractor masterYodaInteractor = new MasterYodaInteractor(masterYodaOutputBoundary,
                 new MasterYodaFactory());
 
-        final SendChatOutputBoundary sendChatOutputBoundary = new SendChatPresenter(chatViewModel);
-        final SendChatInteractor sendChatInteractor = new SendChatInteractor(sendChatOutputBoundary,
+        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel);
+        final SendMessageInteractor sendChatInteractor = new SendMessageInteractor(sendMessageOutputBoundary,
                 new GptApiCallBotResponseDataAccessObject());
 
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
@@ -263,8 +263,8 @@ public class AppBuilder {
         final MasterYodaController controller6 = new MasterYodaController(masterYodaInteractor);
         loggedInView.setMasterYodaController(controller6);
 
-        final SendChatController controller7 = new SendChatController(sendChatInteractor);
-        loggedInView.setSendChatController(controller7);
+        final SendMessageController controller7 = new SendMessageController(sendChatInteractor);
+        loggedInView.setSendMessageController(controller7);
 
         return this;
     }

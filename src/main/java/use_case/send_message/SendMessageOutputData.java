@@ -1,10 +1,10 @@
-package use_case.send_chat;
+package use_case.send_message;
 
-public class SendChatOutputData {
+public class SendMessageOutputData {
     private String botResponse = "";
     private boolean botResponseError = false;
 
-    public SendChatOutputData(String botResponse, boolean botResponseError) {
+    public SendMessageOutputData(String botResponse, boolean botResponseError) {
         this.botResponse = botResponse;
         this.botResponseError = botResponseError;
     }

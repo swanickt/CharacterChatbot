@@ -1,4 +1,4 @@
-package use_case.send_chat;
+package use_case.send_message;
 
 /**
  * The interface for getting api call responses from the gpt API.

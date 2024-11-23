@@ -1,4 +1,4 @@
-package use_case.custom_bot;
+package use_case.exit_custom_bot_view;
 
 public interface CustomViewOutputBoundary {
     // void switchToChatBotApp();

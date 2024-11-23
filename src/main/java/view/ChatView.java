@@ -4,7 +4,7 @@ import data_access.MongoDBDataAccessObject;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
-import interface_adapter.send_chat.SendChatController;
+import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.ChatViewModel;
 
 import javax.swing.BorderFactory;
@@ -34,7 +34,7 @@ public class ChatView extends JFrame {
     private JTextField inputField;
     private JButton sendButton;
     private JButton exitButton;
-    private SendChatController sendChatController;
+    private SendMessageController sendMessageController;
     private CommonUserChatFactory chatFactory;
     private String username;
     private CommonUserChat chat;
@@ -42,8 +42,8 @@ public class ChatView extends JFrame {
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
 
-    public ChatView(SendChatController sendChatController, String username, ChatViewModel chatViewModel) {
-        this.sendChatController = sendChatController;
+    public ChatView(SendMessageController sendMessageController, String username, ChatViewModel chatViewModel) {
+        this.sendMessageController = sendMessageController;
         this.username = username;
 
         dbchatuser = new MongoDBDataAccessObject();
@@ -89,7 +89,7 @@ public class ChatView extends JFrame {
                     addChatBubble(userInput, "user");
                     chat.addUserInput(userInput);
                     inputField.setText("");
-                    sendChatController.execute(userInput);
+                    sendMessageController.execute(userInput);
                     dbchatuser.saveHistory(username, userInput);
                     // Fetch GPT response
                     if (chatViewModel.getBotResponseError() == true) {
@@ -126,7 +126,7 @@ public class ChatView extends JFrame {
             setVisible(true);
             try {
                 // 模拟发送 "hello" 消息但不显示在界面上
-                sendChatController.execute(ChatViewModel.FIRST_BACKEND_PROMPT);
+                sendMessageController.execute(ChatViewModel.FIRST_BACKEND_PROMPT);
                 // 获取助手的响应并在界面上显示为气泡形式
                 final String initialResponse = chatViewModel.getBotResponse();
                 if (!initialResponse.isEmpty()) {

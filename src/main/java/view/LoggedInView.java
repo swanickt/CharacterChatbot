@@ -14,7 +14,7 @@ import interface_adapter.new_chat.master_yoda.MasterYodaController;
 import interface_adapter.new_chat.normal_bot.NormalBotController;
 import interface_adapter.new_chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.send_chat.SendChatController;
+import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.pikachu.PikachuController;
 import interface_adapter.chat_history.ChatHistoryController;
 import interface_adapter.logged_in.LoggedInState;
@@ -22,7 +22,6 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
-import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 import use_case.chat_history.ChatHistoryInteractor;
 
 /**
@@ -41,7 +40,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private PikachuController pikachuController;
     private NormalBotController normalBotController;
     private MasterYodaController masterYodaController;
-    private SendChatController sendChatController;
+    private SendMessageController sendMessageController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -113,7 +112,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 //                final promptController prompcontroller = new promptController();
 //                final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
 //                final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject(setting);
-//                final SendChatController chatController = new SendChatController(GPTApiCallBotResponseDataAccessObject);
+//                final SendMessageController chatController = new SendMessageController(GPTApiCallBotResponseDataAccessObject);
 //                chatApp = new ChatView(chatController, username.getText());
 //                chatApp.setVisible(true);
 //            }
@@ -254,11 +253,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         else if (evt.getPropertyName().equals("new chat")) {
 
             final String setting = chatViewModel.getPrompt();
-            sendChatController.setSystemSetting(setting);
+            sendMessageController.setSystemSetting(setting);
 
             final String username = chatViewModel.getUsername();
 
-            chatApp = new ChatView(sendChatController, username, chatViewModel);
+            chatApp = new ChatView(sendMessageController, username, chatViewModel);
             chatApp.setVisible(true);
         }
     }
@@ -299,7 +298,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.masterYodaController = masterYodaController;
     }
 
-    public void setSendChatController(SendChatController sendChatController) {
-        this.sendChatController = sendChatController;
+    public void setSendMessageController(SendMessageController sendMessageController) {
+        this.sendMessageController = sendMessageController;
     }
 }
