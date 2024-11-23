@@ -1,6 +1,7 @@
 package data_access.gpt_api_calls;
 
 import entity.message.Message;
+import use_case.chat.ChatApiAccessInterface;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,7 +13,7 @@ import java.util.List;
 
 
 @SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
-public class GptApiCallBotResponseDataAccessObject {
+public class GptApiCallBotResponseDataAccessObject implements ChatApiAccessInterface {
     private static final String API_KEY = System.getenv("OPENAI_KEY");
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private List<Message> conversationHistory;
