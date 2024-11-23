@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.MongoDBDataAccessObject;
+import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 import entity.bot.MasterYodaFactory;
 import entity.bot.NormalAIFactory;
 import entity.bot.OptimusPrimeFactory;
@@ -45,6 +46,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.send_chat.SendChatController;
+import interface_adapter.send_chat.SendChatPresenter;
 import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -77,6 +80,8 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.send_chat.SendChatInteractor;
+import use_case.send_chat.SendChatOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -236,6 +241,10 @@ public class AppBuilder {
         final MasterYodaInteractor masterYodaInteractor = new MasterYodaInteractor(masterYodaOutputBoundary,
                 new MasterYodaFactory());
 
+        final SendChatOutputBoundary sendChatOutputBoundary = new SendChatPresenter(chatViewModel);
+        final SendChatInteractor sendChatInteractor = new SendChatInteractor(sendChatOutputBoundary,
+                new GptApiCallBotResponseDataAccessObject());
+
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
 
@@ -253,6 +262,9 @@ public class AppBuilder {
 
         final MasterYodaController controller6 = new MasterYodaController(masterYodaInteractor);
         loggedInView.setMasterYodaController(controller6);
+
+        final SendChatController controller7 = new SendChatController(sendChatInteractor);
+        loggedInView.setSendChatController(controller7);
 
         return this;
     }

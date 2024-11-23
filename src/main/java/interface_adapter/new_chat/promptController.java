@@ -1,6 +1,6 @@
 package interface_adapter.new_chat;
 
-import use_case.send_chat.PrompInteractor;
+import use_case.new_chat.PrompInteractor;
 
 import javax.swing.*;
 

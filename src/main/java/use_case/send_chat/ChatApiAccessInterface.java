@@ -15,4 +15,8 @@ public interface ChatApiAccessInterface {
      */
     String getChatbotResponse() throws Exception;
 
+    /**
+     * Sets the api responses system setting to setting.
+     */
+    void setSystemSetting(String setting);
 }

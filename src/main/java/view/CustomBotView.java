@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import interface_adapter.new_chat.ChatController;
+import interface_adapter.send_chat.SendChatController;
 import interface_adapter.new_chat.promptController;
 import interface_adapter.custom_bot.CustomBotState;
 import interface_adapter.custom_bot.CustomBotViewModel;
@@ -43,13 +43,14 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-            final promptController prompcontroller = new promptController();
-            final String setting = prompcontroller.creatPrompt(nameInputField.getText(),
-                    occupationInputField.getText());
-            final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject(setting);
-            final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
-            final ChatView chatApp = new ChatView(chatController, "");
-            chatApp.setVisible(true);
+//            final promptController prompcontroller = new promptController();
+//            final String setting = prompcontroller.creatPrompt(nameInputField.getText(),
+//                    occupationInputField.getText());
+//            final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject();
+//            GPTApiCallBotResponseDataAccessObject.setSystemSetting(setting);
+//            final SendChatController sendChatController = new SendChatController(GPTApiCallBotResponseDataAccessObject);
+//            final ChatView chatApp = new ChatView(sendChatController, "");
+//            chatApp.setVisible(true);
         });
         backButton = new JButton("Back");
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);

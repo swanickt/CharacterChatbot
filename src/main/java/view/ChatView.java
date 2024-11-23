@@ -4,7 +4,7 @@ import data_access.MongoDBDataAccessObject;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
-import interface_adapter.new_chat.ChatController;
+import interface_adapter.send_chat.SendChatController;
 import interface_adapter.new_chat.ChatViewModel;
 
 import javax.swing.BorderFactory;
@@ -34,7 +34,7 @@ public class ChatView extends JFrame {
     private JTextField inputField;
     private JButton sendButton;
     private JButton exitButton;
-    private ChatController chatController;
+    private SendChatController sendChatController;
     private CommonUserChatFactory chatFactory;
     private String username;
     private CommonUserChat chat;
@@ -42,8 +42,8 @@ public class ChatView extends JFrame {
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
 
-    public ChatView(ChatController chatController, String username) {
-        this.chatController = chatController;
+    public ChatView(SendChatController sendChatController, String username, ChatViewModel chatViewModel) {
+        this.sendChatController = sendChatController;
         this.username = username;
 
         dbchatuser = new MongoDBDataAccessObject();
@@ -89,18 +89,16 @@ public class ChatView extends JFrame {
                     addChatBubble(userInput, "user");
                     chat.addUserInput(userInput);
                     inputField.setText("");
-                    chatController.addUserMessage(userInput);
+                    sendChatController.execute(userInput);
                     dbchatuser.saveHistory(username, userInput);
                     // Fetch GPT response
-                    try {
-                        final String response = chatController.getAssistantResponse().replace("\n", "");
-                        addChatBubble(response, "assistant");
-                        chat.addBotResponse(response);
-                        chatController.addAssistantMessage(response);
-                        dbchatuser.saveHistory("assistant", response);
-                    }
-                    catch (Exception ex) {
+                    if (chatViewModel.getBotResponseError() == true) {
                         addChatBubble("Error: Unable to get response from GPT.", "error");
+                    }
+                    else {
+                        addChatBubble(chatViewModel.getBotResponse(), "assistant");
+                        chat.addBotResponse(chatViewModel.getBotResponse());
+                        dbchatuser.saveHistory("assistant", chatViewModel.getBotResponse());
                     }
                 }
             }
@@ -128,13 +126,12 @@ public class ChatView extends JFrame {
             setVisible(true);
             try {
                 // 模拟发送 "hello" 消息但不显示在界面上
-                chatController.addUserMessage(ChatViewModel.FIRST_BACKEND_PROMPT);
+                sendChatController.execute(ChatViewModel.FIRST_BACKEND_PROMPT);
                 // 获取助手的响应并在界面上显示为气泡形式
-                final String initialResponse = chatController.getAssistantResponse().replace("\n", "");
+                final String initialResponse = chatViewModel.getBotResponse();
                 if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         addChatBubble(initialResponse, "assistant");
-                        chatController.addAssistantMessage(initialResponse);
                         chatPanel.revalidate();
                         chatPanel.repaint();
                     });

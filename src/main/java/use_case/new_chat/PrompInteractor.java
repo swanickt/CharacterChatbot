@@ -1,4 +1,4 @@
-package use_case.send_chat;
+package use_case.new_chat;
 
 import entity.bot.MasterYodaFactory;
 import entity.bot.NormalAIFactory;
