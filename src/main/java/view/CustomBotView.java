@@ -12,9 +12,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import interface_adapter.chat.ChatController;
-import interface_adapter.chat.ChatViewModel;
-import interface_adapter.chat.promptController;
+import interface_adapter.new_chat.ChatController;
+import interface_adapter.new_chat.promptController;
 import interface_adapter.custom_bot.CustomBotState;
 import interface_adapter.custom_bot.CustomBotViewModel;
 import interface_adapter.custom_bot.GoBackToLoggedInViewController;

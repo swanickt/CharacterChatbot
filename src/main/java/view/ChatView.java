@@ -4,8 +4,8 @@ import data_access.MongoDBDataAccessObject;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
-import interface_adapter.chat.ChatController;
-import interface_adapter.chat.ChatViewModel;
+import interface_adapter.new_chat.ChatController;
+import interface_adapter.new_chat.ChatViewModel;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -24,7 +24,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 /**
