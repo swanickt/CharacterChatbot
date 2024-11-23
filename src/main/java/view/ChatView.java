@@ -4,8 +4,10 @@ import data_access.MongoDBDataAccessObject;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
+import interface_adapter.exit_chat.ExitChatController;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.ChatViewModel;
+import use_case.exit_chat.ExitChatInputBoundary;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -107,20 +109,8 @@ public class ChatView extends JFrame {
         // Exit button action listener
         exitButton.addActionListener(e -> {
             setVisible(false);
-            final List<Message> lst = chat.getUserInputs();
-            final List<Message> lst2 = chat.getBotResponses();
-            final MongoDBDataAccessObject database = new MongoDBDataAccessObject();
-
-            for (int i = 0; i < lst.size(); i++) {
-                System.out.println(username);
-                if (!"".equals(username)) {
-                    database.saveHistory(username, lst.get(i).getContent());
-                    database.saveHistory("assistant", lst2.get(i).getContent());
-                }
-                System.out.println(lst.get(i).getContent());
-                System.out.println(lst2.get(i).getContent());
-            }
-            System.out.println(database.get(username));
+            final ExitChatController controller = new ExitChatController();
+            controller.execute(username, chat);
         });
         SwingUtilities.invokeLater(() -> {
             setVisible(true);
