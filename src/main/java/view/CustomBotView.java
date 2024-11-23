@@ -86,8 +86,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         final JPanel namePanel = new JPanel();
         namePanel.setLayout(new FlowLayout());
         final JLabel nameLabel = new JLabel("Name:");
-        final JLabel nameInfoIcon = createInfoIcon("Enter the name "
-                + "of your custom bot or character.");
+        final JLabel nameInfoIcon = createInfoIcon("Choose a name for your custom character! ");
         namePanel.add(nameLabel);
         namePanel.add(nameInputField);
         namePanel.add(nameInfoIcon);
@@ -95,8 +94,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         final JPanel occupationPanel = new JPanel();
         occupationPanel.setLayout(new FlowLayout());
         final JLabel occupationLabel = new JLabel("Occupation:");
-        final JLabel occupationInfoIcon = createInfoIcon("Enter the "
-                + "occupation of your custom bot.");
+        final JLabel occupationInfoIcon = createInfoIcon( "Choose an occupation for your custom character! ");
         occupationPanel.add(occupationLabel);
         occupationPanel.add(occupationInputField);
         occupationPanel.add(occupationInfoIcon);
