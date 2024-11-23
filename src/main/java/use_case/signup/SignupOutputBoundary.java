@@ -22,8 +22,11 @@ public interface SignupOutputBoundary {
      */
     void switchToLoginView();
 
+    boolean isSwitchedToLoginViewCalled();
     /**
      * Switches to the Home View.
      */
     void switchToHomeView();
+
+    boolean isSwitchToHomeViewCalled();
 }
