@@ -1,23 +1,23 @@
 package interface_adapter.chat;
 
-import use_case.ChatService.ChatService;
+import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 
 public class ChatController {
-    private ChatService chatService;
+    private GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject;
 
-    public ChatController(ChatService chatService) {
-        this.chatService = chatService;
+    public ChatController(GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject) {
+        this.GPTApiCallBotResponseDataAccessObject = GPTApiCallBotResponseDataAccessObject;
     }
 
     public void addUserMessage(String message) {
-        chatService.addMessageToHistory("user", message);
+        GPTApiCallBotResponseDataAccessObject.addMessageToHistory("user", message);
     }
 
     public String getAssistantResponse() throws Exception {
-        return chatService.getChatbotResponse();
+        return GPTApiCallBotResponseDataAccessObject.getChatbotResponse();
     }
 
     public void addAssistantMessage(String message) {
-        chatService.addMessageToHistory("assistant", message);
+        GPTApiCallBotResponseDataAccessObject.addMessageToHistory("assistant", message);
     }
 }

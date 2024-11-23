@@ -11,13 +11,14 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import interface_adapter.change_password.ChangePasswordState;
+
 import interface_adapter.chat.ChatController;
+import interface_adapter.chat.ChatViewModel;
 import interface_adapter.chat.promptController;
-import interface_adapter.customBot.CustomBotState;
-import interface_adapter.customBot.CustomBotViewModel;
-import interface_adapter.customBot.GoBackToLoggedInViewController;
-import use_case.ChatService.ChatService;
+import interface_adapter.custom_bot.CustomBotState;
+import interface_adapter.custom_bot.CustomBotViewModel;
+import interface_adapter.custom_bot.GoBackToLoggedInViewController;
+import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 
 public class CustomBotView extends JPanel implements PropertyChangeListener {
 
@@ -46,9 +47,9 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
             final promptController prompcontroller = new promptController();
             final String setting = prompcontroller.creatPrompt(nameInputField.getText(),
                     occupationInputField.getText());
-            final ChatService chatService = new ChatService(setting);
-            final ChatController chatController = new ChatController(chatService);
-            final ChatBotSwingApp chatApp = new ChatBotSwingApp(chatController, "");
+            final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject(setting);
+            final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
+            final ChatView chatApp = new ChatView(chatController, "");
             chatApp.setVisible(true);
         });
         backButton = new JButton("Back");

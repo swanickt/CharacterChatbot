@@ -11,9 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import interface_adapter.home_view.GoToLoginController;
-import interface_adapter.home_view.GoToSignUpController;
-import interface_adapter.home_view.HomeViewModel;
+import interface_adapter.home_view_buttons.GoToLoginController;
+import interface_adapter.home_view_buttons.GoToSignUpController;
+import interface_adapter.home_view_buttons.HomeViewModel;
 
 /**
  * The View for the program's home screen.

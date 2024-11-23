@@ -8,20 +8,23 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import entity.bot.*;
 import entity.chat.CommonUserChat;
-import interface_adapter.Optimus_Prime.OptimusPrimeController;
+import interface_adapter.chat.ChatViewModel;
+import interface_adapter.chat.master_yoda.MasterYodaController;
+import interface_adapter.chat.normal_bot.NormalBotController;
+import interface_adapter.chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.chat.ChatController;
-import interface_adapter.chat.ChatHistoryController;
+import interface_adapter.chat.pikachu.PikachuController;
+import interface_adapter.chat_history.ChatHistoryController;
 import interface_adapter.chat.promptController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
-import use_case.ChatService.ChatService;
-import use_case.ChatService.chatHistoryService;
+import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
+import use_case.chat_history.ChatHistoryInteractor;
 
 /**
  * The View for when the user is logged into the program.
@@ -36,6 +39,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ToPasswordSettingsController toPasswordSettingsController;
     private ToCustomViewController toCustomViewController;
     private OptimusPrimeController optimusPrimeController;
+    private PikachuController pikachuController;
+    private NormalBotController normalBotController;
+    private MasterYodaController masterYodaController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -46,13 +52,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton customBotButton;
     private CommonUserChat testChat;
     private CommonUserChat chat;
+    private final ChatViewModel chatViewModel;
     @SuppressWarnings({"checkstyle:DeclarationOrder", "checkstyle:VisibilityModifier"})
-    ChatBotSwingApp chatApp;
+    ChatView chatApp;
 
     @SuppressWarnings({"checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:CatchParameterName"})
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, ChatViewModel chatViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.chatViewModel = chatViewModel;
+        this.chatViewModel.addPropertyChangeListener(this);
 
         // Title
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -91,14 +100,23 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             if (optimusPrimeButton.isSelected()) {
                 optimusPrimeController.execute(username.getText());
             }
-            else {
-                final promptController prompcontroller = new promptController();
-                final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
-                final ChatService chatService = new ChatService(setting);
-                final ChatController chatController = new ChatController(chatService);
-                chatApp = new ChatBotSwingApp(chatController, username.getText());
-                chatApp.setVisible(true);
+            else if (pikachuButton.isSelected()) {
+                pikachuController.execute(username.getText());
             }
+            else if (normalBotButton.isSelected()) {
+                normalBotController.execute(username.getText());
+            }
+            else if (masterYodaButton.isSelected()) {
+                masterYodaController.execute(username.getText());
+            }
+//            else {
+//                final promptController prompcontroller = new promptController();
+//                final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
+//                final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject(setting);
+//                final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
+//                chatApp = new ChatView(chatController, username.getText());
+//                chatApp.setVisible(true);
+//            }
         });
 
         chatHistoryButton = new JButton("Past Chat");
@@ -112,8 +130,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 testChat = testChat;
             }
             JOptionPane.showMessageDialog(this, "Opening Past Chat...");
-            final chatHistoryService chatHistoryService = new chatHistoryService(username.getText(), testChat);
-            final ChatHistoryController controller = new ChatHistoryController(chatHistoryService);
+            final ChatHistoryInteractor ChatHistoryInteractor = new ChatHistoryInteractor(username.getText(), testChat);
+            final ChatHistoryController controller = new ChatHistoryController(ChatHistoryInteractor);
             final ChatHistoryView chatHistoryView = new ChatHistoryView(controller, username.getText());
             chatHistoryView.setVisible(true);
         });
@@ -233,6 +251,17 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
         }
+        else if (evt.getPropertyName().equals("new chat")) {
+
+            final String setting = chatViewModel.getPrompt();
+            final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject(setting);
+            final ChatController chatController = new ChatController(GPTApiCallBotResponseDataAccessObject);
+
+            final String username = chatViewModel.getUsername();
+
+            chatApp = new ChatView(chatController, username);
+            chatApp.setVisible(true);
+        }
     }
 
     public String getViewName() {
@@ -257,5 +286,17 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setOptimusPrimeController(OptimusPrimeController optimusPrimeController) {
         this.optimusPrimeController = optimusPrimeController;
+    }
+
+    public void setPikachuController(PikachuController pikachuController) {
+        this.pikachuController = pikachuController;
+    }
+
+    public void setNormalBotController(NormalBotController normalBotController) {
+        this.normalBotController = normalBotController;
+    }
+
+    public void setMasterYodaController(MasterYodaController masterYodaController) {
+        this.masterYodaController = masterYodaController;
     }
 }
