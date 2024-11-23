@@ -12,9 +12,9 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import interface_adapter.custom_bot.CustomBotState;
-import interface_adapter.custom_bot.CustomBotViewModel;
-import interface_adapter.custom_bot.GoBackToLoggedInViewController;
+import interface_adapter.custom_bot_page.CustomBotState;
+import interface_adapter.custom_bot_page.CustomBotViewModel;
+import interface_adapter.custom_bot_page.GoBackToLoggedInViewController;
 import interface_adapter.new_chat.ChatViewModel;
 import interface_adapter.new_chat.custom_bot.CustomBotController;
 import interface_adapter.send_message.SendMessageController;

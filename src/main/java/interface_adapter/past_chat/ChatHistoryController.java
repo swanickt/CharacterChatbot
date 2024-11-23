@@ -1,7 +1,7 @@
-package interface_adapter.chat_history;
+package interface_adapter.past_chat;
 
 import entity.chat.CommonUserChat;
-import use_case.chat_history.ChatHistoryInteractor;
+import use_case.past_chat.ChatHistoryInteractor;
 
 public class ChatHistoryController {
     private ChatHistoryInteractor service;

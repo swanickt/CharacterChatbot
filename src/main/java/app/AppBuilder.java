@@ -28,9 +28,9 @@ import interface_adapter.change_password.ChangePasswordViewModel;
 
 import interface_adapter.new_chat.pikachu.PikachuController;
 import interface_adapter.new_chat.pikachu.PikachuPresenter;
-import interface_adapter.custom_bot.CustomBotPagePresenter;
-import interface_adapter.custom_bot.CustomBotViewModel;
-import interface_adapter.custom_bot.GoBackToLoggedInViewController;
+import interface_adapter.custom_bot_page.CustomBotPagePresenter;
+import interface_adapter.custom_bot_page.CustomBotViewModel;
+import interface_adapter.custom_bot_page.GoBackToLoggedInViewController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToCustomViewController;

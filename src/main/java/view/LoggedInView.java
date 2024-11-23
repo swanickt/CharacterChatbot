@@ -16,13 +16,13 @@ import interface_adapter.new_chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.pikachu.PikachuController;
-import interface_adapter.chat_history.ChatHistoryController;
+import interface_adapter.past_chat.ChatHistoryController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
-import use_case.chat_history.ChatHistoryInteractor;
+import use_case.past_chat.ChatHistoryInteractor;
 
 /**
  * The View for when the user is logged into the program.

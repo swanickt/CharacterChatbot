@@ -1,4 +1,4 @@
-package use_case.chat_history;
+package use_case.past_chat;
 
 import entity.chat.CommonUserChat;
 

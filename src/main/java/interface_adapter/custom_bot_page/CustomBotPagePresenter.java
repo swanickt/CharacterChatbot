@@ -1,4 +1,4 @@
-package interface_adapter.custom_bot;
+package interface_adapter.custom_bot_page;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
