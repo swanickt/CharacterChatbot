@@ -20,4 +20,6 @@ public interface LoginOutputBoundary {
      * Switches to the Home View.
      */
     void switchToHomeView();
+
+    boolean isSwitchToHomeViewCalled();
 }

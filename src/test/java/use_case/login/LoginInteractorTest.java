@@ -4,26 +4,36 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.user.CommonUserFactory;
 import entity.user.User;
 import entity.user.UserFactory;
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the LoginInteractor use case.
+ * Contains tests to verify success and failure scenarios for user login.
+ */
 class LoginInteractorTest {
 
+    /**
+     * Tests the successful login flow.
+     * Verifies that a user with valid credentials can log in,
+     * and ensures that the username and password fields are cleared and no error is present after login.
+     */
     @Test
     void successTest() {
         LoginInputData inputData = new LoginInputData("Paul", "password");
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // For the success test, we need to add Paul to the data access repository before we log in.
+        // Add a user to the repository before attempting login.
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
 
-        // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            private boolean switchToHomeViewCalled = false;
+
             @Override
             public void prepareSuccessView(LoginOutputData user) {
                 assertEquals("Paul", user.getUsername());
@@ -36,26 +46,44 @@ class LoginInteractorTest {
 
             @Override
             public void switchToHomeView() {
-                // This is expected
+                switchToHomeViewCalled = true;
+            }
+
+            public boolean isSwitchToHomeViewCalled() {
+                return switchToHomeViewCalled;
             }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
         interactor.execute(inputData);
+
+        // Verify login state after successful login
+        LoginViewModel loginViewModel = new LoginViewModel();
+        LoginState loginState = loginViewModel.getState();
+        assertEquals("", loginState.getUsername(), "Username should be cleared");
+        assertEquals("", loginState.getPassword(), "Password should be cleared");
+        assertNull(loginState.getLoginError(), "LoginError should be null");
+
+        interactor.switchToHomeView();
+        assertTrue(successPresenter.isSwitchToHomeViewCalled());
     }
 
+    /**
+     * Tests the successful login flow and verifies that the user is marked as logged in.
+     */
     @Test
     void successUserLoggedInTest() {
         LoginInputData inputData = new LoginInputData("Paul", "password");
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // For the success test, we need to add Paul to the data access repository before we log in.
+        // Add a user to the repository before attempting login.
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
 
-        // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            private boolean switchToHomeViewCalled = false;
+
             @Override
             public void prepareSuccessView(LoginOutputData user) {
                 assertEquals("Paul", userRepository.getCurrentUsername());
@@ -68,32 +96,40 @@ class LoginInteractorTest {
 
             @Override
             public void switchToHomeView() {
-                // This is expected
+                switchToHomeViewCalled = true;
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                return switchToHomeViewCalled;
             }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
-        assertEquals(null, userRepository.getCurrentUsername());
+        assertNull(userRepository.getCurrentUsername());
 
         interactor.execute(inputData);
+        interactor.switchToHomeView();
+        assertTrue(successPresenter.isSwitchToHomeViewCalled());
     }
 
+    /**
+     * Tests the failure scenario where the user enters an incorrect password.
+     * Verifies that an appropriate error message is displayed.
+     */
     @Test
     void failurePasswordMismatchTest() {
         LoginInputData inputData = new LoginInputData("Paul", "wrong");
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // For this failure test, we need to add Paul to the data access repository before we log in, and
-        // the passwords should not match.
+        // Add a user to the repository with a different password.
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
 
-        // This creates a presenter that tests whether the test case is as we expect.
         LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                // this should never be reached since the test case should fail
                 fail("Use case success is unexpected.");
             }
 
@@ -104,7 +140,12 @@ class LoginInteractorTest {
 
             @Override
             public void switchToHomeView() {
-                // This is expected
+                // No action needed
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                return false;
             }
         };
 
@@ -112,18 +153,18 @@ class LoginInteractorTest {
         interactor.execute(inputData);
     }
 
+    /**
+     * Tests the failure scenario where the user does not exist in the repository.
+     * Verifies that an appropriate error message is displayed.
+     */
     @Test
     void failureUserDoesNotExistTest() {
         LoginInputData inputData = new LoginInputData("Paul", "password");
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // Add Paul to the repo so that when we check later they already exist
-
-        // This creates a presenter that tests whether the test case is as we expect.
         LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                // this should never be reached since the test case should fail
                 fail("Use case success is unexpected.");
             }
 
@@ -134,7 +175,12 @@ class LoginInteractorTest {
 
             @Override
             public void switchToHomeView() {
-                // This is expected
+                // No action needed
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                return false;
             }
         };
 

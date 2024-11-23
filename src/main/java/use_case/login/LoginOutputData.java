@@ -30,20 +30,20 @@ public class LoginOutputData {
         return username;
     }
 
-    public String getPrompt1() {
-        return prompt1;
-    }
-
-    public String getPrompt2() {
-        return prompt2;
-    }
-
-    public String getPrompt3() {
-        return prompt3;
-    }
-
-    public String getPrompt4() {
-        return prompt4;
-    }
+    //    public String getPrompt1() {
+    //        return prompt1;
+    //    }
+    //
+    //    public String getPrompt2() {
+    //        return prompt2;
+    //    }
+    //
+    //    public String getPrompt3() {
+    //        return prompt3;
+    //    }
+    //
+    //    public String getPrompt4() {
+    //        return prompt4;
+    //    }
 
 }
