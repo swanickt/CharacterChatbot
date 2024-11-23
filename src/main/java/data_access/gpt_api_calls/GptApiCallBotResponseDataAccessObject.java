@@ -1,7 +1,7 @@
 package data_access.gpt_api_calls;
 
 import entity.message.Message;
-import use_case.chat.ChatApiAccessInterface;
+import use_case.send_message.ChatApiAccessInterface;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,7 +18,13 @@ public class GptApiCallBotResponseDataAccessObject implements ChatApiAccessInter
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private List<Message> conversationHistory;
 
-    public GptApiCallBotResponseDataAccessObject(String systemSetting) {
+    public GptApiCallBotResponseDataAccessObject() {
+//        this.conversationHistory = new ArrayList<>();
+//        // 添加初始系统设置
+//        addMessageToHistory("system", systemSetting);
+    }
+
+    public void setSystemSetting(String systemSetting) {
         this.conversationHistory = new ArrayList<>();
         // 添加初始系统设置
         addMessageToHistory("system", systemSetting);

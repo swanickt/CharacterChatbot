@@ -7,30 +7,30 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.MongoDBDataAccessObject;
-import entity.bot.MasterYodaFactory;
-import entity.bot.NormalAIFactory;
-import entity.bot.OptimusPrimeFactory;
-import entity.bot.PikachuFactory;
+import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
+import entity.bot.*;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
-import interface_adapter.chat.ChatViewModel;
-import interface_adapter.chat.master_yoda.MasterYodaController;
-import interface_adapter.chat.master_yoda.MasterYodaPresenter;
-import interface_adapter.chat.normal_bot.NormalBotController;
-import interface_adapter.chat.normal_bot.NormalBotPresenter;
-import interface_adapter.chat.optimus_prime.OptimusPrimeController;
-import interface_adapter.chat.optimus_prime.OptimusPrimePresenter;
+import interface_adapter.new_chat.ChatViewModel;
+import interface_adapter.new_chat.custom_bot.CustomBotController;
+import interface_adapter.new_chat.custom_bot.CustomBotPresenter;
+import interface_adapter.new_chat.master_yoda.MasterYodaController;
+import interface_adapter.new_chat.master_yoda.MasterYodaPresenter;
+import interface_adapter.new_chat.normal_bot.NormalBotController;
+import interface_adapter.new_chat.normal_bot.NormalBotPresenter;
+import interface_adapter.new_chat.optimus_prime.OptimusPrimeController;
+import interface_adapter.new_chat.optimus_prime.OptimusPrimePresenter;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.BackToLoggedInController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.ChangePasswordViewModel;
 
-import interface_adapter.chat.pikachu.PikachuController;
-import interface_adapter.chat.pikachu.PikachuPresenter;
-import interface_adapter.custom_bot.CustomBotPresenter;
-import interface_adapter.custom_bot.CustomBotViewModel;
-import interface_adapter.custom_bot.GoBackToLoggedInViewController;
+import interface_adapter.new_chat.pikachu.PikachuController;
+import interface_adapter.new_chat.pikachu.PikachuPresenter;
+import interface_adapter.custom_bot_page.CustomBotPagePresenter;
+import interface_adapter.custom_bot_page.CustomBotViewModel;
+import interface_adapter.custom_bot_page.GoBackToLoggedInViewController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToCustomViewController;
@@ -45,26 +45,30 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.send_message.SendMessageController;
+import interface_adapter.send_message.SendMessagePresenter;
 import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.chat.master_yoda.MasterYodaInteractor;
-import use_case.chat.master_yoda.MasterYodaOutputBoundary;
-import use_case.chat.normal_bot.NormalBotInteractor;
-import use_case.chat.normal_bot.NormalBotOutputBoundary;
-import use_case.chat.optimus_prime.OptimusPrimeInputBoundary;
-import use_case.chat.optimus_prime.OptimusPrimeInteractor;
-import use_case.chat.optimus_prime.OptimusPrimeOutputBoundary;
+import use_case.new_chat.custom_bot.CustomBotInteractor;
+import use_case.new_chat.custom_bot.CustomBotOutputBoundary;
+import use_case.new_chat.master_yoda.MasterYodaInteractor;
+import use_case.new_chat.master_yoda.MasterYodaOutputBoundary;
+import use_case.new_chat.normal_bot.NormalBotInteractor;
+import use_case.new_chat.normal_bot.NormalBotOutputBoundary;
+import use_case.new_chat.optimus_prime.OptimusPrimeInputBoundary;
+import use_case.new_chat.optimus_prime.OptimusPrimeInteractor;
+import use_case.new_chat.optimus_prime.OptimusPrimeOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
-import use_case.chat.pikachu.PikachuInputBoundary;
-import use_case.chat.pikachu.PikachuInteractor;
-import use_case.chat.pikachu.PikachuOutputBoundary;
-import use_case.custom_bot.CustomViewInputBoundary;
-import use_case.custom_bot.CustomViewInteractor;
-import use_case.custom_bot.CustomViewOutputBoundary;
+import use_case.new_chat.pikachu.PikachuInputBoundary;
+import use_case.new_chat.pikachu.PikachuInteractor;
+import use_case.new_chat.pikachu.PikachuOutputBoundary;
+import use_case.exit_custom_bot_view.CustomViewInputBoundary;
+import use_case.exit_custom_bot_view.CustomViewInteractor;
+import use_case.exit_custom_bot_view.CustomViewOutputBoundary;
 import use_case.home_view_buttons.HomeViewInputBoundary;
 import use_case.home_view_buttons.HomeViewInteractor;
 import use_case.home_view_buttons.HomeViewOutputBoundary;
@@ -77,6 +81,8 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.send_message.SendMessageInteractor;
+import use_case.send_message.SendMessageOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -190,7 +196,7 @@ public class AppBuilder {
      */
     public AppBuilder addCustomBotView() {
         customBotViewModel = new CustomBotViewModel();
-        customBotView = new CustomBotView(customBotViewModel);
+        customBotView = new CustomBotView(customBotViewModel, chatViewModel);
         cardPanel.add(customBotView, customBotView.getViewName());
         return this;
     }
@@ -236,6 +242,10 @@ public class AppBuilder {
         final MasterYodaInteractor masterYodaInteractor = new MasterYodaInteractor(masterYodaOutputBoundary,
                 new MasterYodaFactory());
 
+        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel);
+        final SendMessageInteractor sendChatInteractor = new SendMessageInteractor(sendMessageOutputBoundary,
+                new GptApiCallBotResponseDataAccessObject());
+
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
 
@@ -253,6 +263,9 @@ public class AppBuilder {
 
         final MasterYodaController controller6 = new MasterYodaController(masterYodaInteractor);
         loggedInView.setMasterYodaController(controller6);
+
+        final SendMessageController controller7 = new SendMessageController(sendChatInteractor);
+        loggedInView.setSendMessageController(controller7);
 
         return this;
     }
@@ -335,13 +348,27 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addCustomBotUseCase() {
-        final CustomViewOutputBoundary customViewOutputBoundary = new CustomBotPresenter(loggedInViewModel,
+        final CustomViewOutputBoundary customViewOutputBoundary = new CustomBotPagePresenter(loggedInViewModel,
                 viewManagerModel, customBotViewModel);
 
         final CustomViewInputBoundary customViewInteractor = new CustomViewInteractor(customViewOutputBoundary);
 
         final GoBackToLoggedInViewController controller = new GoBackToLoggedInViewController(customViewInteractor);
         customBotView.setToLoggedInView(controller);
+
+        final CustomBotOutputBoundary customBotOutputBoundary = new CustomBotPresenter(chatViewModel);
+        final CustomBotInteractor customBotInteractor = new CustomBotInteractor(customBotOutputBoundary,
+                new CustomBotFactory());
+
+        final CustomBotController controller1 = new CustomBotController(customBotInteractor);
+        customBotView.setCustomBotController(controller1);
+
+        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel);
+        final SendMessageInteractor sendChatInteractor = new SendMessageInteractor(sendMessageOutputBoundary,
+                new GptApiCallBotResponseDataAccessObject());
+
+        final SendMessageController controller2 = new SendMessageController(sendChatInteractor);
+        customBotView.setSendMessageController(controller2);
 
         return this;
     }
