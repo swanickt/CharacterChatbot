@@ -1,17 +1,12 @@
 package view;
 
-import data_access.DBchatuser;
-import entity.chat.CommonUserChat;
-import entity.chat.CommonUserChatFactory;
+import data_access.MongoDBDataAccessObject;
 import entity.message.Message;
-import interface_adapter.chat.ChatController;
-import interface_adapter.chat.ChatHistoryController;
+import interface_adapter.chat_history.ChatHistoryController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class ChatHistoryView extends JFrame {
@@ -21,10 +16,10 @@ public class ChatHistoryView extends JFrame {
     private final List<Message> lst;
     private final List<Message> lst2;
     private ChatHistoryController chathistorycontroller;
-    private DBchatuser dbchatuser;
+    private MongoDBDataAccessObject dbchatuser;
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:SuppressWarnings", "checkstyle:LambdaParameterName", "checkstyle:EmptyLineSeparator"})
     public ChatHistoryView(ChatHistoryController chatHistoryController, String username) {
-        this.dbchatuser = new DBchatuser();
+        this.dbchatuser = new MongoDBDataAccessObject();
         this.username = username;
         lst = dbchatuser.userHistory(username);
         lst2 = dbchatuser.chatHistory(username);

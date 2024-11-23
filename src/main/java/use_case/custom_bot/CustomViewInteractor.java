@@ -1,7 +1,5 @@
 package use_case.custom_bot;
 
-import use_case.logged_in.LoggedInOutputBoundary;
-
 public class CustomViewInteractor implements CustomViewInputBoundary {
     private final CustomViewOutputBoundary customPresenter;
 

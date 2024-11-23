@@ -14,8 +14,30 @@ public class ChatViewModel extends ViewModel<ChatViewState> {
             + "greeting according to your character. Make it so the character is easily recognizable.";
     public static final String TEXT_FONT = "Arial";
 
+    private String username = "";
+    private String prompt = "";
+
     public ChatViewModel() {
         super("chat view");
         setState(new ChatViewState());
     }
+
+    /**
+     * set the state of the chat.
+     * @param username the username of the user chatting
+     * @param prompt the prompt for the relevant character.
+     */
+    public void setChatState(String username, String prompt) {
+        this.username = username;
+        this.prompt = prompt;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPrompt() {
+        return prompt;
+    }
+
 }

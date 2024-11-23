@@ -6,28 +6,39 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.DBchatuser;
+import data_access.MongoDBDataAccessObject;
+import entity.bot.MasterYodaFactory;
+import entity.bot.NormalAIFactory;
+import entity.bot.OptimusPrimeFactory;
+import entity.bot.PikachuFactory;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
-import interface_adapter.Optimus_Prime.OptimusPrimeController;
-import interface_adapter.Optimus_Prime.OptimusPrimePresenter;
+import interface_adapter.chat.ChatViewModel;
+import interface_adapter.chat.master_yoda.MasterYodaController;
+import interface_adapter.chat.master_yoda.MasterYodaPresenter;
+import interface_adapter.chat.normal_bot.NormalBotController;
+import interface_adapter.chat.normal_bot.NormalBotPresenter;
+import interface_adapter.chat.optimus_prime.OptimusPrimeController;
+import interface_adapter.chat.optimus_prime.OptimusPrimePresenter;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.BackToLoggedInController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.ChangePasswordViewModel;
 
-import interface_adapter.customBot.CustomBotPresenter;
-import interface_adapter.customBot.CustomBotViewModel;
-import interface_adapter.customBot.GoBackToLoggedInViewController;
+import interface_adapter.chat.pikachu.PikachuController;
+import interface_adapter.chat.pikachu.PikachuPresenter;
+import interface_adapter.custom_bot.CustomBotPresenter;
+import interface_adapter.custom_bot.CustomBotViewModel;
+import interface_adapter.custom_bot.GoBackToLoggedInViewController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToCustomViewController;
 import interface_adapter.logged_in.ToPasswordSettingsController;
-import interface_adapter.home_view.GoToLoginController;
-import interface_adapter.home_view.GoToSignUpController;
-import interface_adapter.home_view.HomeViewModel;
-import interface_adapter.home_view.HomeViewPresenter;
+import interface_adapter.home_view_buttons.GoToLoginController;
+import interface_adapter.home_view_buttons.GoToSignUpController;
+import interface_adapter.home_view_buttons.HomeViewModel;
+import interface_adapter.home_view_buttons.HomeViewPresenter;
 import interface_adapter.login.LoginCancelController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -38,22 +49,28 @@ import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.OptimusPrime.OptimusPrimeInputBoundary;
-import use_case.OptimusPrime.OptimusPrimeInputData;
-import use_case.OptimusPrime.OptimusPrimeInteractor;
-import use_case.OptimusPrime.OptimusPrimeOutputBoundary;
+import use_case.chat.master_yoda.MasterYodaInteractor;
+import use_case.chat.master_yoda.MasterYodaOutputBoundary;
+import use_case.chat.normal_bot.NormalBotInteractor;
+import use_case.chat.normal_bot.NormalBotOutputBoundary;
+import use_case.chat.optimus_prime.OptimusPrimeInputBoundary;
+import use_case.chat.optimus_prime.OptimusPrimeInteractor;
+import use_case.chat.optimus_prime.OptimusPrimeOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.chat.pikachu.PikachuInputBoundary;
+import use_case.chat.pikachu.PikachuInteractor;
+import use_case.chat.pikachu.PikachuOutputBoundary;
 import use_case.custom_bot.CustomViewInputBoundary;
 import use_case.custom_bot.CustomViewInteractor;
 import use_case.custom_bot.CustomViewOutputBoundary;
-import use_case.home_view.HomeViewInputBoundary;
-import use_case.home_view.HomeViewInteractor;
-import use_case.home_view.HomeViewOutputBoundary;
-import use_case.logged_in.LoggedInInputBoundary;
-import use_case.logged_in.LoggedInInteractor;
-import use_case.logged_in.LoggedInOutputBoundary;
+import use_case.home_view_buttons.HomeViewInputBoundary;
+import use_case.home_view_buttons.HomeViewInteractor;
+import use_case.home_view_buttons.HomeViewOutputBoundary;
+import use_case.logged_in_buttons.LoggedInInputBoundary;
+import use_case.logged_in_buttons.LoggedInInteractor;
+import use_case.logged_in_buttons.LoggedInOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -91,7 +108,7 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
-    private final DBchatuser userDataAccessObject = new DBchatuser();
+    private final MongoDBDataAccessObject userDataAccessObject = new MongoDBDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -105,6 +122,7 @@ public class AppBuilder {
     private ChangePasswordViewModel changePasswordViewModel;
     private CustomBotViewModel customBotViewModel;
     private CustomBotView customBotView;
+    private final ChatViewModel chatViewModel = new ChatViewModel();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -161,7 +179,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, chatViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -203,9 +221,20 @@ public class AppBuilder {
     public AppBuilder addLoggedInUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(changePasswordViewModel,
                 viewManagerModel, loggedInViewModel, customBotViewModel);
-        final OptimusPrimeOutputBoundary optimusPrimeOutputBoundary = new OptimusPrimePresenter();
+        final OptimusPrimeOutputBoundary optimusPrimeOutputBoundary = new OptimusPrimePresenter(chatViewModel);
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
-        final OptimusPrimeInputBoundary optimusPrimeInteractor = new OptimusPrimeInteractor(optimusPrimeOutputBoundary);
+        final OptimusPrimeInputBoundary optimusPrimeInteractor = new OptimusPrimeInteractor(optimusPrimeOutputBoundary,
+                new OptimusPrimeFactory());
+        final PikachuOutputBoundary pikachuOutputBoundary = new PikachuPresenter(chatViewModel);
+        final PikachuInputBoundary pikachuInteractor = new PikachuInteractor(pikachuOutputBoundary,
+                new PikachuFactory());
+        final NormalBotOutputBoundary normalBotOutputBoundary = new NormalBotPresenter(chatViewModel);
+        final NormalBotInteractor normalBotInteractor = new NormalBotInteractor(normalBotOutputBoundary,
+                new NormalAIFactory());
+
+        final MasterYodaOutputBoundary masterYodaOutputBoundary = new MasterYodaPresenter(chatViewModel);
+        final MasterYodaInteractor masterYodaInteractor = new MasterYodaInteractor(masterYodaOutputBoundary,
+                new MasterYodaFactory());
 
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
@@ -215,6 +244,15 @@ public class AppBuilder {
 
         final OptimusPrimeController controller3 = new OptimusPrimeController(optimusPrimeInteractor);
         loggedInView.setOptimusPrimeController(controller3);
+
+        final PikachuController controller4 = new PikachuController(pikachuInteractor);
+        loggedInView.setPikachuController(controller4);
+
+        final NormalBotController controller5 = new NormalBotController(normalBotInteractor);
+        loggedInView.setNormalBotController(controller5);
+
+        final MasterYodaController controller6 = new MasterYodaController(masterYodaInteractor);
+        loggedInView.setMasterYodaController(controller6);
 
         return this;
     }
