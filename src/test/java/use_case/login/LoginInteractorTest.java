@@ -6,6 +6,10 @@ import entity.bot.NormalAIFactory;
 import entity.user.CommonUserFactory;
 import entity.user.User;
 import entity.user.UserFactory;
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.home_view_buttons.HomeViewModel;
+import interface_adapter.ViewManagerModel;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -23,6 +27,8 @@ class LoginInteractorTest {
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
+
+        // ViewManagerModel viewManagerModel = new ViewManagerModel();
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
@@ -51,6 +57,12 @@ class LoginInteractorTest {
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
         interactor.execute(inputData);
+        LoginViewModel loginViewModel = new LoginViewModel();
+        LoginState loginState = loginViewModel.getState();
+        assertEquals("", loginState.getUsername(), "Username should be cleared");
+        assertEquals("", loginState.getPassword(), "Password should be cleared");
+        assertNull(loginState.getLoginError(), "LoginError should be null");
+
         // assertTrue(successPresenter.isSwitchToHomeViewCalled(), "");
         interactor.switchToHomeView();
         assertTrue(successPresenter.isSwitchToHomeViewCalled());
