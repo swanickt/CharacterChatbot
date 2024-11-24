@@ -22,5 +22,7 @@ public interface ChangePasswordOutputBoundary {
      * Goes back to the logged in page from the change password page.
      */
     void switchToLoggedInView();
+
+    boolean isSwitchToLoggedInViewCalled();
 }
 
