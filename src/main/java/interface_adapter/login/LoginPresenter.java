@@ -16,7 +16,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final HomeViewModel homeViewModel;
-    private boolean switchToHomeViewCalled = false;
+    private boolean switchToHomeViewCalled;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,

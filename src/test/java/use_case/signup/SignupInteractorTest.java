@@ -19,6 +19,8 @@ class SignupInteractorTest {
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
+            private boolean switchToLoginViewCalled = false;
+            private boolean switchToHomeViewCalled = false;
             @Override
             public void prepareSuccessView(SignupOutputData user) {
                 // 2 things to check: the output data is correct, and the user has been created in the DAO.
@@ -34,16 +36,30 @@ class SignupInteractorTest {
             @Override
             public void switchToLoginView() {
                 // This is expected
+                switchToLoginViewCalled = true;
+            }
+
+            @Override
+            public boolean isSwitchedToLoginViewCalled() {
+                return switchToLoginViewCalled;
             }
 
             @Override
             public void switchToHomeView() {
-                // This is expected
+                switchToHomeViewCalled = true;
+            }
+
+            public boolean isSwitchToHomeViewCalled() {
+                return switchToHomeViewCalled;
             }
         };
 
         SignupInputBoundary interactor = new SignupInteractor(userRepository, successPresenter, new CommonUserFactory());
         interactor.execute(inputData);
+        interactor.switchToHomeView();
+        assertTrue(successPresenter.isSwitchToHomeViewCalled());
+        interactor.switchToLoginView();
+        assertTrue(successPresenter.isSwitchedToLoginViewCalled());
     }
 
     @Test
@@ -70,8 +86,18 @@ class SignupInteractorTest {
             }
 
             @Override
+            public boolean isSwitchedToLoginViewCalled() {
+                return false;
+            }
+
+            @Override
             public void switchToHomeView() {
                 // This is expected
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                return false;
             }
         };
 
@@ -108,8 +134,18 @@ class SignupInteractorTest {
             }
 
             @Override
+            public boolean isSwitchedToLoginViewCalled() {
+                return false;
+            }
+
+            @Override
             public void switchToHomeView() {
                 // This is expected
+            }
+
+            @Override
+            public boolean isSwitchToHomeViewCalled() {
+                return false;
             }
         };
 

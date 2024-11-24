@@ -18,7 +18,7 @@ public class ChangePasswordOutputData {
         return username;
     }
 
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
-    }
+    // public boolean isUseCaseFailed() {
+    // return useCaseFailed;
+    // }
 }

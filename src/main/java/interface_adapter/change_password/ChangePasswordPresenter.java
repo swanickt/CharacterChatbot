@@ -13,6 +13,7 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ChangePasswordViewModel changePasswordViewModel;
     private final ViewManagerModel viewManagerModel;
+    private boolean switchToLoggedInViewCalled;
 
     public ChangePasswordPresenter(LoggedInViewModel loggedInViewModel,
                                    ChangePasswordViewModel changePasswordViewModel,
@@ -20,6 +21,7 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
         this.loggedInViewModel = loggedInViewModel;
         this.changePasswordViewModel = changePasswordViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.switchToLoggedInViewCalled = false;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
 
     @Override
     public void switchToLoggedInView() {
+        switchToLoggedInViewCalled = true;
         final ChangePasswordState changePasswordState = changePasswordViewModel.getState();
         changePasswordState.setRepeatPasswordError(null);
         changePasswordState.setUsername("");
@@ -51,6 +54,11 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
 
         viewManagerModel.setState(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public boolean isSwitchToLoggedInViewCalled() {
+        return switchToLoggedInViewCalled;
     }
 
 }

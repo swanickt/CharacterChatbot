@@ -16,6 +16,9 @@ public class SignupPresenter implements SignupOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
     private final HomeViewModel homeViewModel;
+    private boolean switchToHomeViewCalled;
+    private boolean switchToLoginViewCalled;
+
 
     public SignupPresenter(ViewManagerModel viewManagerModel,
                            SignupViewModel signupViewModel,
@@ -25,6 +28,8 @@ public class SignupPresenter implements SignupOutputBoundary {
         this.signupViewModel = signupViewModel;
         this.loginViewModel = loginViewModel;
         this.homeViewModel = homeViewModel;
+        this.switchToHomeViewCalled = false;
+        this.switchToLoginViewCalled = false;
     }
 
     @Override
@@ -59,10 +64,17 @@ public class SignupPresenter implements SignupOutputBoundary {
     public void switchToLoginView() {
         viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+        switchToLoginViewCalled = true;
+    }
+
+    @Override
+    public boolean isSwitchedToLoginViewCalled() {
+        return switchToLoginViewCalled;
     }
 
     @Override
     public void switchToHomeView() {
+        switchToHomeViewCalled = true;
         final SignupState signupState = signupViewModel.getState();
         signupState.setUsernameError(null);
         signupState.setUsername("");
@@ -75,5 +87,10 @@ public class SignupPresenter implements SignupOutputBoundary {
 
         viewManagerModel.setState(homeViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public boolean isSwitchToHomeViewCalled() {
+        return switchToHomeViewCalled;
     }
 }
