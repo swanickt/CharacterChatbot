@@ -1,5 +1,8 @@
 package entity.chat;
 import entity.message.Message;
+import entity.user.CommonUserFactory;
+import entity.user.User;
+import entity.user.UserFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
@@ -18,6 +21,23 @@ public class testChat {
         List<Message> userInputs = chat.getUserInputs();
         assertEquals(1, userInputs.size());
         assertEquals("Hello, how are you?", userInputs.get(0).getContent());
+    }
+
+    @Test
+    public void testChatFactoryCreation() {
+        ChatFactory factory = new CommonUserChatFactory();
+        Chat chat = factory.create();
+        assertNotNull(chat);
+        assertTrue(chat instanceof CommonUserChat);
+    }
+
+    @Test
+    public void testUserFactoryCreation() {
+        UserFactory factory = new CommonUserFactory();
+        User user = factory.create("testUser", "testPassword");
+        assertNotNull(user);
+        assertEquals("testUser", user.getName());
+        assertEquals("testPassword", user.getPassword());
     }
 
     @Test
