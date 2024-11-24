@@ -1,9 +1,7 @@
 package use_case.exit_chat;
 
-import data_access.MongoDBDataAccessObject;
 import entity.chat.Chat;
 import entity.chat.ChatFactory;
-import entity.chat.CommonUserChat;
 import entity.message.Message;
 
 import java.util.List;
@@ -28,7 +26,6 @@ public class ExitChatInteractor implements ExitChatInputBoundary {
         final String username = exitChatInputData.getUsername();
         final List<Message> lst = currentChat.getUserInputs();
         final List<Message> lst2 = currentChat.getBotResponses();
-        //final MongoDBDataAccessObject database = new MongoDBDataAccessObject();
 
         for (int i = 0; i < lst.size(); i++) {
             System.out.println(username);
