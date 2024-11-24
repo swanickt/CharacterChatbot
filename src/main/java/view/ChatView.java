@@ -132,6 +132,7 @@ public class ChatView extends JFrame {
                 if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         addChatBubble(initialResponse, "assistant");
+                        dbchatuser.saveGreeting("assistant", initialResponse);
                         chatPanel.revalidate();
                         chatPanel.repaint();
                     });
