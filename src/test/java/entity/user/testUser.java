@@ -1,15 +1,9 @@
-package entity;
+package entity.user;
 import entity.chat.Chat;
 import entity.chat.CommonUserChat;
-import entity.user.CommonUser;
-import entity.user.CommonUserFactory;
-import entity.user.User;
-import entity.user.UserFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
-import java.util.ArrayList;
 
 public class testUser {
     @Test

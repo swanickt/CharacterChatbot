@@ -1,6 +1,4 @@
-package entity;
-import entity.chat.Chat;
-import entity.chat.CommonUserChat;
+package entity.chat;
 import entity.message.Message;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

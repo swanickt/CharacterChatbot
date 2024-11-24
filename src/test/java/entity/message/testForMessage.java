@@ -1,9 +1,7 @@
-package entity;
-import entity.chat.CommonUserChat;
-import entity.message.*;
+package entity.message;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
+
 public class testForMessage {
     @Test
     public void testMessageCreation() {
