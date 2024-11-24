@@ -14,15 +14,13 @@ public class ChatHistoryView extends JFrame {
     private String username;
     private JButton exitButton;
     private final List<Message> lst;
-    private final List<Message> lst2;
     private ChatHistoryController chathistorycontroller;
     private MongoDBDataAccessObject dbchatuser;
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:SuppressWarnings", "checkstyle:LambdaParameterName", "checkstyle:EmptyLineSeparator"})
     public ChatHistoryView(ChatHistoryController chatHistoryController, String username) {
         this.dbchatuser = new MongoDBDataAccessObject();
         this.username = username;
-        lst = dbchatuser.userHistory(username);
-        lst2 = dbchatuser.chatHistory(username);
+        lst = dbchatuser.mixedHistory(username);
         // Initialize main frame
         setTitle("Past Chat");
         setSize(500, 600);
@@ -45,12 +43,14 @@ public class ChatHistoryView extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         SwingUtilities.invokeLater(() -> {
-
             for (int i = 0; i < lst.size(); i++) {
-                addChatBubble(lst.get(i).getContent(), "user");
-                System.out.println(lst.get(i).getContent());
-                addChatBubble(lst2.get(i).getContent(), "assistant");
-                System.out.println(lst2.get(i).getContent());
+                String role = lst.get(i).getRole();
+                if (role.equals("user")) {
+                    addChatBubble(lst.get(i).getContent(), "user");
+                }
+                else {
+                    addChatBubble(lst.get(i).getContent(), "assistant");
+                }
             }
         });
 

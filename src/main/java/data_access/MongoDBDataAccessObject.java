@@ -1,6 +1,7 @@
 package data_access;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.mongodb.client.*;
@@ -61,18 +62,20 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface,
         }
     }
 
-    // TODO: need to modify due to different condition
+    public void saveGreeting(String user,String Response){
+        Document document = new Document("chat", user+"'s greeting")
+                .append("response", Response);
+        chatCollection.insertOne(document);
+    }
+
     public void saveHistory(String user,String Response) {
         Document document;
-        if (chatStatus) {
-            document = new Document("user:", user)
+        if (!user.contains("assistant")) {
+            document = new Document("user", user)
                     .append("response", Response);
-            chatStatus = Boolean.FALSE;
-        }
-        else {
-            document = new Document("chat:", user)
+        } else {
+            document = new Document("chat", user)
                     .append("response", Response);
-            chatStatus = Boolean.TRUE;
         }
         chatCollection.insertOne(document);
     }
@@ -117,36 +120,28 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface,
         userCollection.updateOne(query, update);
     }
 
-    public List<Message> userHistory(String user) {
-        List<Message> userdocuments = new ArrayList();
-        MongoCollection<Document> juju =  databaseForHis.getCollection(user + "'s history");
-        FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
-        // check the last n messages
-        documents = documents.limit(LIMIT);
-
-        for (Document doc: documents) {
-            if (doc.containsKey("user:")) {
-                Message message = new Message("user", doc.getString("response"));
-                userdocuments.add(message);
-            }
-        }
-        return userdocuments;
-    }
-
-    public List<Message> chatHistory(String user) {
-        List<Message> chatdocuments = new ArrayList();
+    public List<Message> mixedHistory(String user){
+        List<Message> returnDoc = new ArrayList();
         MongoCollection<Document> juju = databaseForHis.getCollection(user + "'s history");
         FindIterable<Document> documents = juju.find().sort(new Document("_id", -1));
-        // check the last n messages
-        documents = documents.limit(LIMIT);
-
         for (Document doc: documents) {
-            if (doc.containsKey("chat:")) {
+            if (doc.containsKey("user")) {
+                // check the note from saving history
+                Message message = new Message("user", doc.getString("response"));
+                returnDoc.add(message);
+            }
+            if (doc.containsKey("chat")) {
+                if (doc.getString("chat").contains("greeting")){
+                    Message message = new Message("assistant", doc.getString("response"));
+                    returnDoc.add(message);
+                    break;
+                }
                 Message message = new Message("assistant", doc.getString("response"));
-                chatdocuments.add(message);
+                returnDoc.add(message);
             }
         }
-        return chatdocuments;
+        Collections.reverse(returnDoc);
+        return returnDoc;
     }
 
     public boolean existsByName(String identifier) {
