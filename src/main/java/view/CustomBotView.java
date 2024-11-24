@@ -51,14 +51,6 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
         chatButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Starting Chat...");
-//            final promptController prompcontroller = new promptController();
-//            final String setting = prompcontroller.creatPrompt(nameInputField.getText(),
-//                    occupationInputField.getText());
-//            final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject();
-//            GPTApiCallBotResponseDataAccessObject.setSystemSetting(setting);
-//            final SendMessageController sendChatController = new SendMessageController(GPTApiCallBotResponseDataAccessObject);
-//            final ChatView chatApp = new ChatView(sendChatController, "");
-//            chatApp.setVisible(true);
             final String occupation = occupationInputField.getText();
             final String name = nameInputField.getText();
             customBotController.execute("", name, occupation);

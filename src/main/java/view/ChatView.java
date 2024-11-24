@@ -99,9 +99,8 @@ public class ChatView extends JFrame {
                         addChatBubble("Error: Unable to get response from GPT.", "error");
                     }
                     else {
-                        addChatBubble(chatViewModel.getBotResponse(), "assistant");
-                        exitChatController.addBotResponse(chatViewModel.getBotResponse());
-                        // exitChatController.saveHistory("assistant", chatViewModel.getBotResponse());
+                        addChatBubble(chatViewModel.getBotResponse().replace("\n", ""), "assistant");
+                        exitChatController.addBotResponse(chatViewModel.getBotResponse().replace("\n", ""));
                     }
                 }
             }
@@ -109,21 +108,6 @@ public class ChatView extends JFrame {
 
         // Exit button action listener
         exitButton.addActionListener(e -> {
-            // setVisible(false);
-//            final List<Message> lst = chat.getUserInputs();
-//            final List<Message> lst2 = chat.getBotResponses();
-//            final MongoDBDataAccessObject database = new MongoDBDataAccessObject();
-//
-//            for (int i = 0; i < lst.size(); i++) {
-//                System.out.println(username);
-//                if (!"".equals(username)) {
-//                    database.saveHistory(username, lst.get(i).getContent());
-//                    database.saveHistory("assistant", lst2.get(i).getContent());
-//                }
-//                System.out.println(lst.get(i).getContent());
-//                System.out.println(lst2.get(i).getContent());
-//            }
-//            System.out.println(database.get(username));
             exitChatController.execute(username);
             if (chatViewModel.getEndChat()) {
                 setVisible(false);
@@ -138,8 +122,8 @@ public class ChatView extends JFrame {
                 final String initialResponse = chatViewModel.getBotResponse();
                 if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
-                        addChatBubble(initialResponse, "assistant");
-                        exitChatController.saveGreeting("assistant", initialResponse);
+                        addChatBubble(initialResponse.replace("\n", ""), "assistant");
+                        exitChatController.saveGreeting("assistant", initialResponse.replace("\n", ""));
                         chatPanel.revalidate();
                         chatPanel.repaint();
                     });
