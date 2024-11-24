@@ -13,6 +13,17 @@ public class testForBotFactory {
     }
 
     @Test
+    public void testCustomBotFactory2() {
+        CustomBotFactory factory = new CustomBotFactory();
+        String name = "AI";
+        String occupation = "helpful assistant";
+        Bot bot = factory.create(name, occupation);
+        assertNotNull(bot);
+        assertEquals("AI", bot.getName());
+        assertEquals("You areAI, thehelpful assistant. Always remember your role, and your reply should not exceed 25 words.only reply in plain word text, you have to behave likeAI, thehelpful assistant at all times!", bot.getPrompt());
+    }
+
+    @Test
     public void testMasterYodaFactory() {
         BotFactory factory = new MasterYodaFactory();
         Bot bot = factory.create();
