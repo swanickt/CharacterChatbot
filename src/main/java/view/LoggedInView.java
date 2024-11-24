@@ -9,6 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import entity.chat.CommonUserChat;
+import interface_adapter.exit_chat.ExitChatController;
 import interface_adapter.new_chat.ChatViewModel;
 import interface_adapter.new_chat.master_yoda.MasterYodaController;
 import interface_adapter.new_chat.normal_bot.NormalBotController;
@@ -41,6 +42,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private NormalBotController normalBotController;
     private MasterYodaController masterYodaController;
     private SendMessageController sendMessageController;
+    private ExitChatController exitChatController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -108,26 +110,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             else if (masterYodaButton.isSelected()) {
                 masterYodaController.execute(username.getText());
             }
-//            else {
-//                final promptController prompcontroller = new promptController();
-//                final String setting = prompcontroller.getPrompt(normalBotButton, pikachuButton, masterYodaButton, optimusPrimeButton);
-//                final GptApiCallBotResponseDataAccessObject GPTApiCallBotResponseDataAccessObject = new GptApiCallBotResponseDataAccessObject(setting);
-//                final SendMessageController chatController = new SendMessageController(GPTApiCallBotResponseDataAccessObject);
-//                chatApp = new ChatView(chatController, username.getText());
-//                chatApp.setVisible(true);
-//            }
         });
 
         chatHistoryButton = new JButton("Past Chat");
         chatHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatHistoryButton.addActionListener(evt -> {
-            try {
-                // Attempt to get the chat
-                testChat = chatApp.getchat();
-            } catch (Exception e) {
-                // Handle the exception and proceed to alternative code
-                testChat = testChat;
-            }
             JOptionPane.showMessageDialog(this, "Opening Past Chat...");
             final ChatHistoryInteractor ChatHistoryInteractor = new ChatHistoryInteractor(username.getText(), testChat);
             final ChatHistoryController controller = new ChatHistoryController(ChatHistoryInteractor);
@@ -257,7 +244,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
             final String username = chatViewModel.getUsername();
 
-            chatApp = new ChatView(sendMessageController, username, chatViewModel);
+            chatApp = new ChatView(sendMessageController, username, chatViewModel, exitChatController);
             chatApp.setVisible(true);
         }
     }
@@ -300,5 +287,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setSendMessageController(SendMessageController sendMessageController) {
         this.sendMessageController = sendMessageController;
+    }
+
+    public void exitChatController(ExitChatController exitChatController) {
+        this.exitChatController = exitChatController;
     }
 }

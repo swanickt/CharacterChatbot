@@ -9,8 +9,11 @@ import javax.swing.WindowConstants;
 import data_access.MongoDBDataAccessObject;
 import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 import entity.bot.*;
+import entity.chat.CommonUserChatFactory;
 import entity.user.CommonUserFactory;
 import entity.user.UserFactory;
+import interface_adapter.exit_chat.ExitChatController;
+import interface_adapter.exit_chat.ExitChatPresenter;
 import interface_adapter.new_chat.ChatViewModel;
 import interface_adapter.new_chat.custom_bot.CustomBotController;
 import interface_adapter.new_chat.custom_bot.CustomBotPresenter;
@@ -51,6 +54,8 @@ import interface_adapter.signup.SignupCancelController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.exit_chat.ExitChatInteractor;
+import use_case.exit_chat.ExitChatOutputBoundary;
 import use_case.new_chat.custom_bot.CustomBotInteractor;
 import use_case.new_chat.custom_bot.CustomBotOutputBoundary;
 import use_case.new_chat.master_yoda.MasterYodaInteractor;
@@ -246,6 +251,10 @@ public class AppBuilder {
         final SendMessageInteractor sendChatInteractor = new SendMessageInteractor(sendMessageOutputBoundary,
                 new GptApiCallBotResponseDataAccessObject());
 
+        final ExitChatOutputBoundary exitChatOutputBoundary = new ExitChatPresenter(chatViewModel);
+        final ExitChatInteractor exitChatInteractor = new ExitChatInteractor(exitChatOutputBoundary,
+                new MongoDBDataAccessObject(), new CommonUserChatFactory());
+
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
 
@@ -266,6 +275,9 @@ public class AppBuilder {
 
         final SendMessageController controller7 = new SendMessageController(sendChatInteractor);
         loggedInView.setSendMessageController(controller7);
+
+        final ExitChatController controller8 = new ExitChatController(exitChatInteractor);
+        loggedInView.exitChatController(controller8);
 
         return this;
     }
@@ -369,6 +381,13 @@ public class AppBuilder {
 
         final SendMessageController controller2 = new SendMessageController(sendChatInteractor);
         customBotView.setSendMessageController(controller2);
+
+        final ExitChatOutputBoundary exitChatOutputBoundary = new ExitChatPresenter(chatViewModel);
+        final ExitChatInteractor exitChatInteractor = new ExitChatInteractor(exitChatOutputBoundary,
+                new MongoDBDataAccessObject(), new CommonUserChatFactory());
+
+        final ExitChatController controller3 = new ExitChatController(exitChatInteractor);
+        customBotView.setExitChatController(controller3);
 
         return this;
     }
