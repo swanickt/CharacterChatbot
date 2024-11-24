@@ -18,6 +18,7 @@ public class ChatViewModel extends ViewModel<ChatViewState> {
     private String prompt = "";
     private String botResponse = "";
     private boolean botResponseError;
+    private boolean endChat = false;
 
 
     public ChatViewModel() {
@@ -33,6 +34,14 @@ public class ChatViewModel extends ViewModel<ChatViewState> {
     public void setChatState(String username, String prompt) {
         this.username = username;
         this.prompt = prompt;
+    }
+
+    public void setEndChat(boolean endChat) {
+        this.endChat = endChat;
+    }
+
+    public boolean getEndChat() {
+        return endChat;
     }
 
     public String getUsername() {

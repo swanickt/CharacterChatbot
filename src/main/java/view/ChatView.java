@@ -4,6 +4,7 @@ import data_access.MongoDBDataAccessObject;
 import entity.chat.CommonUserChat;
 import entity.chat.CommonUserChatFactory;
 import entity.message.Message;
+import interface_adapter.exit_chat.ExitChatController;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.ChatViewModel;
 
@@ -35,6 +36,7 @@ public class ChatView extends JFrame {
     private JButton sendButton;
     private JButton exitButton;
     private SendMessageController sendMessageController;
+    private ExitChatController exitChatController;
     private CommonUserChatFactory chatFactory;
     private String username;
     private CommonUserChat chat;
@@ -42,14 +44,15 @@ public class ChatView extends JFrame {
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
 
-    public ChatView(SendMessageController sendMessageController, String username, ChatViewModel chatViewModel) {
+    public ChatView(SendMessageController sendMessageController,
+                    String username,
+                    ChatViewModel chatViewModel,
+                    ExitChatController exitChatController) {
         this.sendMessageController = sendMessageController;
+        this.exitChatController = exitChatController;
         this.username = username;
 
-        dbchatuser = new MongoDBDataAccessObject();
-        dbchatuser.setUp(username);
-        chatFactory = new CommonUserChatFactory();
-        chat = chatFactory.create();
+        exitChatController.newChat(username);
         // Initialize main frame
         setTitle(ChatViewModel.TITLE_LABEL);
         setSize(500, 600);
@@ -87,18 +90,18 @@ public class ChatView extends JFrame {
                 final String userInput = inputField.getText().replace("\n", "");
                 if (!userInput.isEmpty()) {
                     addChatBubble(userInput, "user");
-                    chat.addUserInput(userInput);
+                    exitChatController.addUserInput(userInput);
                     inputField.setText("");
                     sendMessageController.execute(userInput);
-                    dbchatuser.saveHistory(username, userInput);
+                    // exitChatController.saveHistory(username, userInput);
                     // Fetch GPT response
                     if (chatViewModel.getBotResponseError() == true) {
                         addChatBubble("Error: Unable to get response from GPT.", "error");
                     }
                     else {
                         addChatBubble(chatViewModel.getBotResponse(), "assistant");
-                        chat.addBotResponse(chatViewModel.getBotResponse());
-                        dbchatuser.saveHistory("assistant", chatViewModel.getBotResponse());
+                        exitChatController.addBotResponse(chatViewModel.getBotResponse());
+                        // exitChatController.saveHistory("assistant", chatViewModel.getBotResponse());
                     }
                 }
             }
@@ -106,21 +109,25 @@ public class ChatView extends JFrame {
 
         // Exit button action listener
         exitButton.addActionListener(e -> {
-            setVisible(false);
-            final List<Message> lst = chat.getUserInputs();
-            final List<Message> lst2 = chat.getBotResponses();
-            final MongoDBDataAccessObject database = new MongoDBDataAccessObject();
-
-            for (int i = 0; i < lst.size(); i++) {
-                System.out.println(username);
-                if (!"".equals(username)) {
-                    database.saveHistory(username, lst.get(i).getContent());
-                    database.saveHistory("assistant", lst2.get(i).getContent());
-                }
-                System.out.println(lst.get(i).getContent());
-                System.out.println(lst2.get(i).getContent());
+            // setVisible(false);
+//            final List<Message> lst = chat.getUserInputs();
+//            final List<Message> lst2 = chat.getBotResponses();
+//            final MongoDBDataAccessObject database = new MongoDBDataAccessObject();
+//
+//            for (int i = 0; i < lst.size(); i++) {
+//                System.out.println(username);
+//                if (!"".equals(username)) {
+//                    database.saveHistory(username, lst.get(i).getContent());
+//                    database.saveHistory("assistant", lst2.get(i).getContent());
+//                }
+//                System.out.println(lst.get(i).getContent());
+//                System.out.println(lst2.get(i).getContent());
+//            }
+//            System.out.println(database.get(username));
+            exitChatController.execute(username);
+            if (chatViewModel.getEndChat()) {
+                setVisible(false);
             }
-            System.out.println(database.get(username));
         });
         SwingUtilities.invokeLater(() -> {
             setVisible(true);
@@ -132,7 +139,7 @@ public class ChatView extends JFrame {
                 if (!initialResponse.isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         addChatBubble(initialResponse, "assistant");
-                        dbchatuser.saveGreeting("assistant", initialResponse);
+                        exitChatController.saveGreeting("assistant", initialResponse);
                         chatPanel.revalidate();
                         chatPanel.repaint();
                     });
@@ -192,13 +199,5 @@ public class ChatView extends JFrame {
             JScrollBar verticalBar = ((JScrollPane) chatPanel.getParent().getParent()).getVerticalScrollBar();
             verticalBar.setValue(verticalBar.getMaximum());
         });
-    }
-    @SuppressWarnings({"checkstyle:EmptyLineSeparator", "checkstyle:MissingJavadocMethod"})
-    public CommonUserChat getchat() {
-        return chat;
-    }
-
-    @SuppressWarnings({"checkstyle:UncommentedMain", "checkstyle:SuppressWarnings", "checkstyle:MissingJavadocMethod"})
-    public static void main(String[] args) {
     }
 }

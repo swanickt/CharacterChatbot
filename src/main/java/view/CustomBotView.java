@@ -15,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.custom_bot_page.CustomBotState;
 import interface_adapter.custom_bot_page.CustomBotViewModel;
 import interface_adapter.custom_bot_page.GoBackToLoggedInViewController;
+import interface_adapter.exit_chat.ExitChatController;
 import interface_adapter.new_chat.ChatViewModel;
 import interface_adapter.new_chat.custom_bot.CustomBotController;
 import interface_adapter.send_message.SendMessageController;
@@ -25,6 +26,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
     private final CustomBotViewModel customBotViewModel;
     private CustomBotController customBotController;
     private SendMessageController sendMessageController;
+    private ExitChatController exitChatController;
     private final JButton chatButton;
     private final JButton backButton;
     private GoBackToLoggedInViewController goBackToLoggedInViewController;
@@ -66,7 +68,7 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
 
             final String username = chatViewModel.getUsername();
 
-            chatApp = new ChatView(sendMessageController, username, chatViewModel);
+            chatApp = new ChatView(sendMessageController, username, chatViewModel, exitChatController);
             chatApp.setVisible(true);
         });
         backButton = new JButton("Back");
@@ -217,6 +219,10 @@ public class CustomBotView extends JPanel implements PropertyChangeListener {
 
     public void setSendMessageController(SendMessageController sendMessageController) {
         this.sendMessageController = sendMessageController;
+    }
+
+    public void setExitChatController(ExitChatController exitChatController) {
+        this.exitChatController = exitChatController;
     }
 }
 
