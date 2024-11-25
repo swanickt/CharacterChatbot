@@ -5,8 +5,12 @@ import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomViewInteractorTest {
+    /**
+     * Tests the successful exit button.
+     * Verifies that if the user can go back to LoggedInView,
+     */
     @Test
-    void successTest() {
+    public void successTest() {
         CustomViewOutputBoundary successPresenter = new CustomViewOutputBoundary() {
             private boolean switchToLoggedInViewCalled;
             @Override
