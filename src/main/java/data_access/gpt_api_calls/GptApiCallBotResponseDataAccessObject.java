@@ -16,6 +16,7 @@ import java.util.List;
 public class GptApiCallBotResponseDataAccessObject implements ChatApiAccessInterface {
     private static final String API_KEY = System.getenv("OPENAI_KEY");
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
+    private static final String MODELS_API_URL = "https://api.openai.com/v1/models";
     private List<Message> conversationHistory;
 
     public GptApiCallBotResponseDataAccessObject() {

@@ -10,5 +10,5 @@ public class SendMessageInputData {
         this.userInput = userInput;
     }
 
-    String getUserInput() { return userInput; }
+    public String getUserInput() { return userInput; }
 }
