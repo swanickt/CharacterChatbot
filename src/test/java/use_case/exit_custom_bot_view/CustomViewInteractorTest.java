@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+This is a test for exit_custom_bot_view.
+ */
 public class CustomViewInteractorTest {
     /**
      * Tests the successful exit button.
