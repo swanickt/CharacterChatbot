@@ -12,6 +12,7 @@ public class CustomBotPagePresenter implements CustomViewOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final CustomBotViewModel customBotViewModel;
+    private boolean switchToLoggedInViewCalled;
 
     public CustomBotPagePresenter(LoggedInViewModel loggedInViewModel,
                                   ViewManagerModel viewManagerModel,
@@ -19,6 +20,7 @@ public class CustomBotPagePresenter implements CustomViewOutputBoundary {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.customBotViewModel = customBotViewModel;
+        this.switchToLoggedInViewCalled = false;
     }
 
     // @Override
@@ -28,6 +30,7 @@ public class CustomBotPagePresenter implements CustomViewOutputBoundary {
 
     @Override
     public void switchToLoggedinView() {
+        switchToLoggedInViewCalled = true;
         final CustomBotState customBotState = customBotViewModel.getState();
         customBotState.setName("");
         customBotState.setOccupation("");
@@ -36,6 +39,11 @@ public class CustomBotPagePresenter implements CustomViewOutputBoundary {
 
         viewManagerModel.setState(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public boolean isSwitchToLoggedInViewCalled() {
+        return switchToLoggedInViewCalled;
     }
 }
 
