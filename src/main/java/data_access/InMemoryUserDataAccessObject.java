@@ -1,13 +1,17 @@
 package data_access;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import entity.message.Message;
 import entity.user.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.exit_chat.SaveChatHistoryUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.past_chat.PastChatUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 /**
@@ -17,7 +21,7 @@ import use_case.signup.SignupUserDataAccessInterface;
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface, SaveChatHistoryUserDataAccessInterface {
+        LogoutUserDataAccessInterface, SaveChatHistoryUserDataAccessInterface, PastChatUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
@@ -74,5 +78,12 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public void saveGreeting(String user, String greeting) {
         this.database.put(user, greeting);
+    }
+
+    @Override
+    public List<Message> mixedHistory(String user) {
+        List<Message> messages = new ArrayList<>();
+        messages.add(new Message("user", "hello"));
+        return messages;
     }
 }
