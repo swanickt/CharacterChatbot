@@ -28,13 +28,10 @@ public class ExitChatInteractor implements ExitChatInputBoundary {
         final List<Message> lst2 = currentChat.getBotResponses();
 
         for (int i = 0; i < lst.size(); i++) {
-            System.out.println(username);
-            if (!"".equals(username)) {
-                chatHistoryAccess.saveHistory(username, lst.get(i).getContent());
-                chatHistoryAccess.saveHistory("assistant", lst2.get(i).getContent());
-            }
-             System.out.println(lst.get(i).getContent());
-             System.out.println(lst2.get(i).getContent());
+            chatHistoryAccess.saveHistory(username, lst.get(i).getContent());
+            chatHistoryAccess.saveHistory("assistant", lst2.get(i).getContent());
+            System.out.println(lst.get(i).getContent());
+            System.out.println(lst2.get(i).getContent());
         }
         System.out.println(username);
 
