@@ -14,6 +14,7 @@ import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.exit_chat.SaveChatHistoryUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.past_chat.PastChatUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import entity.user.CommonUser;
@@ -26,7 +27,8 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
-        SaveChatHistoryUserDataAccessInterface {
+        SaveChatHistoryUserDataAccessInterface,
+        PastChatUserDataAccessInterface {
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
     private static final String HISTORY = "history";
