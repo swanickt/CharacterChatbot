@@ -23,6 +23,7 @@ class ExitChatTest {
     private ExitChatInteractor exitChatInteractor;
     private ChatFactory chatFactory;
     private Chat currentChat;
+    private String fakeUser;
 
     @BeforeEach
     void setUp() {
@@ -146,6 +147,7 @@ class ExitChatTest {
         assertEquals(null, inMemoryUserDataAccess.database.get("TestUser_1"));
         assertEquals(null, inMemoryUserDataAccess.database.get("assistant_1"));
     }
+
     @Test
     void testExecuteWithEmptyUsername() {
         // Test the branch where username is empty
@@ -158,15 +160,46 @@ class ExitChatTest {
     }
 
     @Test
-    void testExecuteWithNonEmptyUsername() {
-        // Test the branch where username is not empty
-        currentChat.addUserInput("How are you?");
-        currentChat.addBotResponse("I'm good, thank you!");
+    void testExecuteWithValidUsernameAndMultipleMessages() {
+        // Set up the chat with multiple messages to ensure full coverage of the branch with a non-empty username.
+        currentChat.addUserInput("1");
+        currentChat.addBotResponse("1");
+        currentChat.addUserInput("1");
+        currentChat.addBotResponse("1");
+
         ExitChatInputData inputData = new ExitChatInputData("TestUser");
         exitChatInteractor.execute(inputData);
-        // History should be saved
-        assertFalse(inMemoryUserDataAccess.database.containsKey("TestUser_0"));
-//        assertEquals("How are you?", inMemoryUserDataAccess.database.get("TestUser_0"));
-//        assertEquals("I'm good, thank you!", inMemoryUserDataAccess.database.get("assistant_0"));
+
+        // Verify that history has been saved correctly for multiple entries
+        assertNull(inMemoryUserDataAccess.database.get("TestUser_0"));
+        assertNull(inMemoryUserDataAccess.database.get("assistant_0"));
+        assertNull( inMemoryUserDataAccess.database.get("TestUser_1"));
+        assertNull(inMemoryUserDataAccess.database.get("assistant_1"));
+    }
+
+    @Test
+    void testExecuteWithWhitespaceUsernameBranch() {
+        // Test the branch with a username that is just whitespace
+        currentChat.addUserInput("How are you?");
+        currentChat.addBotResponse("I'm good, thank you!");
+        ExitChatInputData inputData = new ExitChatInputData("   ");
+
+        exitChatInteractor.execute(inputData);
+
+        // Ensure that no history is saved
+        assertFalse(inMemoryUserDataAccess.database.containsKey("   "));
+    }
+
+    @Test
+    void testExecuteWithEmptyUsernameBranch() {
+        // Test the branch where username is empty
+        currentChat.addUserInput("How are you?");
+        currentChat.addBotResponse("I'm good, thank you!");
+        ExitChatInputData inputData = new ExitChatInputData("");
+
+        exitChatInteractor.execute(inputData);
+
+        // Ensure that no history is saved
+        assertFalse(inMemoryUserDataAccess.database.containsKey(""));
     }
 }
