@@ -7,5 +7,9 @@ public interface LoggedInOutputBoundary {
      */
     void switchToChangePasswordView();
 
+    boolean isSwitchToChangePasswordViewCalled();
+
     void switchToCustomBotView();
+
+    boolean isSwitchToCustomBotViewCalled();
 }

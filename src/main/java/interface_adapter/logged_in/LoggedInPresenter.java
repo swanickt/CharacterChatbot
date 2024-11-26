@@ -12,6 +12,8 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final CustomBotViewModel customBotViewModel;
+    private boolean switchToChangePasswordViewCalled;
+    private boolean switchToCustomBotViewCalled;
 
     public LoggedInPresenter(ChangePasswordViewModel changePasswordViewModel,
                              ViewManagerModel viewManagerModel,
@@ -22,10 +24,13 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.customBotViewModel = customBotViewModel;
+        this.switchToChangePasswordViewCalled = false;
+        this.switchToCustomBotViewCalled = false;
     }
 
     @Override
     public void switchToChangePasswordView() {
+        switchToChangePasswordViewCalled = true;
         final LoggedInState loggedInState = loggedInViewModel.getState();
         final ChangePasswordState changePasswordState = changePasswordViewModel.getState();
         changePasswordState.setPassword("");
@@ -39,8 +44,19 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
     }
 
     @Override
+    public boolean isSwitchToChangePasswordViewCalled() {
+        return switchToChangePasswordViewCalled;
+    }
+
+    @Override
     public void switchToCustomBotView() {
+        switchToCustomBotViewCalled = true;
         viewManagerModel.setState(customBotViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public boolean isSwitchToCustomBotViewCalled() {
+        return switchToCustomBotViewCalled;
     }
 }
