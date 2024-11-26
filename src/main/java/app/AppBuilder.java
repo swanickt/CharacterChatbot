@@ -48,6 +48,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.past_chat.PastChatController;
+import interface_adapter.past_chat.PastChatPresenter;
+import interface_adapter.past_chat.PastChatViewModel;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.send_message.SendMessagePresenter;
 import interface_adapter.signup.SignupCancelController;
@@ -86,6 +89,8 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.past_chat.PastChatInteractor;
+import use_case.past_chat.PastChatOutputBoundary;
 import use_case.send_message.SendMessageInteractor;
 import use_case.send_message.SendMessageOutputBoundary;
 import use_case.signup.SignupInputBoundary;
@@ -134,6 +139,7 @@ public class AppBuilder {
     private CustomBotViewModel customBotViewModel;
     private CustomBotView customBotView;
     private final ChatViewModel chatViewModel = new ChatViewModel();
+    private final PastChatViewModel pastChatViewModel = new PastChatViewModel();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -190,7 +196,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel, chatViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, chatViewModel, pastChatViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -255,6 +261,10 @@ public class AppBuilder {
         final ExitChatInteractor exitChatInteractor = new ExitChatInteractor(exitChatOutputBoundary,
                 new MongoDBDataAccessObject(), new CommonUserChatFactory());
 
+        final PastChatOutputBoundary pastChatOutputBoundary = new PastChatPresenter(pastChatViewModel);
+        final PastChatInteractor pastChatInteractor = new PastChatInteractor(pastChatOutputBoundary,
+                new MongoDBDataAccessObject());
+
         final ToPasswordSettingsController controller1 = new ToPasswordSettingsController(loggedInInteractor);
         loggedInView.setToPasswordSettingsController(controller1);
 
@@ -278,6 +288,9 @@ public class AppBuilder {
 
         final ExitChatController controller8 = new ExitChatController(exitChatInteractor);
         loggedInView.exitChatController(controller8);
+
+        final PastChatController controller9 = new PastChatController(pastChatInteractor);
+        loggedInView.setPastChatController(controller9);
 
         return this;
     }

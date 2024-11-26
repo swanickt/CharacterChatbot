@@ -15,15 +15,16 @@ import interface_adapter.new_chat.master_yoda.MasterYodaController;
 import interface_adapter.new_chat.normal_bot.NormalBotController;
 import interface_adapter.new_chat.optimus_prime.OptimusPrimeController;
 import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.past_chat.PastChatViewModel;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.pikachu.PikachuController;
-import interface_adapter.past_chat.ChatHistoryController;
+import interface_adapter.past_chat.PastChatController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.ToPasswordSettingsController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logged_in.ToCustomViewController;
-import use_case.past_chat.ChatHistoryInteractor;
+import use_case.past_chat.PastChatInteractor;
 
 /**
  * The View for when the user is logged into the program.
@@ -43,6 +44,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private MasterYodaController masterYodaController;
     private SendMessageController sendMessageController;
     private ExitChatController exitChatController;
+    private PastChatController pastChatController;
 
     private final JButton chatButton;
     private final JButton chatHistoryButton;
@@ -51,29 +53,25 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
     private final JButton customBotButton;
-    private CommonUserChat testChat;
-    private CommonUserChat chat;
     private final ChatViewModel chatViewModel;
     @SuppressWarnings({"checkstyle:DeclarationOrder", "checkstyle:VisibilityModifier"})
+    private final PastChatViewModel pastChatViewModel;
     ChatView chatApp;
+    PastChatView pastChatView;
+
 
     @SuppressWarnings({"checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:CatchParameterName"})
-    public LoggedInView(LoggedInViewModel loggedInViewModel, ChatViewModel chatViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, ChatViewModel chatViewModel,
+                        PastChatViewModel pastChatViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.chatViewModel = chatViewModel;
         this.chatViewModel.addPropertyChangeListener(this);
+        this.pastChatViewModel = pastChatViewModel;
 
         // Title
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JLabel title = new JLabel("Chatbot for");
-        // testChat
-        testChat = new CommonUserChat();
-        testChat.addBotResponse("NO CHAT HISTORY NOW");
-        testChat.addBotResponse("NO CHAT HISTORY NOW");
-        testChat.addUserInput("NO CHAT HISTORY NOW");
-        testChat.addUserInput("NO CHAT HISTORY NOW");
-        chat = testChat;
 
         username = new JLabel();
         titlePanel.add(title);
@@ -116,10 +114,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         chatHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         chatHistoryButton.addActionListener(evt -> {
             JOptionPane.showMessageDialog(this, "Opening Past Chat...");
-            final ChatHistoryInteractor ChatHistoryInteractor = new ChatHistoryInteractor(username.getText(), testChat);
-            final ChatHistoryController controller = new ChatHistoryController(ChatHistoryInteractor);
-            final ChatHistoryView chatHistoryView = new ChatHistoryView(controller, username.getText());
-            chatHistoryView.setVisible(true);
+
+            pastChatView = new PastChatView(pastChatController, username.getText(), pastChatViewModel);
+            pastChatView.setVisible(true);
         });
 
         changePassword = new JButton("Change Password");
@@ -291,5 +288,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void exitChatController(ExitChatController exitChatController) {
         this.exitChatController = exitChatController;
+    }
+
+    public void setPastChatController(PastChatController pastChatController) {
+        this.pastChatController = pastChatController;
     }
 }

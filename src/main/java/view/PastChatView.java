@@ -2,25 +2,26 @@ package view;
 
 import data_access.MongoDBDataAccessObject;
 import entity.message.Message;
-import interface_adapter.past_chat.ChatHistoryController;
+import interface_adapter.past_chat.PastChatController;
+import interface_adapter.past_chat.PastChatViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
 
-public class ChatHistoryView extends JFrame {
+public class PastChatView extends JFrame {
     private JPanel chatPanel;
     private String username;
     private JButton exitButton;
-    private final List<Message> lst;
-    private ChatHistoryController chathistorycontroller;
-    private MongoDBDataAccessObject dbchatuser;
+    private PastChatController pastChatController;
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:SuppressWarnings", "checkstyle:LambdaParameterName", "checkstyle:EmptyLineSeparator"})
-    public ChatHistoryView(ChatHistoryController chatHistoryController, String username) {
-        this.dbchatuser = new MongoDBDataAccessObject();
+    public PastChatView(PastChatController pastChatController,
+                        String username,
+                        PastChatViewModel pastChatViewModel) {
+        this.pastChatController = pastChatController;
         this.username = username;
-        lst = dbchatuser.mixedHistory(username);
+        pastChatController.execute(username);
         // Initialize main frame
         setTitle("Past Chat");
         setSize(500, 600);
@@ -43,15 +44,16 @@ public class ChatHistoryView extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         SwingUtilities.invokeLater(() -> {
+            final List<String> lst = pastChatViewModel.getPastChat();
             for (int i = 0; i < lst.size(); i++) {
-                String role = lst.get(i).getRole();
-                if (role.equals("user")) {
-                    addChatBubble(lst.get(i).getContent(), "user");
+                if (i % 2 == 0) {
+                    addChatBubble(lst.get(i), "assistant");
                 }
                 else {
-                    addChatBubble(lst.get(i).getContent(), "assistant");
+                    addChatBubble(lst.get(i), "user");
                 }
             }
+
         });
 
         // Exit button action listener
@@ -106,7 +108,5 @@ public class ChatHistoryView extends JFrame {
         });
     }
 
-//    public static void main(String[] args) {
-//    }
 
 }
