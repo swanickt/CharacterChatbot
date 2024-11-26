@@ -33,8 +33,8 @@ public class ExitChatInteractor implements ExitChatInputBoundary {
                 chatHistoryAccess.saveHistory(username, lst.get(i).getContent());
                 chatHistoryAccess.saveHistory("assistant", lst2.get(i).getContent());
             }
-             System.out.println(lst.get(i).getContent());
-             System.out.println(lst2.get(i).getContent());
+            System.out.println(lst.get(i).getContent());
+            System.out.println(lst2.get(i).getContent());
         }
         System.out.println(username);
 

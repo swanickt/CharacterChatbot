@@ -5,6 +5,7 @@ import java.util.Map;
 
 import entity.user.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.exit_chat.SaveChatHistoryUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -16,12 +17,18 @@ import use_case.signup.SignupUserDataAccessInterface;
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        LogoutUserDataAccessInterface, SaveChatHistoryUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
+    public Map<String, String> database;
+    public String username;
     // null value for currentUsername means that nobody is logged in.
+
+    public InMemoryUserDataAccessObject() {
+        database = new HashMap<>();
+    }
 
     @Override
     public boolean existsByName(String identifier) {
@@ -52,5 +59,20 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public String getCurrentUsername() {
         return this.currentUsername;
+    }
+
+    @Override
+    public void setUp(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public void saveHistory(String send, String message) {
+        this.database.put(send, message);
+    }
+
+    @Override
+    public void saveGreeting(String user, String greeting) {
+        this.database.put(user, greeting);
     }
 }
