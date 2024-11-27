@@ -11,4 +11,9 @@ public interface PikachuOutputBoundary {
      */
     void beginChat(PikachuOutputData pikachuOutputData);
 
+    // only for test
+    boolean isBeginChatCalled();
+
+    // only for test
+    PikachuOutputData getCapturedOutputData();
 }

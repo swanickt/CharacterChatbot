@@ -10,4 +10,10 @@ public interface MasterYodaOutputBoundary {
      * @param masterYodaOutputData the necessary data to begin the chat.
      */
     void beginChat(MasterYodaOutputData masterYodaOutputData);
+
+    // only for test
+    boolean isBeginChatCalled();
+
+    // only for test
+    MasterYodaOutputData getCapturedOutputData();
 }

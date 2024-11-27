@@ -19,4 +19,16 @@ public class OptimusPrimePresenter implements OptimusPrimeOutputBoundary {
         chatViewModel.setChatState(username, prompt);
         chatViewModel.firePropertyChanged("new chat");
     }
+
+    // only for test
+    @Override
+    public boolean isBeginChatCalled() {
+        return false;
+    }
+
+    // only for test
+    @Override
+    public OptimusPrimeOutputData getCapturedOutputData() {
+        return null;
+    }
 }
