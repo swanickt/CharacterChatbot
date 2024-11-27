@@ -11,4 +11,9 @@ public interface OptimusPrimeOutputBoundary {
      */
     void beginChat(OptimusPrimeOutputData optimusPrimeOutputData);
 
+    // only for test
+    boolean isBeginChatCalled();
+
+    // only for test
+    OptimusPrimeOutputData getCapturedOutputData();
 }

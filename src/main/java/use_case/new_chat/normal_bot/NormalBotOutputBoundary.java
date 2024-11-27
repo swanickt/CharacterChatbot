@@ -10,4 +10,10 @@ public interface NormalBotOutputBoundary {
      * @param normalBotOutputData the necessary data to begin the chat.
      */
     void beginChat(NormalBotOutputData normalBotOutputData);
+
+    // only for test
+    boolean isBeginChatCalled();
+
+    // only for test
+    NormalBotOutputData getCapturedOutputData();
 }

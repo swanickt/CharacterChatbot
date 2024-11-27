@@ -9,4 +9,10 @@ public interface CustomBotOutputBoundary {
      * @param customBotOutputData the necessary data to begin the chat.
      */
     void beginChat(CustomBotOutputData customBotOutputData);
+
+    // only for test
+    boolean isBeginChatCalled();
+
+    // only for test
+    CustomBotOutputData getCapturedOutputData();
 }

@@ -19,4 +19,16 @@ public class PikachuPresenter implements PikachuOutputBoundary {
         chatViewModel.setChatState(username, prompt);
         chatViewModel.firePropertyChanged("new chat");
     }
+
+    // only for test
+    @Override
+    public boolean isBeginChatCalled() {
+        return false;
+    }
+
+    // only for test
+    @Override
+    public PikachuOutputData getCapturedOutputData() {
+        return null;
+    }
 }
