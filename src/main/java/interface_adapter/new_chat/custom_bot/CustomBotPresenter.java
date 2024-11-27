@@ -18,4 +18,16 @@ public class CustomBotPresenter implements CustomBotOutputBoundary {
         final String prompt = customBotOutputData.getPrompt();
         chatViewModel.setChatState(username, prompt);
     }
+
+    // only for test
+    @Override
+    public boolean isBeginChatCalled() {
+        return false;
+    }
+
+    // only for test
+    @Override
+    public CustomBotOutputData getCapturedOutputData() {
+        return null;
+    }
 }
