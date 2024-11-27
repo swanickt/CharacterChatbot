@@ -8,11 +8,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link MasterYodaInteractor}.
+ * <p>
+ * This test class covers the interactor's behavior, including successful execution,
+ * handling of null input data, and validation of {@link MasterYodaOutputData}.
+ */
 public class MasterYodaInteractorTest {
 
     private MasterYodaOutputBoundary mockPresenter;
     private BotFactory mockFactory;
 
+    /**
+     * Sets up the mock dependencies required for the test cases.
+     * <p>
+     * The presenter captures the output of the interactor, and the factory provides
+     * a mock Master Yoda bot instance. This setup method is executed before each test.
+     */
     @BeforeEach
     void setup() {
         // Mock Presenter to capture outputs
@@ -26,10 +38,20 @@ public class MasterYodaInteractorTest {
                 capturedOutputData = masterYodaOutputData;
             }
 
+            /**
+             * Checks whether the {@code beginChat} method was called during the test.
+             *
+             * @return true if {@code beginChat} was called, false otherwise.
+             */
             public boolean isBeginChatCalled() {
                 return beginChatCalled;
             }
 
+            /**
+             * Retrieves the {@link MasterYodaOutputData} captured during the test.
+             *
+             * @return the captured {@link MasterYodaOutputData}.
+             */
             public MasterYodaOutputData getCapturedOutputData() {
                 return capturedOutputData;
             }
@@ -49,6 +71,12 @@ public class MasterYodaInteractorTest {
         };
     }
 
+    /**
+     * Tests the successful execution of the {@link MasterYodaInteractor}.
+     * <p>
+     * Ensures the interactor correctly retrieves input data, generates a Master Yoda bot via the factory,
+     * and calls the presenter's {@code beginChat} method with the expected output data.
+     */
     @Test
     void testSuccessfulExecution() {
         // Arrange
@@ -66,6 +94,11 @@ public class MasterYodaInteractorTest {
         assertEquals("Do or do not, there is no try.", outputData.getPrompt());
     }
 
+    /**
+     * Tests the behavior of the {@link MasterYodaInteractor} when null input data is provided.
+     * <p>
+     * Expects a {@link NullPointerException} to be thrown.
+     */
     @Test
     void testNullInputData() {
         // Arrange
@@ -75,6 +108,9 @@ public class MasterYodaInteractorTest {
         assertThrows(NullPointerException.class, () -> interactor.execute(null));
     }
 
+    /**
+     * Tests the {@link MasterYodaOutputData} class to ensure correct initialization and retrieval of fields.
+     */
     @Test
     void testMasterYodaOutputData() {
         // Arrange
