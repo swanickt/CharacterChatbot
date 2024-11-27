@@ -210,3 +210,7 @@ specific guidelines.
 - Once approved, contributions will be merged into the main branch by one of the original 4
   contributors and if revisions are requested, address them in full and update the PR.
 - Contributors will be acknowledged in the [Project Contributors](#Project-Contributors) section.
+
+![Normal Bot](images/NormalAI.gif)
+![Optimus Prime](images/OptimusPrime.gif)
+![Pikachu](images/Pikachu.gif)
