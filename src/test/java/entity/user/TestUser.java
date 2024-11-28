@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testUser {
+public class TestUser {
     @Test
     public void testUserCreation() {
-        User user = new CommonUser("testUser", "testPassword");
+        User user = new CommonUser("TestUser", "testPassword");
         assertNotNull(user);
-        assertEquals("testUser", user.getName());
+        assertEquals("TestUser", user.getName());
         assertEquals("testPassword", user.getPassword());
         assertNotNull(user.getChatHistory());
         assertEquals(0, user.getChatHistory().size());
@@ -18,19 +18,19 @@ public class testUser {
 
     @Test
     public void testGetName() {
-        User user = new CommonUser("testUser", "testPassword");
-        assertEquals("testUser", user.getName());
+        User user = new CommonUser("TestUser", "testPassword");
+        assertEquals("TestUser", user.getName());
     }
 
     @Test
     public void testGetPassword() {
-        User user = new CommonUser("testUser", "testPassword");
+        User user = new CommonUser("TestUser", "testPassword");
         assertEquals("testPassword", user.getPassword());
     }
 
     @Test
     public void testGetChatHistory() {
-        User user = new CommonUser("testUser", "testPassword");
+        User user = new CommonUser("TestUser", "testPassword");
         assertNotNull(user.getChatHistory());
         assertTrue(user.getChatHistory().isEmpty());
 
@@ -42,9 +42,9 @@ public class testUser {
     @Test
     public void testUserFactoryCreation() {
         UserFactory factory = new CommonUserFactory();
-        User user = factory.create("testUser", "testPassword");
+        User user = factory.create("TestUser", "testPassword");
         assertNotNull(user);
-        assertEquals("testUser", user.getName());
+        assertEquals("TestUser", user.getName());
         assertEquals("testPassword", user.getPassword());
     }
 }

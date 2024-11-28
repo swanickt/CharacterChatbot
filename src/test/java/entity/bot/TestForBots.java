@@ -2,7 +2,7 @@ package entity.bot;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testForBots {
+public class TestForBots {
         @Test
         public void testCustomBotCreation() {
             Bot bot = new CustomBot("CustomBot", "CustomBot");

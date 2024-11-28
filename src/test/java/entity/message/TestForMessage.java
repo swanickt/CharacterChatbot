@@ -2,7 +2,7 @@ package entity.message;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testForMessage {
+public class TestForMessage {
     @Test
     public void testMessageCreation() {
         MessageInterface message = new CommonUserMessage("Hello, how are you?", "User");
