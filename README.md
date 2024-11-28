@@ -5,9 +5,10 @@
 2. [Project Summary](#Project-Summary)
 3. [Software Features](#Software-Features)
 4. [Installation Instructions](#Installation-Instructions)
-5. [License](#License)
-6. [Leaving Feedback](#Leaving-Feedback)
-7. [Contributing to Character Chatbot](#Contributing-to-Character-Chatbot)
+5. [Initial Usage Guide](#Initial-Usage-Guide)
+6. [License](#License)
+7. [Leaving Feedback](#Leaving-Feedback)
+8. [Contributing to Character Chatbot](#Contributing-to-Character-Chatbot)
 
 ## ***Project Contributors***
 - Thomas Swanick (github account: ThomasSwanick)
@@ -16,41 +17,37 @@
 - John Deng (github account: JonDD-D)
 
 ### User Story Credits:
-**Note for TA** These vary from our original blueprint submission on Markus. We have decided to not seperate
-the account types into free/premium and instead focus on making the design/clean architecture
-as best as possible (i.e. instead of over implementing features). However, we have decided
-to replace the work of making multiple account types with a custom character
-feature.
+**Note for the TA:** These vary from our original blueprint submission on Markus. We have made several
+design choices since then which modified our original plan.
 
-**[Team Story]** Bob is bored and home all by himself.He wants to chat with
+**[Team Story]** Bob is bored and home all by himself. He wants to chat with
 someone but all his friends are currently busy or unavailable. He decides to run the
 Character Chatbot app and spends the next half hour **conversing with the normal AI bot.**
 
+**[Thomas Swanick]** Bob wants to be able to **create an account, log in, and change his password** if he forgets it,
+so that he can still access his Character Chatbot account. He wants to be able to interface with these options
+through a simple and easily understandable home screen.
+
 **[Thomas Swanick]** Bob wants to know what it would be like to talk to his favourite robot Optimus Prime. To find out,
-he **talks to the Optimus Prime character** in Character Chatbot.
+he **chats with the Optimus Prime character** in Character Chatbot.
 
 **[Yukun Wang]** Bob wants to include a happy birthday message written by Pikachu in his son's
 birthday card. Bob **uses the Pikachu character offered by Character Chatbot** to produce this message.
 
 **[Yukun Wang]** Bob is a huge Star Wars fan. He has always wanted to **talk to master Yoda** about the philosophy of life. Bob can achieve his dream through his Character Chatbot account.
 
-**[John Deng]** Bob previously had a conversation with a bot in Character Chatbot. Some time has passed and he wants to revisit the conversation so that he can remember the main points.
-Bob logs in to his account and goes to his **chat history to view that conversation in full**.
+**[John Deng]** Bob previously had a conversation with a bot in Character Chatbot. Some time has passed, and he wants to revisit the conversation so that he can remember the main points.
+Bob logs in to his account and goes to his **past chat to view that conversation in full**.
 
-**[Thomas Swanick]** Bob wants to be able to **create an account, log in, and change his password** if he forgets it,
-so that he can still access his Character Chatbot account. He wants to be able to interface with these options
-through a simple and easily understandable home screen.
-
-**[Yi Pan]** Bob wants to be able to **create his own character** with a unique name and attributes
-so that he can chat with it on Character Chatbot.
-
+**[Yi Pan]** Bob wants to be able to **create his own character** with a unique name and attributes, different from
+the default options so that he can chat with it on Character Chatbot.
 
 ## ***Project Summary***
 
 Like any other AI chatbot, the Character Chatbot program allows users to converse with an AI model which responds to user inputs in a human like manner.
 Aside from the standard AI bot available, the user also has the option to assign a character to the AI.
 Specifically, they can choose from default characters Pikachu, Master Yoda, or Optimus Prime.
-The chatbot will then respond using the mannerisms and tone of the chosen character.
+The chatbot will then respond using the mannerisms and tones of the chosen character.
 
 Character Chatbot also allows the user to create their own custom characters.
 This includes the ability to assign the AI to a pre-existing celebrity/character or create a completely new persona from scratch!
@@ -65,6 +62,37 @@ why spend your time talking to a boring robotic AI when you can get all the same
 from your favourite character or celebrity!
 
 ## ***Software Features***
+
+### Chatting Features
+Currently, th character chatbot application supports chats with 4 default characters. A standard
+AI bot, Pikachu the Pokemon, Optimus Prime the autobot, and Master Yoda the Star Wars jedi. Aside from these
+easily accessible default personas, the user has the option to create any character they wish to chat with from scratch.
+
+### Demo Chat with the Normal AI:
+<img src="images/NormalAI.gif" alt="Normal Bot" width="500">
+
+### Demo Chat with Pikachu:
+<img src="images/Pikachu.gif" alt="Pikachu" width="500">
+
+### Demo Chat with Optimus Prime:
+<img src="images/OptimusPrime.gif" alt="OptimusPrime" width="500">
+
+### Demo Chat with Master Yoda:
+<img src="images/MasterYoda.gif" alt="MasterYoda" width="500">
+
+### Creating a custom bot:
+This small demo shows how a Character Chatbot user can create their own custom characters. This includes
+the ability to chat with real or fictional pre-existing characters not currently offered as a default,
+or creating completely new personas from scratch. This specific example shows the process for
+creating a bot to chat with Scooby-Doo!
+
+<img src="images/CustomBotScooby.gif" alt="CustomBotScooby" width="500">
+
+### Viewing your Past Chat:
+No matter how long it's been since you've logged in to your Character Chatbot account,
+you have the ability to view your previous conversation in full!
+
+<img src="images/PastChat.gif" alt="PastChat" width="500">
 
 ## ***Installation Instructions***
 
@@ -123,6 +151,20 @@ As a desktop GUI-based application, there are two common issues with installatio
 - **Project Documentation:** Refer to the [README.md](https://github.com/ThomasSwanick/CharacterChatbot/blob/main/README.md) for more details.
 - **Issue Tracker:** Report issues or request features via the [GitHub Issues](https://github.com/ThomasSwanick/CharacterChatbot/issues) page.
 
+
+## **Initial Usage Guide**
+Once you have followed the installation instructions and are ready to get started
+using Character Chatbot, you can follow these two tutorials. The first shows you how
+you can create your account. Once you have an account, the second tutorial details
+how you can log in, log out, and change your password if needed.
+
+### Creating a Character Chatbot Account:
+
+<img src="images/NewAccount.gif" alt="NewAccount" width="500">
+
+### Logging In, Changing your Password, and Logging Out:
+
+<img src="images/Login-PasswordChange-Logout.gif" alt="Login-PasswordChange-Logout" width="500">
 
 ## ***License***
 
@@ -210,12 +252,3 @@ specific guidelines.
 - Once approved, contributions will be merged into the main branch by one of the original 4
   contributors and if revisions are requested, address them in full and update the PR.
 - Contributors will be acknowledged in the [Project Contributors](#Project-Contributors) section.
-
-![Normal Bot](images/NormalAI.gif)
-![Optimus Prime](images/OptimusPrime.gif)
-![Pikachu](images/Pikachu.gif)
-![MasterYoda](images/MasterYoda.gif)
-![PastChat](images/PastChat.gif)
-![CustomBotScooby](images/CustomBotScooby.gif)
-![Login-PasswordChange-Logout](images/Login-PasswordChange-Logout.gif)
-![NewAccount](images/NewAccount.gif)
