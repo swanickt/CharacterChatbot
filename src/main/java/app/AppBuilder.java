@@ -381,7 +381,7 @@ public class AppBuilder {
         final GoBackToLoggedInViewController controller = new GoBackToLoggedInViewController(customViewInteractor);
         customBotView.setToLoggedInView(controller);
 
-        final CustomBotOutputBoundary customBotOutputBoundary = new CustomBotPresenter(chatViewModel);
+        final CustomBotOutputBoundary customBotOutputBoundary = new CustomBotPresenter(chatViewModel, viewManagerModel, customBotViewModel);
         final CustomBotInteractor customBotInteractor = new CustomBotInteractor(customBotOutputBoundary,
                 new CustomBotFactory());
 

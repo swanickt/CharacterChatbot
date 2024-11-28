@@ -38,6 +38,7 @@ public class ChatView extends JFrame {
     private SendMessageController sendMessageController;
     private ExitChatController exitChatController;
     private String username;
+    private ChatViewModel chatViewModel;
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
 
@@ -48,6 +49,7 @@ public class ChatView extends JFrame {
         this.sendMessageController = sendMessageController;
         this.exitChatController = exitChatController;
         this.username = username;
+        this.chatViewModel = chatViewModel;
 
         exitChatController.newChat(username);
         // Initialize main frame
