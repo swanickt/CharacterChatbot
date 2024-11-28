@@ -23,10 +23,14 @@ public class ExitChatInteractor implements ExitChatInputBoundary {
     @Override
     public void execute(ExitChatInputData exitChatInputData) {
 
+        // Get the current user from the input data.
         final String username = exitChatInputData.getUsername();
+
+        // Get all the user inputs and bot responses from the current chat.
         final List<Message> lst = currentChat.getUserInputs();
         final List<Message> lst2 = currentChat.getBotResponses();
 
+        // Save this chat (bot responses and user inputs) to the DB.
         for (int i = 0; i < lst.size(); i++) {
             chatHistoryAccess.saveHistory(username, lst.get(i).getContent());
             chatHistoryAccess.saveHistory("assistant", lst2.get(i).getContent());
@@ -35,9 +39,9 @@ public class ExitChatInteractor implements ExitChatInputBoundary {
         }
         System.out.println(username);
 
+        // Tell the presenter to update the views so that the chat "exits".
         final boolean endChat = true;
         final ExitChatOutputData exitChatOutputData = new ExitChatOutputData(endChat);
-
         exitChatPresenter.endChat(exitChatOutputData);
     }
 

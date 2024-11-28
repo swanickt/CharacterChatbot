@@ -18,7 +18,11 @@ public class PastChatInteractor implements PastChatInputBoundary {
 
     @Override
     public void execute(PastChatInputData pastChatInputData) {
+        // get the user's username from the input data.
         final String username = pastChatInputData.getUsername();
+
+        // Get the past chat bot responses and user inputs corresponding to this user from the DB.
+        // Store them as a list of strings for the output data.
         final List<Message> lst = pastChatAccess.mixedHistory(username);
         final List<String> pastChatMessagesInOrder = new ArrayList<String>();
 

@@ -1,13 +1,11 @@
 package use_case.change_password;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.user_data.InMemoryUserDataAccessObject;
 import entity.user.CommonUserFactory;
 import entity.user.User;
 import entity.user.UserFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import interface_adapter.change_password.ChangePasswordPresenter;
-import use_case.login.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

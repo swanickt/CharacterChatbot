@@ -1,9 +1,5 @@
 package view;
 
-import data_access.MongoDBDataAccessObject;
-import entity.chat.CommonUserChat;
-import entity.chat.CommonUserChatFactory;
-import entity.message.Message;
 import interface_adapter.exit_chat.ExitChatController;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.new_chat.ChatViewModel;
@@ -25,7 +21,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * The chatting view/"app" for all chats, regardless of the character.
