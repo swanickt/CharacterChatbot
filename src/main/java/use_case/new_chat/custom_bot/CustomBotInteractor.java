@@ -20,9 +20,12 @@ public class CustomBotInteractor implements CustomBotInputBoundary {
         final String botName = customBotInputData.getBotName();
         final String occupation = customBotInputData.getBotOccupation();
 
-        // creates a custom bot object and retrieves the relevant backend prompt to start the chat.
+        // creates a custom bot object and the relevant backend prompt to start the chat
+        // based on the input data.
         final String prompt = customBotFactory.create(botName, occupation).getPrompt();
 
+        // Tell the presenter to signal the beginning of a new custom bot chat with
+        // this information.
         final CustomBotOutputData customBotOutputData = new CustomBotOutputData(username, prompt);
         customBotPresenter.beginChat(customBotOutputData);
     }
