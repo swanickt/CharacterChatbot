@@ -214,3 +214,8 @@ specific guidelines.
 ![Normal Bot](images/NormalAI.gif)
 ![Optimus Prime](images/OptimusPrime.gif)
 ![Pikachu](images/Pikachu.gif)
+![MasterYoda](images/MasterYoda.gif)
+![PastChat](images/PastChat.gif)
+![CustomBotScooby](images/CustomBotScooby.gif)
+![Login-PasswordChange-Logout](images/Login-PasswordChange-Logout.gif)
+![NewAccount](images/NewAccount.gif)
