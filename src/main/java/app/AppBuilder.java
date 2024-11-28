@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.MongoDBDataAccessObject;
+import data_access.user_data.MongoDBDataAccessObject;
 import data_access.gpt_api_calls.GptApiCallBotResponseDataAccessObject;
 import entity.bot.*;
 import entity.chat.CommonUserChatFactory;
@@ -253,15 +253,15 @@ public class AppBuilder {
         final MasterYodaInteractor masterYodaInteractor = new MasterYodaInteractor(masterYodaOutputBoundary,
                 new MasterYodaFactory());
 
-        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel);
+        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel, viewManagerModel);
         final SendMessageInteractor sendChatInteractor = new SendMessageInteractor(sendMessageOutputBoundary,
                 new GptApiCallBotResponseDataAccessObject());
 
-        final ExitChatOutputBoundary exitChatOutputBoundary = new ExitChatPresenter(chatViewModel);
+        final ExitChatOutputBoundary exitChatOutputBoundary = new ExitChatPresenter(chatViewModel, viewManagerModel, loggedInViewModel);
         final ExitChatInteractor exitChatInteractor = new ExitChatInteractor(exitChatOutputBoundary,
                 new MongoDBDataAccessObject(), new CommonUserChatFactory());
 
-        final PastChatOutputBoundary pastChatOutputBoundary = new PastChatPresenter(pastChatViewModel);
+        final PastChatOutputBoundary pastChatOutputBoundary = new PastChatPresenter(pastChatViewModel, viewManagerModel, loggedInViewModel);
         final PastChatInteractor pastChatInteractor = new PastChatInteractor(pastChatOutputBoundary,
                 new MongoDBDataAccessObject());
 
@@ -381,21 +381,21 @@ public class AppBuilder {
         final GoBackToLoggedInViewController controller = new GoBackToLoggedInViewController(customViewInteractor);
         customBotView.setToLoggedInView(controller);
 
-        final CustomBotOutputBoundary customBotOutputBoundary = new CustomBotPresenter(chatViewModel);
+        final CustomBotOutputBoundary customBotOutputBoundary = new CustomBotPresenter(chatViewModel, viewManagerModel, customBotViewModel);
         final CustomBotInteractor customBotInteractor = new CustomBotInteractor(customBotOutputBoundary,
                 new CustomBotFactory());
 
         final CustomBotController controller1 = new CustomBotController(customBotInteractor);
         customBotView.setCustomBotController(controller1);
 
-        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel);
+        final SendMessageOutputBoundary sendMessageOutputBoundary = new SendMessagePresenter(chatViewModel, viewManagerModel);
         final SendMessageInteractor sendChatInteractor = new SendMessageInteractor(sendMessageOutputBoundary,
                 new GptApiCallBotResponseDataAccessObject());
 
         final SendMessageController controller2 = new SendMessageController(sendChatInteractor);
         customBotView.setSendMessageController(controller2);
 
-        final ExitChatOutputBoundary exitChatOutputBoundary = new ExitChatPresenter(chatViewModel);
+        final ExitChatOutputBoundary exitChatOutputBoundary = new ExitChatPresenter(chatViewModel, viewManagerModel, loggedInViewModel);
         final ExitChatInteractor exitChatInteractor = new ExitChatInteractor(exitChatOutputBoundary,
                 new MongoDBDataAccessObject(), new CommonUserChatFactory());
 

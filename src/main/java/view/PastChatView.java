@@ -1,7 +1,5 @@
 package view;
 
-import data_access.MongoDBDataAccessObject;
-import entity.message.Message;
 import interface_adapter.past_chat.PastChatController;
 import interface_adapter.past_chat.PastChatViewModel;
 

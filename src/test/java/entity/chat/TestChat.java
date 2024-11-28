@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
-public class testChat {
+public class TestChat {
     @Test
     public void testChatCreation() {
         Chat chat = new CommonUserChat();
@@ -34,9 +34,9 @@ public class testChat {
     @Test
     public void testUserFactoryCreation() {
         UserFactory factory = new CommonUserFactory();
-        User user = factory.create("testUser", "testPassword");
+        User user = factory.create("TestUser", "testPassword");
         assertNotNull(user);
-        assertEquals("testUser", user.getName());
+        assertEquals("TestUser", user.getName());
         assertEquals("testPassword", user.getPassword());
     }
 

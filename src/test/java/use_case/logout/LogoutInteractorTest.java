@@ -1,6 +1,6 @@
 package use_case.logout;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.user_data.InMemoryUserDataAccessObject;
 import entity.user.CommonUserFactory;
 import entity.user.User;
 import entity.user.UserFactory;

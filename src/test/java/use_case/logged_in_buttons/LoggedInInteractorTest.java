@@ -58,7 +58,7 @@ public class LoggedInInteractorTest {
     @Test
     void testGetUsername() {
         // Arrange
-        String expectedUsername = "testUser";
+        String expectedUsername = "TestUser";
         LoggedInOutputData outputData = new LoggedInOutputData(expectedUsername);
 
         // Act
@@ -75,7 +75,7 @@ public class LoggedInInteractorTest {
     @Test
     void testGetUsername1() {
         // Arrange
-        String expectedUsername = "testUser";
+        String expectedUsername = "TestUser";
         String dummyPassword = "testPass";
         LoggedInInputData inputData = new LoggedInInputData(dummyPassword, expectedUsername);
 
@@ -94,7 +94,7 @@ public class LoggedInInteractorTest {
     void testGetPassword() {
         // Arrange
         String expectedPassword = "testPass";
-        String dummyUsername = "testUser";
+        String dummyUsername = "TestUser";
         LoggedInInputData inputData = new LoggedInInputData(expectedPassword, dummyUsername);
 
         // Act

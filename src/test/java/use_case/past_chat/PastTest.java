@@ -2,8 +2,7 @@ package use_case.past_chat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.past_chat.*;
-import data_access.InMemoryUserDataAccessObject;
+import data_access.user_data.InMemoryUserDataAccessObject;
 import entity.message.Message;
 
 import java.util.List;

@@ -1,20 +1,13 @@
 package use_case.exit_chat;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.user_data.InMemoryUserDataAccessObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.exit_chat.ExitChatInputData;
-import use_case.exit_chat.ExitChatInteractor;
-import use_case.exit_chat.ExitChatOutputBoundary;
-import use_case.exit_chat.ExitChatOutputData;
 import entity.chat.Chat;
 import entity.chat.ChatFactory;
 import entity.chat.CommonUserChatFactory;
-import use_case.exit_chat.SaveChatHistoryUserDataAccessInterface;
-import entity.message.Message;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExitChatTest {
 
