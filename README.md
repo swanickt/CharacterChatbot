@@ -64,7 +64,7 @@ from your favourite character or celebrity!
 ## ***Software Features***
 
 ### Chatting Features
-Currently, th character chatbot application supports chats with 4 default characters. A standard
+Currently, the character chatbot application supports chats with 4 default characters. A standard
 AI bot, Pikachu the Pokemon, Optimus Prime the autobot, and Master Yoda the Star Wars jedi. Aside from these
 easily accessible default personas, the user has the option to create any character they wish to chat with from scratch.
 
