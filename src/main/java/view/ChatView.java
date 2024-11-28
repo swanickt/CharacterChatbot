@@ -37,10 +37,7 @@ public class ChatView extends JFrame {
     private JButton exitButton;
     private SendMessageController sendMessageController;
     private ExitChatController exitChatController;
-    private CommonUserChatFactory chatFactory;
     private String username;
-    private CommonUserChat chat;
-    private MongoDBDataAccessObject dbchatuser;
 
     @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LambdaParameterName", "checkstyle:RightCurly", "checkstyle:IllegalCatch", "checkstyle:LambdaBodyLength", "checkstyle:VariableDeclarationUsageDistance", "checkstyle:JavaNCSS"})
 
