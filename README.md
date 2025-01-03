@@ -1,4 +1,6 @@
 # CSC207 Final Project (group 199): Character Chatbot
+* This is simply a fork of the project from my school account *
+
 
 ## ***README Table of Contents***
 1. [Project Contributors](#Project-Contributors)
@@ -15,32 +17,6 @@
 - Yi Pan (github account: YiPan1028)
 - Yukun Wang (github account: NKwyk)
 - John Deng (github account: JonDD-D)
-
-### User Story Credits:
-**Note for the TA:** These vary from our original blueprint submission on Markus. We have made several
-design choices since then which modified our original plan.
-
-**[Team Story]** Bob is bored and home all by himself. He wants to chat with
-someone but all his friends are currently busy or unavailable. He decides to run the
-Character Chatbot app and spends the next half hour **conversing with the normal AI bot.**
-
-**[Thomas Swanick]** Bob wants to be able to **create an account, log in, and change his password** if he forgets it,
-so that he can still access his Character Chatbot account. He wants to be able to interface with these options
-through a simple and easily understandable home screen.
-
-**[Thomas Swanick]** Bob wants to know what it would be like to talk to his favourite robot Optimus Prime. To find out,
-he **chats with the Optimus Prime character** in Character Chatbot.
-
-**[Yukun Wang]** Bob wants to include a happy birthday message written by Pikachu in his son's
-birthday card. Bob **uses the Pikachu character offered by Character Chatbot** to produce this message.
-
-**[Yukun Wang]** Bob is a huge Star Wars fan. He has always wanted to **talk to master Yoda** about the philosophy of life. Bob can achieve his dream through his Character Chatbot account.
-
-**[John Deng]** Bob previously had a conversation with a bot in Character Chatbot. Some time has passed, and he wants to revisit the conversation so that he can remember the main points.
-Bob logs in to his account and goes to his **past chat to view that conversation in full**.
-
-**[Yi Pan]** Bob wants to be able to **create his own character** with a unique name and attributes, different from
-the default options so that he can chat with it on Character Chatbot.
 
 ## ***Project Summary***
 
