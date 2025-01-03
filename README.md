@@ -1,5 +1,14 @@
-# CSC207 Final Project (group 199): Character Chatbot
-* This is simply a fork of the project from my school account *
+# Character Chatbot
+\*\*\*This is simply a fork of the project from my school account. My individual contributions to the app are under the ThomasSwanick github account.***
+
+This project implements a fully functional character based chatbot application using the GPT-4o API. The project is
+implemented using Uncle Bob's Clean Architecture software design philosophy. As much as possible, we also tried to adhere to the SOLID design principles.
+Our main focus was the structure and organization of the code, not the GUI (clearly lol, yucky Java Swing) or the optimization of the bot responses. Note that
+the API key has been deactivated so to have a working version of the app after following the installation instructions, you would need to purchase your own key
+and set it as an environment variable.
+
+Here is the link to our presentation:
+[presentation slides](https://utoronto-my.sharepoint.com/:p:/g/personal/thomas_swanick_mail_utoronto_ca/EUCkclvDEn1Bmwl3KK3sn7wB8vrkrM5OfcKNH69lRQYupw?e=NabGQH)
 
 
 ## ***README Table of Contents***
