@@ -10,6 +10,8 @@ and set it as an environment variable.
 Here is the link to our presentation:
 [presentation slides](https://utoronto-my.sharepoint.com/:p:/g/personal/thomas_swanick_mail_utoronto_ca/EUCkclvDEn1Bmwl3KK3sn7wB8vrkrM5OfcKNH69lRQYupw?e=NabGQH)
 
+Here is a link to a youtube video I recorded to demo the main features of the application: [Character Chatbot Demo](https://youtu.be/ORRLnTfXpTQ)
+
 
 ## ***README Table of Contents***
 1. [Project Contributors](#Project-Contributors)
