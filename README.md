@@ -9,6 +9,7 @@ and set it as an environment variable.
 
 Here is a link to a youtube video I recorded to demo the main features of the application: [Character Chatbot Demo](https://youtu.be/ORRLnTfXpTQ)
 
+Here are the presentation slides: [Presentaion Slides]()
 
 ## ***README Table of Contents***
 1. [Project Contributors](#Project-Contributors)
