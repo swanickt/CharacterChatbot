@@ -8,7 +8,7 @@ the API key has been deactivated so to have a working version of the app after f
 and set it as an environment variable.
 
 Here is the link to our presentation:
-[presentation slides](https://utoronto-my.sharepoint.com/:p:/g/personal/thomas_swanick_mail_utoronto_ca/EUCkclvDEn1Bmwl3KK3sn7wB8vrkrM5OfcKNH69lRQYupw?e=NabGQH)
+[presentation slides](file:///Users/thomasswanick/Desktop/work/CharacterChatbotPresentation.pdf)
 
 Here is a link to a youtube video I recorded to demo the main features of the application: [Character Chatbot Demo](https://youtu.be/ORRLnTfXpTQ)
 
