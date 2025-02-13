@@ -7,9 +7,6 @@ Our main focus was the structure and organization of the code, not the GUI (clea
 the API key has been deactivated so to have a working version of the app after following the installation instructions, you would need to purchase your own key
 and set it as an environment variable.
 
-Here is the link to our presentation:
-[presentation slides](file:///Users/thomasswanick/Desktop/work/CharacterChatbotPresentation.pdf)
-
 Here is a link to a youtube video I recorded to demo the main features of the application: [Character Chatbot Demo](https://youtu.be/ORRLnTfXpTQ)
 
 
