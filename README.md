@@ -9,7 +9,7 @@ and set it as an environment variable.
 
 Here is a link to a youtube video I recorded to demo the main features of the application: [Character Chatbot Demo](https://youtu.be/ORRLnTfXpTQ)
 
-Here are the presentation slides: [Presentaion Slides]()
+Here are the presentation slides: [Presentaion Slides](https://github.com/swanickt/CharacterChatbot/blob/6158c725ce53509e307b846149b8dadfd0cbed90/images/CharacterChatbotPresentation.pdf)
 
 ## ***README Table of Contents***
 1. [Project Contributors](#Project-Contributors)
